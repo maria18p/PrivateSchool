@@ -25,10 +25,13 @@ export const addAdmin = async () => {
 export const login = async (req) => {
   try {
     const account = await ODM.models.User.findOne({ email: req.email });
-    if (!account) return { user: null, message: 'Account does not exist!' };
-
+    if (!account)
+      return {
+        user: null,
+        message: 'Account with the entered email does not exist',
+      };
     const isMatch = await bcryptjs.compare(req.password, account.password);
-    if (!isMatch) return { user: null, message: 'Password does not match' };
+    if (!isMatch) return { user: null, message: 'Password or email does not match' };
 
     if (!account.isActive) return { user: null, message: 'Your account is not active' };
 
@@ -227,10 +230,6 @@ export const getUserChats = async (req) => {
     let userChats = await ODM.models.Chat.find({
       users: { $in: req.user._id },
     }).populate('users');
-
-    // userChats.forEach((chat) => {
-    // 	console.log("chat", chat);
-    // });
 
     return { success: true, data: userChats };
   } catch (e) {

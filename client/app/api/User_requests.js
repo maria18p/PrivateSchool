@@ -70,7 +70,6 @@ export const updateLastName = async (params) => {
     _id: params.user._id,
     token: params.user.token,
   };
-  console.log(params);
   const result = await axios.post(BASE_URL + 'updateLastName', params);
   return result.data;
 };

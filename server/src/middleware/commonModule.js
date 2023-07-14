@@ -1,11 +1,12 @@
 import { setupODM } from '../config/setupMongoDB.js';
 import { addAdmin, checkUserLoggedIn } from '../controllers/UserActions.js';
+import colors from 'colors';
 
 let ODM;
 
 export const createDBConnection = async () => {
   ODM = await setupODM();
-  console.log('SERVER READY');
+  console.log('SERVER READY'.bold.yellow);
   // await addAdmin();
 };
 

@@ -25,7 +25,7 @@ export default function Login({ navigation }) {
         dispatch(updateUser(requestResult.data));
         Alert.alert('You logged in successfully');
         navigation.navigate('HomeScreen');
-      }
+      } else Alert.alert(requestResult.message);
     } catch (e) {
       console.log(e);
       Alert.alert('Something went wrong');

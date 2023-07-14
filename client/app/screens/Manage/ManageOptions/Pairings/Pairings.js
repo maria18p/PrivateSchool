@@ -52,7 +52,6 @@ const Pairings = () => {
                 <SelectList
                   data={adaptedTeacherList}
                   setSelected={(teacherID) => {
-                    console.log('teacherID', teacherID);
                     const toUpdate = {
                       _id: pairing._id,
                       student: { _id: pairing.student._id },
