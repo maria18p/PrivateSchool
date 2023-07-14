@@ -26,7 +26,7 @@ export const createStudent = async (reqObj) => {
   });
 
   await _account.save();
-  console.log('Account created: ' + _account + '\n');
+  console.log('Account created: ' + _account.email + ' ' + _account.firstName + '\n');
   return {
     success: true,
     message: 'Student created Successfully !',

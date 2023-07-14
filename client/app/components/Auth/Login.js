@@ -2,7 +2,7 @@ import { Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
 import React, { useState } from 'react';
 import { Icon } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
-import { getData, updateUser } from '../../store/reducer';
+import { updateUser } from '../../store/reducer';
 import { makeLoginRequest } from '../../api/User_requests';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Animatable from 'react-native-animatable';
