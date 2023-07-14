@@ -11,18 +11,20 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     marginTop: 10,
+    marginBottom: 10,
   },
 
   addedSubjectName: {
     justifyContent: 'flex-start',
-    width: '75%',
+    width: '67%',
+    marginLeft: 20,
   },
 
   fontAddedSub: { fontSize: 17 },
 
   containerDeleteBtn: {
     justifyContent: 'flex-end',
-    width: '25%',
+    width: '27%',
   },
 
   safeAreaContainer: {

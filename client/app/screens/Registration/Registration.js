@@ -272,7 +272,12 @@ export default function Registration({ navigation }) {
             editable={true}
           />
           <TouchableOpacity onPress={togglePasswordVisibility}>
-            <Ionicons name={showPassword ? 'eye' : 'eye-off'} size={24} color='#888888' />
+            <Ionicons
+              style={{ marginRight: 10 }}
+              name={showPassword ? 'eye' : 'eye-off'}
+              size={24}
+              color='#888888'
+            />
           </TouchableOpacity>
         </View>
         {regMode === STUDENT_MODE ? studentAddons() : teacherRegistrationAddon()}
