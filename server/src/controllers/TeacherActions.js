@@ -12,6 +12,7 @@ export const createTeacher = async (reqObj) => {
 
   //Password crypt
   const hashedPassword = await bcryptjs.hash(reqObj.password, 8);
+
   const _account = await ODM.models.User({
     _id: new mongoose.Types.ObjectId(),
     firstName: reqObj.firstName,
@@ -23,9 +24,13 @@ export const createTeacher = async (reqObj) => {
   });
 
   await _account.save();
-  console.log('Account created: ' + _account.email + ' ' + _account.firstName + '\n');
+  console.log('Teacher Account created: ' + _account.email + ' ' + _account.firstName + '\n');
 
-  return { success: true, message: 'Teacher created successfully' };
+  return {
+    success: true,
+    message: 'Teacher created successfully',
+    data: _account,
+  };
 };
 
 export const assignSubjectToTeacher = async (req) => {

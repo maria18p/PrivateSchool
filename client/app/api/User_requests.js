@@ -74,30 +74,6 @@ export const updateLastName = async (params) => {
   return result.data;
 };
 
-// export const getSchedule = async (params) => {
-// 	params.user = {
-// 		_id: params.user._id,
-// 		token: params.user.token,
-// 		email: params.user.email,
-// 	};
-// 	const result = await axios.get(BASE_URL + "getSchedule", { params: params });
-// 	return result.data;
-// };
-
-// export const updateSchedule = async (params) => {
-// 	params.user = {
-// 		user: {
-// 			_id: params.user._id,
-// 			token: params.user.token,
-// 			email: params.user.email,
-// 		},
-// 	};
-// 	const result = await axios.post(BASE_URL + "updateSchedule", {
-// 		params: params,
-// 	});
-// 	return result.data;
-// };
-
 export const getUserChat = async (params) => {
   params.user = {
     _id: params.user._id,
