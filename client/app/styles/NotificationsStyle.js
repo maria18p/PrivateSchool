@@ -35,23 +35,23 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 
-  txtContainer: { width: '70%', alignItems: 'flex-start' },
-
-  txt: { fontSize: 17, lineHeight: 18, color: '#003844' },
-
-  btnLayout: {
-    marginTop: 15,
+  notificationContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    justifyContent: 'space-between',
   },
 
+  txtLayout: { width: '75%' },
+  txt: { fontSize: 18, lineHeight: 18, color: '#003844' },
+
   btn: {
-    width: '30%',
-    height: 25,
+    padding: 5,
+    width: '20%',
+    height: 28,
     backgroundColor: '#2081C3',
-    elevation: 10,
-    alignSelf: 'flex-end',
-    alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 8,
+    borderRadius: 5,
   },
 
   btnTxt: { textTransform: 'uppercase', textAlign: 'center', color: '#ffff', fontWeight: '500' },

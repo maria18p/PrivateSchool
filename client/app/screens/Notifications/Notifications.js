@@ -67,11 +67,11 @@ const Notifications = () => {
           ]}>
           {notification.payload.firstName + ' ' + notification.payload.lastName}
         </Text>
-        <View style={notificationStyles.txtContainer}>
+        <View style={notificationStyles.txtLayout}>
           <Text
             style={[
               [notificationStyles.txt, { color: '#ffff' }],
-              notification.read && [notificationStyles.txt, { fontWeight: '600' }],
+              notification.read && [notificationStyles.txt, { fontWeight: '500' }],
             ]}>
             {notification.text}
           </Text>
@@ -90,16 +90,16 @@ const Notifications = () => {
           ]}>
           {notification.payload.firstName + ' ' + notification.payload.lastName}
         </Text>
-        <View style={notificationStyles.txtContainer}>
-          <Text
-            style={[
-              [notificationStyles.txt, { color: '#ffff' }],
-              notification.read && [notificationStyles.txt, { fontWeight: '600' }],
-            ]}>
-            {notification.text}
-          </Text>
-        </View>
-        <View style={notificationStyles.btnLayout}>
+        <View style={notificationStyles.notificationContainer}>
+          <View style={notificationStyles.txtLayout}>
+            <Text
+              style={[
+                [notificationStyles.txt, { color: '#ffff' }],
+                notification.read && [notificationStyles.txt, { fontWeight: '500' }],
+              ]}>
+              {notification.text}
+            </Text>
+          </View>
           <TouchableOpacity
             style={notificationStyles.btn}
             onPress={() =>
