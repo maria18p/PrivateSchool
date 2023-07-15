@@ -71,10 +71,10 @@ export default function Rooms(props) {
         <DataTable.Header style={{ backgroundColor: '#0ABED6' }}>
           <DataTable.Title textStyle={ManageStyles.tableTxtTitleStyle}>room</DataTable.Title>
           <DataTable.Title numeric textStyle={ManageStyles.tableTxtTitleStyle}>
-            action 1
+            Edit
           </DataTable.Title>
           <DataTable.Title numeric textStyle={ManageStyles.tableTxtTitleStyle}>
-            action 2
+            Delete
           </DataTable.Title>
         </DataTable.Header>
         <LinearGradient
@@ -94,13 +94,13 @@ export default function Rooms(props) {
 
                 <DataTable.Cell numeric>
                   <TouchableOpacity onPress={() => setRoomToUpdate(room)}>
-                    <Icon name='edit' type='ionicons' color='#FCEADE' />
+                    <Icon name='edit' type='ionicons' color='#FCEADE' size={26} />
                   </TouchableOpacity>
                 </DataTable.Cell>
 
                 <DataTable.Cell numeric>
                   <TouchableOpacity onPress={() => setRoomToDelete(room)}>
-                    <Icon name='delete' type='ionicons' color='#EB8F1E' />
+                    <Icon name='delete' type='ionicons' color='#EB8F1E' size={26} />
                   </TouchableOpacity>
                 </DataTable.Cell>
               </DataTable.Row>
