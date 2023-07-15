@@ -72,7 +72,6 @@ export default function Registration({ navigation }) {
 
   useEffect(() => {
     setEmail('');
-    setPassword('');
     setFirstName('');
     setLastName('');
     setCode('');
@@ -80,13 +79,43 @@ export default function Registration({ navigation }) {
       type: 'clear',
       payload: {},
     });
+    setPassword(generateRandomPassword());
   }, [regMode]);
 
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
   const getSubjects = async () => {
     const res = await getAllSubjects();
     setAllSubjects(res.data);
+  };
+
+  // Function to generate a random password
+  const generateRandomPassword = () => {
+    const symbols = '!@#$%^&*()_-+={}[]:;<>,.?/~';
+    const letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const digits = '0123456789';
+
+    const passwordLength = 12;
+    let password = '';
+
+    for (let i = 0; i < passwordLength; i++) {
+      const category = Math.floor(Math.random() * 3); // 0 for symbols, 1 for letters, 2 for digits
+
+      switch (category) {
+        case 0:
+          password += symbols[Math.floor(Math.random() * symbols.length)];
+          break;
+        case 1:
+          password += letters[Math.floor(Math.random() * letters.length)];
+          break;
+        case 2:
+          password += digits[Math.floor(Math.random() * digits.length)];
+          break;
+      }
+    }
+
+    return password;
   };
 
   const submit = async () => {
@@ -94,7 +123,13 @@ export default function Registration({ navigation }) {
       Alert.alert('Please enter a valid email address');
       return;
     }
-
+    if (!passwordRegex.test(password)) {
+      Alert.alert(
+        'Password Error',
+        'Password should be at least 8 characters long and contain at least one letter, one digit, and one special character (@ $ ! % * ? &).',
+      );
+      return;
+    }
     regMode === STUDENT_MODE ? registerStudent() : registerTeacher();
   };
 
@@ -104,7 +139,6 @@ export default function Registration({ navigation }) {
         if (allSubjects[i].name === subject) return allSubjects[i]._id;
       }
     });
-
     const params = {
       firstName: firstName,
       lastName: lastName,
@@ -112,12 +146,21 @@ export default function Registration({ navigation }) {
       password: password,
       subjects: subjectIDs,
     };
+
+    console.log(params.email, params.firstName, params.lastName);
+
     try {
       if (email === '' || password === '' || firstName === '' || lastName === '') {
         Alert.alert('All fields are required');
         return;
       }
-
+      if (subjectIDs.length === 0) {
+        Alert.alert(
+          'Registration Error',
+          'Please choose at least one or more subjects to proceed with registration.',
+        );
+        return;
+      }
       const requestResult = await makeRegisterStudentRequest(params);
       Alert.alert(requestResult.message);
       navigation.navigate('Login');
@@ -132,7 +175,6 @@ export default function Registration({ navigation }) {
         if (allSubjects[i].name === subject) return allSubjects[i]._id;
       }
     });
-
     const params = {
       firstName: firstName,
       lastName: lastName,
@@ -141,9 +183,6 @@ export default function Registration({ navigation }) {
       code: code,
       subjects: subjectIDs,
     };
-
-    console.log(params.email, params.firstName, params.lastName, params.code);
-
     try {
       if (email === '' || password === '' || firstName === '' || lastName === '') {
         Alert.alert('All fields are required');
@@ -151,7 +190,6 @@ export default function Registration({ navigation }) {
       } else {
         if (params.code !== '123') {
           setIncorrectAttempts((prevAttempts) => prevAttempts + 1);
-
           if (incorrectAttempts >= 2) {
             Alert.alert('Please call the system administrator');
             setIncorrectAttempts(0); // Reset the counter after three incorrect attempts
@@ -159,7 +197,6 @@ export default function Registration({ navigation }) {
           } else {
             Alert.alert('Code incorrect', 'Please try again!');
           }
-
           setCode(''); // Clear the code input
         } else {
           if (disableRegistration === false) {
