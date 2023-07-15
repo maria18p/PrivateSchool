@@ -1,6 +1,5 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
 import Login from '../components/Auth/Login';
 import HomeScreen from '../screens/Home/HomePage';
 import Notifications from '../screens/Notifications';
@@ -22,16 +21,16 @@ const styleOptions = {
     fontSize: 18,
     fontWeight: '500',
   },
-  headerLeft: () => {
-    const navigation = useNavigation();
-    return (
-      <TouchableOpacity
-        onPress={() => navigation.navigate('HomeScreen')}
-        style={{ paddingRight: 20, paddingLeft: 0 }}>
-        <AntDesign name='leftcircleo' size={28} color='black' />
-      </TouchableOpacity>
-    );
-  },
+};
+
+const CustomHeaderLeft = ({ navigation }) => {
+  return (
+    <TouchableOpacity
+      onPress={() => navigation.navigate('HomeScreen')}
+      style={{ paddingRight: 20, paddingLeft: 0 }}>
+      <AntDesign name='leftcircleo' size={28} color='black' />
+    </TouchableOpacity>
+  );
 };
 
 export const LoginStack = () => {
@@ -47,8 +46,22 @@ export const HomeStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen name='HomeScreen' component={HomeScreen} options={{ headerShown: false }} />
-      <Stack.Screen name='Notifications' component={Notifications} options={styleOptions} />
-      <Stack.Screen name='Chats' component={Messages} options={styleOptions} />
+      <Stack.Screen
+        name='Notifications'
+        component={Notifications}
+        options={({ navigation }) => ({
+          ...styleOptions,
+          headerLeft: () => <CustomHeaderLeft navigation={navigation} />,
+        })}
+      />
+      <Stack.Screen
+        name='Chats'
+        component={Messages}
+        options={({ navigation }) => ({
+          ...styleOptions,
+          headerLeft: () => <CustomHeaderLeft navigation={navigation} />,
+        })}
+      />
     </Stack.Navigator>
   );
 };
