@@ -80,6 +80,14 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 2, height: 1 },
     textShadowRadius: 5,
   },
+
+  noMoreSubjectsContainer: { padding: 20, alignItems: 'center' },
+
+  noMoreSubjectsText: {
+    fontSize: 18,
+    color: '#000000',
+    fontWeight: '500',
+  },
 });
 
 export default styles;

@@ -68,7 +68,8 @@ export const login = async (req) => {
 };
 
 const updateToken = async (account, token) => {
-  await ODM.models.User.findOneAndUpdate({ _id: account.id }, { token: token });
+  await ODM.models.User.findOneAndUpdate({ _id: account._id }, { token: token });
+  // await ODM.models.User.findOneAndUpdate({ _id: account.id }, { token: token });
 };
 
 export const checkUserLoggedIn = async (reqObj) => {
@@ -174,27 +175,6 @@ export const updateLastName = async (req) => {
     console.log('Error updating LastName -> UserActions', e);
   }
 };
-
-// export const getUserSchedule = async (user) => {
-//   const userObj = await ODM.models.User.findOne({ email: user.email });
-//   if (!userObj) return { success: false, message: 'USER NOT FOUND' };
-//   return { success: true, data: userObj.weeklySchedule };
-// };
-
-// export const updateSchedule = async (req) => {
-//   try {
-//     const userObj = await ODM.models.User.findOne({ email: req.user.email });
-//     if (!userObj) return { success: false, message: 'USER NOT FOUND' };
-//     userObj.weeklySchedule = req.schedule;
-//     userObj.save();
-//     return { success: true, message: 'Updated successfully' };
-//   } catch (e) {
-//     console.log(e);
-//     return { success: false, message: 'SOMETHING WENT WRONG' };
-//   }
-// };
-
-//Remove
 
 export const removeUser = async (user) => {
   try {

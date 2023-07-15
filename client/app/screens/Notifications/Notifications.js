@@ -52,12 +52,11 @@ const Notifications = () => {
   };
 
   const determineNotificationType = (notification) => {
-    if (notification.type === 'message') return messageNotification(notification);
-    else if (notification.type === 'pair') return pairingRequestNotification(notification);
-    else return null;
+    if (notification.type === 'pair') return pairingRequestNotification(notification);
+    return messageRequestNotification(notification);
   };
 
-  const messageNotification = (notification) => {
+  const messageRequestNotification = (notification) => {
     return (
       <>
         <Text
@@ -65,12 +64,12 @@ const Notifications = () => {
             notificationStyles.nameTxt,
             notification.read && [notificationStyles.nameTxt, { color: '#2E5EAA' }],
           ]}>
-          {notification.payload.firstName + ' ' + notification.payload.lastName}
+          {userData.firstName + ' ' + userData.lastName}
         </Text>
         <View style={notificationStyles.txtLayout}>
           <Text
             style={[
-              [notificationStyles.txt, { color: '#ffff' }],
+              [notificationStyles.txt, { color: '#000' }],
               notification.read && [notificationStyles.txt, { fontWeight: '500' }],
             ]}>
             {notification.text}

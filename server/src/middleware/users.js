@@ -29,10 +29,9 @@ export const postTeacherRequest = async (req) => {
     const queryResult = await createTeacher(req);
     await sendAdminNotification({
       text: 'A new teacher has joined !',
-      type: 'message',
+      // type: 'message',
       payload: queryResult.data,
     });
-
     return queryResult.success
       ? requestSuccess({ message: queryResult.message })
       : requestFailure({ message: queryResult.message });
@@ -45,6 +44,7 @@ export const postTeacherRequest = async (req) => {
 export const postStudentRequest = async (req) => {
   try {
     const queryResult = await createStudent(req);
+
     let pairings = await req.subjects.map(async (subject) => {
       const pairingCreation = await addPairing({
         user: queryResult.data,

@@ -37,13 +37,14 @@ export const pairTeacherToStudent = async (req) => {
   const isLoggedIn = await userLoggedIn(req.user);
   if (!isLoggedIn.success) return requestFailure({ message: isLoggedIn.message });
   const result = await updatePairing(req);
+
   await createNotification({
     user: result.data.student,
     text: `You were paired for learning ${result.data.subject.name} with ${result.data.teacher.firstName} ${result.data.teacher.lastName}`,
   });
 
   await createNotification({
-    user: result.data.teacher._id,
+    user: result.data.teacher,
     text: `You were assigned for teaching ${result.data.subject.name} with ${result.data.student.firstName} ${result.data.student.lastName}`,
   });
 

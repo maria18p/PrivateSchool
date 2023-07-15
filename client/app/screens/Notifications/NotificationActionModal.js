@@ -24,6 +24,8 @@ const pairingReducer = (state, action) => {
 
 export default function NotificationActionModal(props) {
   const [pairings, setPairings] = useState([]);
+  const [noMoreSubjectsPaired, setNoMoreSubjectsPaired] = useState(false);
+
   const userData = useSelector((state) => state.user);
   const [state, pairingsDispatcher] = useReducer(pairingReducer, {
     pairings: [],
@@ -40,6 +42,12 @@ export default function NotificationActionModal(props) {
       role: props.data.role,
       status: 'unassigned',
     });
+
+    if (queryResult.data.length === 0) {
+      setNoMoreSubjectsPaired(true);
+    } else {
+      setNoMoreSubjectsPaired(false);
+    }
 
     pairingsDispatcher({
       type: 'fetch',
@@ -70,6 +78,16 @@ export default function NotificationActionModal(props) {
   };
 
   const showSubjectPairings = () => {
+    if (noMoreSubjectsPaired) {
+      return (
+        <View style={notificationStyle.noMoreSubjectsContainer}>
+          <Text style={notificationStyle.noMoreSubjectsText}>
+            No more subjects available for pairing.
+          </Text>
+        </View>
+      );
+    }
+
     if (pairings.length === 0) return <></>;
     return (
       <View style={notificationStyle.scrollViewLayout}>
@@ -143,7 +161,6 @@ export default function NotificationActionModal(props) {
         </LinearGradient>
         {showSubjectPairings()}
         <View style={modalStyle.btnLayout}>
-          {}
           <Button title='Close' onPress={() => props.closeModal()} />
         </View>
       </SafeAreaView>
