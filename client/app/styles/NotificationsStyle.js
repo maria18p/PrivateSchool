@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
 
   nameTxt: {
     fontSize: 19,
-    color: '#ffff',
+    color: '#0E402D',
     textTransform: 'capitalize',
     marginBottom: 5,
   },

@@ -51,6 +51,9 @@ export default function Registration({ navigation }) {
   const [code, setCode] = useState('');
   const [regMode, setRegMode] = useState(STUDENT_MODE);
   const [allSubjects, setAllSubjects] = useState([]);
+  const [isCodeCorrect, setIsCodeCorrect] = useState(true);
+  const [incorrectAttempts, setIncorrectAttempts] = useState(0);
+  const [disableRegistration, setDisableRegistration] = useState(false);
 
   const [subjectsState, subjectsDispatcher] = useReducer(subjectReducer, {
     subjects: [],
@@ -63,18 +66,9 @@ export default function Registration({ navigation }) {
     setShowPassword(!showPassword);
   };
 
-  const submit = async () => {
-    regMode === STUDENT_MODE ? registerStudent() : registerTeacher();
-  };
-
   useEffect(() => {
     getSubjects();
   }, []);
-
-  const getSubjects = async () => {
-    const res = await getAllSubjects();
-    setAllSubjects(res.data);
-  };
 
   useEffect(() => {
     setEmail('');
@@ -87,6 +81,22 @@ export default function Registration({ navigation }) {
       payload: {},
     });
   }, [regMode]);
+
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+  const getSubjects = async () => {
+    const res = await getAllSubjects();
+    setAllSubjects(res.data);
+  };
+
+  const submit = async () => {
+    if (!emailRegex.test(email)) {
+      Alert.alert('Please enter a valid email address');
+      return;
+    }
+
+    regMode === STUDENT_MODE ? registerStudent() : registerTeacher();
+  };
 
   const registerStudent = async () => {
     let subjectIDs = subjectsState.subjects.map((subject) => {
@@ -103,11 +113,14 @@ export default function Registration({ navigation }) {
       subjects: subjectIDs,
     };
     try {
-      if (email !== '') {
-        const requestResult = await makeRegisterStudentRequest(params);
-        Alert.alert(requestResult.message);
-        navigation.navigate('Login');
-      } else Alert.alert('Email is required');
+      if (email === '' || password === '' || firstName === '' || lastName === '') {
+        Alert.alert('All fields are required');
+        return;
+      }
+
+      const requestResult = await makeRegisterStudentRequest(params);
+      Alert.alert(requestResult.message);
+      navigation.navigate('Login');
     } catch (e) {
       console.log(e);
     }
@@ -128,12 +141,36 @@ export default function Registration({ navigation }) {
       code: code,
       subjects: subjectIDs,
     };
+
+    console.log(params.email, params.firstName, params.lastName, params.code);
+
     try {
-      if (email !== '') {
-        const requestResult = await makeRegisterTeacherRequest(params);
-        Alert.alert(requestResult.message);
-        navigation.navigate('Login');
-      } else Alert.alert('Email is required');
+      if (email === '' || password === '' || firstName === '' || lastName === '') {
+        Alert.alert('All fields are required');
+        return;
+      } else {
+        if (params.code !== '123') {
+          setIncorrectAttempts((prevAttempts) => prevAttempts + 1);
+
+          if (incorrectAttempts >= 2) {
+            Alert.alert('Please call the system administrator');
+            setIncorrectAttempts(0); // Reset the counter after three incorrect attempts
+            setDisableRegistration(true); // Disable registration after three incorrect attempts
+          } else {
+            Alert.alert('Code incorrect', 'Please try again!');
+          }
+
+          setCode(''); // Clear the code input
+        } else {
+          if (disableRegistration === false) {
+            setIsCodeCorrect(true); // Set the code correctness state to true when it is correct
+            setIncorrectAttempts(0); // Reset the counter after successful login
+            const requestResult = await makeRegisterTeacherRequest(params);
+            Alert.alert(requestResult.message);
+            navigation.navigate('Login'); // Navigate to the login screen on successful registration
+          } else return <></>;
+        }
+      }
     } catch (e) {
       console.log(e);
     }
@@ -212,7 +249,7 @@ export default function Registration({ navigation }) {
               status={regMode === STUDENT_MODE ? 'checked' : 'unchecked'}
               onPress={() => setRegMode(STUDENT_MODE)}
             />
-            <Text style={{ fontSize: 15 }}>Student Registration</Text>
+            <Text style={{ fontSize: 15 }}>Student</Text>
           </View>
           <View style={registerStyle.radioBtnLayout}>
             <RadioButton
@@ -220,7 +257,7 @@ export default function Registration({ navigation }) {
               status={regMode === TEACHER_MODE ? 'checked' : 'unchecked'}
               onPress={() => setRegMode(TEACHER_MODE)}
             />
-            <Text style={{ fontSize: 15 }}>Teacher Registration</Text>
+            <Text style={{ fontSize: 15 }}>Teacher</Text>
           </View>
         </SafeAreaView>
 
@@ -280,7 +317,9 @@ export default function Registration({ navigation }) {
             />
           </TouchableOpacity>
         </View>
+
         {regMode === STUDENT_MODE ? studentAddons() : teacherRegistrationAddon()}
+
         {subjectSelection()}
         <View style={styles.loginButton}>
           <TouchableOpacity onPress={() => submit()}>

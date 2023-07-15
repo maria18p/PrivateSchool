@@ -32,7 +32,7 @@ const Notifications = () => {
   };
 
   const showNotifications = () => {
-    if (!notifications) return <></>;
+    if (notifications === null) return <></>;
     return (
       <>
         {notifications.map((notification, key) => {

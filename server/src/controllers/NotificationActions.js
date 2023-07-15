@@ -30,6 +30,7 @@ export const getUserNotifications = async (req) => {
     let user = (await getUsers(req.user))[0];
     const allNotifications = await ODM.models.Notification.find({
       user: user._id,
+      // user: user,
       // read: false,
     });
     return { success: true, data: allNotifications };

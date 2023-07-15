@@ -207,6 +207,10 @@ export const removeAllUsersByType = async (type) => {
 
 export const getUserChats = async (req) => {
   try {
+    // if (!req.user || !req.user._id) {
+    //   throw new Error('Invalid request: req.user or req.user._id is undefined');
+    // }
+
     let userChats = await ODM.models.Chat.find({
       users: { $in: req.user._id },
     }).populate('users');

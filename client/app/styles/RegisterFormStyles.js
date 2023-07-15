@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
   safeAreaContainer: {
     flexDirection: 'row',
     marginTop: 15,
+    justifyContent: 'space-evenly',
   },
 
   radioBtnLayout: { flexDirection: 'row', alignItems: 'center' },
