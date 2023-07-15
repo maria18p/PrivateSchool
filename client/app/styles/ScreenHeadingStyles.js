@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
     height: 100,
     justifyContent: 'center',
     alignItems: 'center',
+    marginLeft: 12,
   },
 
   threeD_EffectButton: {
@@ -37,6 +38,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '10%',
+    marginRight: 6,
   },
 });
 

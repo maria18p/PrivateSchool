@@ -71,23 +71,23 @@ const ScreenHeading = () => {
               <TouchableOpacity
                 onPress={() => setHamburgerShown(!hamburgerShown)}
                 style={headingStyles.threeD_EffectButton}>
-                <MaterialCommunityIcons name='menu' size={25.5} color='#5352ed' />
+                <MaterialCommunityIcons name='menu' size={26} color='#5352ed' />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => navigation.navigate('Notifications')}
                 style={headingStyles.threeD_EffectButton}>
-                <MaterialCommunityIcons name='android-messages' size={25.5} color='#5352ed' />
+                <MaterialCommunityIcons name='android-messages' size={26} color='#5352ed' />
               </TouchableOpacity>
 
               <TouchableOpacity
                 onPress={() => navigation.navigate('Chats')}
                 style={headingStyles.threeD_EffectButton}>
-                <MaterialCommunityIcons name='message' size={25.5} color='#5352ed' />
+                <MaterialCommunityIcons name='message' size={26} color='#5352ed' />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => refreshData()}
                 style={headingStyles.threeD_EffectButton}>
-                <MaterialCommunityIcons name='refresh' size={25.5} color='#5352ed' />
+                <MaterialCommunityIcons name='refresh' size={26} color='#5352ed' />
               </TouchableOpacity>
             </View>
 

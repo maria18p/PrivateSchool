@@ -7,6 +7,7 @@ import ManageStyles from '../../../../styles/ManageOptionStyles';
 import DeleteModal from './DeleteModal';
 import { DataTable } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Icon } from 'react-native-elements';
 
 export default function Rooms(props) {
   const touchableHighlightProps = {
@@ -15,6 +16,7 @@ export default function Rooms(props) {
     onHideUnderlay: () => setIsPress(false),
     onShowUnderlay: () => setIsPress(true),
   };
+
   const [isPress, setIsPress] = useState(false);
   const [creationModalShown, setCreationModalShown] = useState(false);
   const [data, setData] = useState([]);
@@ -36,14 +38,14 @@ export default function Rooms(props) {
 
   const getAllObjects = () => {
     return (
-      <DataTable>
+      <DataTable style={{ marginTop: 12 }}>
         <DataTable.Header style={{ backgroundColor: '#76E5FC' }}>
           <DataTable.Title textStyle={ManageStyles.tableTxtTitleStyle}>room</DataTable.Title>
           <DataTable.Title numeric textStyle={ManageStyles.tableTxtTitleStyle}>
-            action 1
+            Edit
           </DataTable.Title>
           <DataTable.Title numeric textStyle={ManageStyles.tableTxtTitleStyle}>
-            action 2
+            Remove
           </DataTable.Title>
         </DataTable.Header>
         <LinearGradient
@@ -62,18 +64,14 @@ export default function Rooms(props) {
                 </DataTable.Cell>
 
                 <DataTable.Cell numeric>
-                  <TouchableOpacity
-                    onPress={() => setRoomToUpdate(room)}
-                    style={ManageStyles.btnContainer}>
-                    <Text style={{ color: '#000' }}>Update</Text>
+                  <TouchableOpacity onPress={() => setRoomToUpdate(room)}>
+                    <Icon name='edit' type='ionicons' color='#FCEADE' />
                   </TouchableOpacity>
                 </DataTable.Cell>
 
                 <DataTable.Cell numeric>
-                  <TouchableOpacity
-                    onPress={() => setRoomToDelete(room)}
-                    style={[ManageStyles.btnContainer, { backgroundColor: '#9C3848' }]}>
-                    <Text style={{ color: '#fff' }}>Delete</Text>
+                  <TouchableOpacity onPress={() => setRoomToDelete(room)}>
+                    <Icon name='delete' type='ionicons' color='#EB8F1E' />
                   </TouchableOpacity>
                 </DataTable.Cell>
               </DataTable.Row>
@@ -114,11 +112,11 @@ export default function Rooms(props) {
   };
 
   return (
-    <ScrollView style={{ flex: 1 }}>
+    <>
       {showCreationModal()}
       {showManageModal()}
       {showDeleteModal()}
-      <View style={[ManageStyles.btnLayout]}>
+      <View style={[ManageStyles.btnLayout, { marginBottom: 0 }]}>
         <TouchableHighlight
           onPress={() => props.back()}
           {...touchableHighlightProps}
@@ -135,6 +133,6 @@ export default function Rooms(props) {
       </View>
 
       <View style={ManageStyles.tableLayout}>{getAllObjects()}</View>
-    </ScrollView>
+    </>
   );
 }
