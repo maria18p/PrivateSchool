@@ -36,16 +36,45 @@ export default function Rooms(props) {
     }
   };
 
+  const showManageModal = () => {
+    if (!roomToUpdate) return <></>;
+    if (props.title === 'Rooms')
+      return <ManageModal type={props.title} obj={roomToUpdate} closeModal={() => closeModal()} />;
+  };
+
+  const closeModal = () => {
+    if (roomToUpdate) setRoomToUpdate(null);
+    if (roomToDelete) setRoomToDelete(null);
+    if (creationModalShown) setCreationModalShown(false);
+    updateData();
+  };
+
+  const closeCreationModal = async () => {
+    setCreationModalShown(false);
+    await updateData();
+  };
+
+  const showCreationModal = () => {
+    if (!creationModalShown) return <></>;
+    if (props.title === 'Rooms') return <RoomCreationModal closeModal={() => closeModal()} />;
+  };
+
+  const showDeleteModal = () => {
+    if (!roomToDelete) return <></>;
+    if (props.title === 'Rooms')
+      return <DeleteModal type={props.title} obj={roomToDelete} closeModal={() => closeModal()} />;
+  };
+
   const getAllObjects = () => {
     return (
       <DataTable style={{ marginTop: 12 }}>
-        <DataTable.Header style={{ backgroundColor: '#76E5FC' }}>
+        <DataTable.Header style={{ backgroundColor: '#0ABED6' }}>
           <DataTable.Title textStyle={ManageStyles.tableTxtTitleStyle}>room</DataTable.Title>
           <DataTable.Title numeric textStyle={ManageStyles.tableTxtTitleStyle}>
-            Edit
+            action 1
           </DataTable.Title>
           <DataTable.Title numeric textStyle={ManageStyles.tableTxtTitleStyle}>
-            Remove
+            action 2
           </DataTable.Title>
         </DataTable.Header>
         <LinearGradient
@@ -82,41 +111,12 @@ export default function Rooms(props) {
     );
   };
 
-  const showManageModal = () => {
-    if (!roomToUpdate) return <></>;
-    if (props.title === 'Rooms')
-      return <ManageModal type={props.title} obj={roomToUpdate} closeModal={() => closeModal()} />;
-  };
-
-  const closeModal = () => {
-    if (roomToUpdate) setRoomToUpdate(null);
-    if (roomToDelete) setRoomToDelete(null);
-    if (creationModalShown) setCreationModalShown(false);
-    updateData();
-  };
-
-  const closeCreationModal = async () => {
-    setCreationModalShown(false);
-    await updateData();
-  };
-
-  const showCreationModal = () => {
-    if (!creationModalShown) return <></>;
-    if (props.title === 'Rooms') return <RoomCreationModal closeModal={() => closeModal()} />;
-  };
-
-  const showDeleteModal = () => {
-    if (!roomToDelete) return <></>;
-    if (props.title === 'Rooms')
-      return <DeleteModal type={props.title} obj={roomToDelete} closeModal={() => closeModal()} />;
-  };
-
   return (
     <>
       {showCreationModal()}
       {showManageModal()}
       {showDeleteModal()}
-      <View style={[ManageStyles.btnLayout, { marginBottom: 0 }]}>
+      <View style={[ManageStyles.btnLayout]}>
         <TouchableHighlight
           onPress={() => props.back()}
           {...touchableHighlightProps}
@@ -132,7 +132,9 @@ export default function Rooms(props) {
         </TouchableHighlight>
       </View>
 
-      <View style={ManageStyles.tableLayout}>{getAllObjects()}</View>
+      <ScrollView>
+        <View style={ManageStyles.tableLayout}>{getAllObjects()}</View>
+      </ScrollView>
     </>
   );
 }

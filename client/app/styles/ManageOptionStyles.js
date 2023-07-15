@@ -11,7 +11,8 @@ const ManageStyles = StyleSheet.create({
     marginTop: 6,
     marginLeft: 7,
   },
-  btnLayout: { width: '100%', height: '15%', marginBottom: 30, marginLeft: 6, marginTop: 5 },
+
+  btnLayout: { width: '100%', height: '12%', marginLeft: 6, marginTop: 5 },
 
   tableLayout: { width: '100%', height: '85%' },
 
