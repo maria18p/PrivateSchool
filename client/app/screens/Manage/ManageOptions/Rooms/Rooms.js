@@ -132,7 +132,7 @@ export default function Rooms(props) {
         </TouchableHighlight>
       </View>
 
-      <ScrollView>
+      <ScrollView style={{ height: '85%' }}>
         <View style={ManageStyles.tableLayout}>{getAllObjects()}</View>
       </ScrollView>
     </>
