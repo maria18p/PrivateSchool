@@ -87,13 +87,14 @@ const styles = StyleSheet.create({
   topBar: {
     width: '100%',
     flexDirection: 'row',
+    justifyContent: 'center',
   },
 
   linearStyles: {
     justifyContent: 'center',
-    flex: 0.3,
+    flex: 0.4,
     marginTop: 10,
-    padding: 5,
+    padding: 4,
   },
 
   txtHelloUser: {

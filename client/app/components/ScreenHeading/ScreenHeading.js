@@ -71,34 +71,34 @@ const ScreenHeading = () => {
               <TouchableOpacity
                 onPress={() => setHamburgerShown(!hamburgerShown)}
                 style={headingStyles.threeD_EffectButton}>
-                <MaterialCommunityIcons name='menu' size={28} color='#5352ed' />
+                <MaterialCommunityIcons name='menu' size={25.5} color='#5352ed' />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => navigation.navigate('Notifications')}
                 style={headingStyles.threeD_EffectButton}>
-                <MaterialCommunityIcons name='android-messages' size={28} color='#5352ed' />
+                <MaterialCommunityIcons name='android-messages' size={25.5} color='#5352ed' />
               </TouchableOpacity>
 
               <TouchableOpacity
                 onPress={() => navigation.navigate('Chats')}
                 style={headingStyles.threeD_EffectButton}>
-                <MaterialCommunityIcons name='message' size={28} color='#5352ed' />
+                <MaterialCommunityIcons name='message' size={25.5} color='#5352ed' />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => refreshData()}
                 style={headingStyles.threeD_EffectButton}>
-                <MaterialCommunityIcons name='refresh' size={28} color='#5352ed' />
+                <MaterialCommunityIcons name='refresh' size={25.5} color='#5352ed' />
               </TouchableOpacity>
             </View>
 
-            <View style={{ width: '58%' }}>
+            <View style={{ width: '59%' }}>
               <Text style={styles.txtHelloUser}>Hello {userData.name}</Text>
             </View>
           </View>
 
           <View style={headingStyles.logoutBtnLayout}>
             <TouchableOpacity onPress={Logout}>
-              <MaterialCommunityIcons name='account-arrow-left' size={28} color='#5352ed' />
+              <MaterialCommunityIcons name='account-arrow-left' size={30} color='#5352ed' />
             </TouchableOpacity>
           </View>
         </View>

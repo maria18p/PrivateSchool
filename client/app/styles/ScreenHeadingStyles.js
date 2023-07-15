@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   headingContainer: {
     flexDirection: 'row',
-    width: '90%',
+    width: '92%',
     height: 100,
     justifyContent: 'center',
     alignItems: 'center',
@@ -12,8 +12,8 @@ const styles = StyleSheet.create({
   threeD_EffectButton: {
     backgroundColor: '#ffff',
     borderRadius: 50,
-    width: 35,
-    height: 35,
+    width: 33,
+    height: 33,
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#2660A4',
@@ -29,8 +29,8 @@ const styles = StyleSheet.create({
   leftSideHeadingLayout: {
     flexDirection: 'row',
     width: '42%',
-    paddingLeft: 5,
     justifyContent: 'space-between',
+    // borderWidth: 5,
   },
 
   logoutBtnLayout: {
