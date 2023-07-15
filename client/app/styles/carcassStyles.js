@@ -14,21 +14,21 @@ const styles = StyleSheet.create({
   },
 
   registerOptionLoginScreen: {
-    justifyContent: 'center',
-    // flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    flexDirection: 'row',
     width: '100%',
     height: 50,
   },
 
-  btnRegister: { justifyContent: 'flex-end', alignSelf: 'center' },
-
   titleText: { fontSize: 20, fontWeight: 'bold', color: '#0D21A1' },
+
   bottomView: {
     width: '88%',
     alignSelf: 'center',
     flexDirection: 'column',
     backgroundColor: '#ffffff ',
   },
+
   inputView: {
     height: 50,
     backgroundColor: '#f1f3f6',
@@ -37,15 +37,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+
   inputIcon: {
     paddingHorizontal: '2%',
   },
+
   input: {
     height: '90%',
     flex: 1,
     fontSize: 18,
     color: '#1D1E2C',
   },
+
   loginButton: {
     height: 35,
     width: '75%',
@@ -55,27 +58,32 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'center',
   },
+
   loginButtonText: {
     color: '#fff',
     alignSelf: 'center',
     fontSize: 18,
   },
+
   loginWithBar: {
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: '8%',
   },
+
   iconButton: {
     backgroundColor: '#ADB6C4',
     padding: 14,
     marginHorizontal: 10,
     borderRadius: 100,
   },
+
   registerText: {
-    alignSelf: 'center',
-    marginTop: 12,
-    fontSize: 16,
+    textAlign: 'center',
+    marginTop: 15,
+    fontSize: 17,
   },
+
   safeAreaViewHomePage: {
     flex: 1,
     width: '100%',

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, View, ImageBackground } from 'react-native';
+import React, { useState } from 'react';
+import { ScrollView, View, ImageBackground } from 'react-native';
 import Planner from './PlannerScreen/Planner';
 import { LinearGradient } from 'expo-linear-gradient';
 import HomeContext from './HomeContext';

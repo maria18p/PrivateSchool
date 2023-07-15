@@ -6,7 +6,7 @@ import Notifications from '../screens/Notifications';
 import Registration from '../screens/Registration/Registration';
 import Messages from '../screens/Messages/Messages';
 import img1 from '../assets/bc_chats.webp';
-import { Image, TouchableOpacity } from 'react-native';
+import { Image } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
 const Stack = createNativeStackNavigator();
@@ -23,16 +23,6 @@ const styleOptions = {
   },
 };
 
-const CustomHeaderLeft = ({ navigation }) => {
-  return (
-    <TouchableOpacity
-      onPress={() => navigation.navigate('HomeScreen')}
-      style={{ paddingRight: 20, paddingLeft: 0 }}>
-      <AntDesign name='leftcircleo' size={28} color='black' />
-    </TouchableOpacity>
-  );
-};
-
 export const LoginStack = () => {
   return (
     <Stack.Navigator>
@@ -46,22 +36,8 @@ export const HomeStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen name='HomeScreen' component={HomeScreen} options={{ headerShown: false }} />
-      <Stack.Screen
-        name='Notifications'
-        component={Notifications}
-        options={({ navigation }) => ({
-          ...styleOptions,
-          headerLeft: () => <CustomHeaderLeft navigation={navigation} />,
-        })}
-      />
-      <Stack.Screen
-        name='Chats'
-        component={Messages}
-        options={({ navigation }) => ({
-          ...styleOptions,
-          headerLeft: () => <CustomHeaderLeft navigation={navigation} />,
-        })}
-      />
+      <Stack.Screen name='Notifications' component={Notifications} options={styleOptions} />
+      <Stack.Screen name='Chats' component={Messages} options={styleOptions} />
     </Stack.Navigator>
   );
 };
