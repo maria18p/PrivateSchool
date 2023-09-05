@@ -7,7 +7,7 @@ let ODM;
 export const createDBConnection = async () => {
    ODM = await setupODM();
    console.log('SERVER READY'.bold.yellow);
-   await addAdmin();
+   // await addAdmin();
 };
 
 // ============================== Utility functions ==============================
