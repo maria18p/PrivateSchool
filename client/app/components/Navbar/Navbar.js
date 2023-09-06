@@ -15,61 +15,61 @@ const teacherOptions = [{ title: 'Students', component: <Students /> }];
 const adminOptions = [{ title: 'Manage', component: <Manage /> }];
 
 const navOptions = [
-  { title: 'Planner', component: <Planner /> },
-  { title: 'Subjects', component: <Subjects /> },
-  { title: 'Profile', component: <Profile /> },
+   { title: 'Planner', component: <Planner /> },
+   { title: 'Subjects', component: <Subjects /> },
+   { title: 'Profile', component: <Profile /> },
 ];
 
 export default function Navbar(props) {
-  const userData = useSelector((state) => state.user);
-  const dispatch = useDispatch();
-  const [options, setOptions] = useState(navOptions);
-  const context = useContext(HomeContext);
+   const userData = useSelector((state) => state.user);
+   const dispatch = useDispatch();
+   const [options, setOptions] = useState(navOptions);
+   const context = useContext(HomeContext);
 
-  useEffect(() => {
-    addRoleOptions();
-  }, []);
+   useEffect(() => {
+      addRoleOptions();
+   }, []);
 
-  const addRoleOptions = () => {
-    let addedOptions = [];
-    addedOptions = addedOptions.concat(navOptions);
-    if (userData.role === 'Teacher') {
-      addedOptions = addedOptions.concat(teacherOptions);
-    } else if (userData.role === 'Admin') {
-      addedOptions = addedOptions.concat(teacherOptions);
-      addedOptions = addedOptions.concat(adminOptions);
-    }
-    setOptions(addedOptions);
-  };
+   const addRoleOptions = () => {
+      let addedOptions = [];
+      addedOptions = addedOptions.concat(navOptions);
+      if (userData.role === 'Teacher') {
+         addedOptions = addedOptions.concat(teacherOptions);
+      } else if (userData.role === 'Admin') {
+         addedOptions = addedOptions.concat(teacherOptions);
+         addedOptions = addedOptions.concat(adminOptions);
+      }
+      setOptions(addedOptions);
+   };
 
-  const handleOnPress = (option) => {
-    props.closeMenu();
-    context.switchContent(option.component);
-  };
+   const handleOnPress = (option) => {
+      props.closeMenu();
+      context.switchContent(option.component);
+   };
 
-  const generateOptions = () => {
-    const toDisplay = {};
-    if (!props.show) toDisplay.display = 'none';
-    else toDisplay.zIndex = 999;
-    return (
-      <View style={[navBar.navContainer, toDisplay]}>
-        {options.map((option, index) => {
-          return (
-            <LinearGradient
-              key={index}
-              colors={['#FDCA40', '#C5E6A6', '#ffff']}
-              start={[0.9, 0.55]}
-              end={[0.7, -0.4]}
-              style={navBar.linearGradientContainer}>
-              <TouchableOpacity style={navBar.navTab} onPress={() => handleOnPress(option)}>
-                <Text style={navBar.txtHamburgerOption}>{option.title}</Text>
-              </TouchableOpacity>
-            </LinearGradient>
-          );
-        })}
-      </View>
-    );
-  };
+   const generateOptions = () => {
+      const toDisplay = {};
+      if (!props.show) toDisplay.display = 'none';
+      else toDisplay.zIndex = 999;
+      return (
+         <View style={[navBar.navContainer, toDisplay]}>
+            {options.map((option, index) => {
+               return (
+                  <LinearGradient
+                     key={index}
+                     colors={['#FDCA40', '#C5E6A6', '#ffff']}
+                     start={[0.9, 0.55]}
+                     end={[0.7, -0.4]}
+                     style={navBar.linearGradientContainer}>
+                     <TouchableOpacity style={navBar.navTab} onPress={() => handleOnPress(option)}>
+                        <Text style={navBar.txtHamburgerOption}>{option.title}</Text>
+                     </TouchableOpacity>
+                  </LinearGradient>
+               );
+            })}
+         </View>
+      );
+   };
 
-  return <View style={navBar.mainContainer}>{generateOptions()}</View>;
+   return <View style={navBar.mainContainer}>{generateOptions()}</View>;
 }
