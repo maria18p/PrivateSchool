@@ -19,15 +19,18 @@ export default function Login({ navigation }) {
       };
       try {
          const requestResult = await makeLoginRequest(params);
+
+         console.log('RequestResult:', requestResult);
+
          if (requestResult.success) {
             dispatch(updateUser(requestResult.data));
             Alert.alert('You logged in successfully');
             navigation.navigate('HomeScreen');
          } else Alert.alert(requestResult.message);
       } catch (e) {
-         console.log(e);
+         console.error(e);
          Alert.alert('Something went wrong');
-      } finally {
+         console.log('2222222222222222');
       }
    };
 

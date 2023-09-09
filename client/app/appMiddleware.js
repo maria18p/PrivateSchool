@@ -11,46 +11,52 @@ import actions from './store/actions';
 import LoadingPage from './screens/Loading/LoadingPage';
 
 const LoadApp = () => {
-  const [loaded, setLoaded] = useState(false);
-  const userData = useSelector((state) => state.user);
-  const dispatch = useDispatch();
+   const [loaded, setLoaded] = useState(false);
+   const userData = useSelector((state) => state.user);
+   const dispatch = useDispatch();
 
-  useEffect(() => {
-    openApp();
-  }, []);
+   useEffect(() => {
+      openApp();
+   }, []);
 
-  const openApp = async () => {
-    if (store.getState().user.token !== null) {
+   const openApp = async () => {
+      // if (store.getState().user.token !== null) {
+      if (userData.token !== null) {
+         setLoaded(true);
+         return;
+      }
+      const savedState = await actions.loadUserData();
+
+      if (savedState && savedState.token) {
+         let userAdaptedObj = store.getState().user;
+         const res = await checkLoggedIn({
+            _id: userAdaptedObj._id,
+            token: userAdaptedObj.token,
+         });
+         //  const res = await checkLoggedIn({
+         //     _id: savedState._id,
+         //     token: savedState.token,
+         //  });
+
+         if (!res.data) dispatch(resetUserData());
+         else dispatch(updateUser(savedState));
+      }
+
       setLoaded(true);
-      return;
-    }
-    const savedState = await actions.loadUserData();
+   };
 
-    if (savedState && savedState.token) {
-      let userAdaptedObj = store.getState().user;
-      const res = await checkLoggedIn({
-        _id: userAdaptedObj._id,
-        token: userAdaptedObj.token,
-      });
-      if (!res.data) dispatch(resetUserData());
-      else dispatch(updateUser(savedState));
-    }
+   const showStack = () =>
+      userData.token ? (
+         <HomeStack>
+            <Login />
+         </HomeStack>
+      ) : (
+         <LoginStack>
+            <HomeScreen />
+         </LoginStack>
+      );
 
-    setLoaded(true);
-  };
-
-  const showStack = () =>
-    userData.token ? (
-      <HomeStack>
-        <Login />
-      </HomeStack>
-    ) : (
-      <LoginStack>
-        <HomeScreen />
-      </LoginStack>
-    );
-
-  return <NavigationContainer>{loaded ? showStack() : <LoadingPage />}</NavigationContainer>;
+   return <NavigationContainer>{loaded ? showStack() : <LoadingPage />}</NavigationContainer>;
 };
 
 export default LoadApp;
