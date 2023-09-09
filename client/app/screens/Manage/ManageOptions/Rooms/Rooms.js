@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View, TouchableHighlight, ScrollView } from 'react-native';
+import { Text, TouchableOpacity, View, TouchableHighlight, ScrollView, Alert } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import ManageModal from './ManageModal';
 import RoomCreationModal from './RoomCreatingModal';
@@ -32,6 +32,19 @@ export default function Rooms(props) {
       let fetched = [];
       if (props.title === 'Rooms') {
          fetched = await getAllRooms({});
+
+         const roomNamesSet = new Set();
+         fetched.data.forEach((item) => {
+            if (!roomNamesSet.has(item.name)) {
+               // Add the room name to the set if it doesn't exist
+               roomNamesSet.add(item.name);
+               // Add the item to the fetched array only if it doesn't exist
+               setData((prevData) => [...prevData, item]);
+            } else {
+               // Send an alert message if the room with the same name already exists
+               Alert.alert('Room with the same name already exists');
+            }
+         });
          setData(fetched.data);
       }
    };

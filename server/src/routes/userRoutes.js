@@ -52,8 +52,6 @@ Router.delete('/deleteUser/:id', async (req, res) => {
 
 Router.post('/checkLoggedIn', async (req, res) => {
    console.log(req);
-   console.log(888);
-
    return respond(await userLoggedIn(req.body), res);
 });
 
