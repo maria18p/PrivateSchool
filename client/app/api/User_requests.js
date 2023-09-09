@@ -9,12 +9,7 @@ export const makeLoginRequest = async (data) => {
    try {
       console.log('Making login request...');
       console.log('Request data:', data);
-      console.log('111111111111');
-
       const result = await axios.post(BASE_URL + 'login', data);
-
-      console.log('Response data:', result.data);
-
       return await result.data;
    } catch (error) {
       console.error('Error:', error);

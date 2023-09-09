@@ -19,9 +19,7 @@ export default function Login({ navigation }) {
       };
       try {
          const requestResult = await makeLoginRequest(params);
-
          console.log('RequestResult:', requestResult);
-
          if (requestResult.success) {
             dispatch(updateUser(requestResult.data));
             Alert.alert('You logged in successfully');
@@ -30,7 +28,6 @@ export default function Login({ navigation }) {
       } catch (e) {
          console.error(e);
          Alert.alert('Something went wrong');
-         console.log('2222222222222222');
       }
    };
 
