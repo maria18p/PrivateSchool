@@ -6,6 +6,8 @@ import {
    ImageBackground,
    ScrollView,
    RefreshControl,
+   Keyboard,
+   TouchableWithoutFeedback,
 } from 'react-native';
 import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -142,11 +144,7 @@ export default function Messages() {
                      rowMessage = (
                         <View style={chatStyle.rowMessageContainer} key={key}>
                            <Text style={chatStyle.selectedChatTxt}>{message.message}</Text>
-                           <Text
-                              style={[
-                                 chatStyle.selectedChatTxt,
-                                 { color: '#141B41', fontSize: 13 },
-                              ]}>
+                           <Text style={[chatStyle.selectedChatTxt, chatStyle.dateMessage]}>
                               {messageDateString === today
                                  ? `today ${messageTimeString}`
                                  : `${messageDay} ${messageMonth}${
@@ -158,19 +156,12 @@ export default function Messages() {
                   } else {
                      rowMessage = (
                         <View
-                           style={[
-                              chatStyle.rowMessageContainer,
-                              { borderBottomColor: '#000', alignItems: 'flex-start' },
-                           ]}
+                           style={[chatStyle.rowMessageContainer, { alignItems: 'flex-start' }]}
                            key={key}>
                            <Text style={[chatStyle.selectedChatTxt, { color: '#ffff' }]}>
                               {message.message}
                            </Text>
-                           <Text
-                              style={[
-                                 chatStyle.selectedChatTxt,
-                                 { color: '#141B41', fontSize: 13 },
-                              ]}>
+                           <Text style={[chatStyle.selectedChatTxt, chatStyle.dateMessage]}>
                               {messageDateString === today
                                  ? `today ${messageTimeString}`
                                  : `${messageDay} ${messageMonth}${
@@ -198,47 +189,95 @@ export default function Messages() {
    };
 
    return (
-      <View style={{ flex: 1 }}>
-         <ImageBackground source={bcImage} style={{ flex: 1 }}>
-            <View style={{ flex: 1, backgroundColor: 'rgba(112, 118, 178, 0.7)' }}>
-               <ScrollView
-                  style={chatStyle.container}
-                  contentContainerStyle={chatStyle.contentContainer}
-                  refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-                  <View style={chatStyle.headingLayout}>
-                     {selectedPartner && (
-                        <View style={{ flexDirection: 'row' }}>
-                           <TouchableOpacity onPress={() => setSelectedPartner(null)}>
-                              <MaterialCommunityIcons
-                                 name='arrow-left-bold-circle-outline'
-                                 size={35}
-                                 color='#ffff'
-                              />
-                           </TouchableOpacity>
-                           <TouchableOpacity onPress={() => refreshMessages()} activeOpacity={0.5}>
-                              <MaterialCommunityIcons
-                                 name='refresh-circle'
-                                 size={35}
-                                 color='#ffff'
-                              />
-                           </TouchableOpacity>
-                        </View>
-                     )}
-
-                     <View style={chatStyle.nameContainer}>
-                        {!selectedPartner ? (
-                           <Text style={[chatStyle.txtStyle, { fontSize: 25, color: '#E8C547' }]}>
-                              Contacts
-                           </Text>
-                        ) : (
-                           <Text style={chatStyle.txtStyle}>{selectedPartner.name}</Text>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+         <View style={{ flex: 1 }}>
+            <ImageBackground source={bcImage} style={{ flex: 1 }}>
+               <View style={{ flex: 1, backgroundColor: 'rgba(112, 118, 178, 0.7)' }}>
+                  <ScrollView
+                     style={chatStyle.container}
+                     contentContainerStyle={chatStyle.contentContainer}
+                     refreshControl={
+                        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                     }>
+                     <View style={chatStyle.headingLayout}>
+                        {selectedPartner && (
+                           <View style={{ flexDirection: 'row' }}>
+                              <TouchableOpacity onPress={() => setSelectedPartner(null)}>
+                                 <MaterialCommunityIcons
+                                    name='arrow-left-bold-circle-outline'
+                                    size={35}
+                                    color='#ffff'
+                                 />
+                              </TouchableOpacity>
+                              <TouchableOpacity
+                                 onPress={() => refreshMessages()}
+                                 activeOpacity={0.5}>
+                                 <MaterialCommunityIcons
+                                    name='refresh-circle'
+                                    size={35}
+                                    color='#ffff'
+                                 />
+                              </TouchableOpacity>
+                           </View>
                         )}
+                        <View style={chatStyle.nameContainer}>
+                           {!selectedPartner ? (
+                              <Text
+                                 style={[chatStyle.txtStyle, { fontSize: 25, color: '#E8C547' }]}>
+                                 Contacts
+                              </Text>
+                           ) : (
+                              <Text style={chatStyle.txtStyle}>{selectedPartner.name}</Text>
+                           )}
+                        </View>
                      </View>
-                  </View>
-                  {selectedPartner ? showSelectedChat() : showChats()}
-               </ScrollView>
-            </View>
-         </ImageBackground>
-      </View>
+                     {selectedPartner ? showSelectedChat() : showChats()}
+                  </ScrollView>
+               </View>
+            </ImageBackground>
+         </View>
+      </TouchableWithoutFeedback>
+      // <View style={{ flex: 1 }}>
+      //    <ImageBackground source={bcImage} style={{ flex: 1 }}>
+      //       <View style={{ flex: 1, backgroundColor: 'rgba(112, 118, 178, 0.7)' }}>
+      //          <ScrollView
+      //             style={chatStyle.container}
+      //             contentContainerStyle={chatStyle.contentContainer}
+      //             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+      //             <View style={chatStyle.headingLayout}>
+      //                {selectedPartner && (
+      //                   <View style={{ flexDirection: 'row' }}>
+      //                      <TouchableOpacity onPress={() => setSelectedPartner(null)}>
+      //                         <MaterialCommunityIcons
+      //                            name='arrow-left-bold-circle-outline'
+      //                            size={35}
+      //                            color='#ffff'
+      //                         />
+      //                      </TouchableOpacity>
+      //                      <TouchableOpacity onPress={() => refreshMessages()} activeOpacity={0.5}>
+      //                         <MaterialCommunityIcons
+      //                            name='refresh-circle'
+      //                            size={35}
+      //                            color='#ffff'
+      //                         />
+      //                      </TouchableOpacity>
+      //                   </View>
+      //                )}
+
+      //                <View style={chatStyle.nameContainer}>
+      //                   {!selectedPartner ? (
+      //                      <Text style={[chatStyle.txtStyle, { fontSize: 25, color: '#E8C547' }]}>
+      //                         Contacts
+      //                      </Text>
+      //                   ) : (
+      //                      <Text style={chatStyle.txtStyle}>{selectedPartner.name}</Text>
+      //                   )}
+      //                </View>
+      //             </View>
+      //             {selectedPartner ? showSelectedChat() : showChats()}
+      //          </ScrollView>
+      //       </View>
+      //    </ImageBackground>
+      // </View>
    );
 }

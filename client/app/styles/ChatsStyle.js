@@ -2,8 +2,6 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
    container: {
-      // width: '100%',
-      // height: '100%',
       flex: 1,
       marginTop: 10,
    },
@@ -82,11 +80,11 @@ const styles = StyleSheet.create({
       width: 'auto',
       height: 'auto',
       padding: 1,
-      // borderColor: '#fff',
-      // borderWidth: 2,
    },
 
-   selectedChatTxt: { color: '#ffff', fontWeight: '500', fontSize: 20 },
+   selectedChatTxt: { color: '#ffff', fontWeight: '400', fontSize: 22 },
+
+   dateMessage: { color: '#141B41', fontSize: 13, marginTop: 5 },
 
    txtStyle: {
       color: '#ffff',
@@ -98,26 +96,25 @@ const styles = StyleSheet.create({
 
    sendRow: {
       flexDirection: 'row',
-      marginTop: 10,
       justifyContent: 'space-between',
       marginLeft: 2,
       borderWidth: 1,
       borderColor: '#ffff',
-      borderRadius: 15,
-      marginTop: '10%',
+      borderRadius: 16,
+      marginTop: '4%',
    },
 
    btnSend: { width: '9%', alignItems: 'center', justifyContent: 'center' },
 
    txtInputContainer: {
-      backgroundColor: '#13B0B9',
-      width: '90%',
-      color: '#ffff',
+      backgroundColor: '#B7C6E1',
+      width: '92%',
+      color: '#40404F',
       fontSize: 20,
       borderRadius: 15,
       marginLeft: 0,
       textAlign: 'left',
-      padding: 4,
+      padding: 6,
    },
 });
 
