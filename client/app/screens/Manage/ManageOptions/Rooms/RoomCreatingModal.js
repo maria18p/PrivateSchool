@@ -21,11 +21,11 @@ export default function RoomCreationModal(props) {
             existingRoomData.push(room);
          }
          setExistingRoomData(existingRoomData);
-         console.log('existingRoomData - ', existingRoomData);
          const roomExists = existingRoomData.some(
             (room) => room.name.toLowerCase() === roomName.toLowerCase(),
          );
-         console.log('roomExists - ', roomExists);
+         console.log('roomExists - \n', roomExists);
+         console.log('>>>>>>>>>>>>>');
 
          if (roomExists) {
             Alert.alert('Room with the same name already exists.');
