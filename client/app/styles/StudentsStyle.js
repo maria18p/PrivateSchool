@@ -1,18 +1,19 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+   containerStudentsScreen: { flex: 1, height: '100%' },
+
    btnLayout: {
-      // borderWidth: 4,
+      // borderWidth: 2,
       height: 'auto',
       width: '100%',
       flexDirection: 'row',
       justifyContent: 'space-between',
-      // backgroundColor: '#161B33',
    },
    btnContainer: {
       height: 35,
-      width: '31%',
-      backgroundColor: '#5352ed',
+      width: '30%',
+      backgroundColor: '#0A54FF',
       borderRadius: 10,
       marginTop: '4%',
       marginBottom: '4%',
@@ -20,10 +21,9 @@ const styles = StyleSheet.create({
       marginRight: 5,
       justifyContent: 'center',
    },
-   tblHeader: { padding: 10, marginLeft: 10 },
-   cell: { fontSize: 16, textTransform: 'capitalize' },
-
-   txtBtn: { color: '#fff', textAlign: 'center', fontSize: 18 },
+   tblHeader: { padding: 2, marginLeft: 0 },
+   cell: { fontSize: 14, textTransform: 'capitalize' },
+   txtBtn: { color: '#ffffff', textAlign: 'center', fontSize: 20 },
 });
 
 export default styles;

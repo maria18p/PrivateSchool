@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Alert, ImageBackground } from 'react-native';
 import { DataTable } from 'react-native-paper';
 import { getAllUsers, updateStudentActive, updateStudentInactive } from '../../api/User_requests';
 import { useSelector } from 'react-redux';
 import { getTeacherStudents } from '../../api/Pairing_requests';
 import styles from '../../styles/StudentsStyle';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Tooltip } from 'react-native-elements';
 
 const Students = () => {
    const [myStudents, setMyStudents] = useState(null);
@@ -49,18 +50,40 @@ const Students = () => {
       if (!mode) return <></>;
       return (
          <LinearGradient
-            colors={['#86BBD8', '#F69865', '#ffff']}
-            start={{ x: 2, y: 1 }}
-            end={{ x: 0, y: 0 }}>
+            colors={['#B7B5E4', '#95F9E3', '#E0CA3C']}
+            start={{ x: 0, y: -1 }}
+            end={{ x: 1.3, y: -2 }}>
             {mode.map((student, key) => {
                return (
                   <DataTable.Row
-                     style={{ marginLeft: 10 }}
                      key={key}
-                     onPress={() => handleStudentPressed(student)}>
-                     <DataTable.Cell textStyle={styles.cell}>{student.firstName}</DataTable.Cell>
-                     <DataTable.Cell numeric textStyle={styles.cell}>
-                        {student.lastName}
+                     onPress={() => handleStudentPressed(student)}
+                     style={{ marginBottom: 5, borderBottomWidth: 2 }}>
+                     <DataTable.Cell textStyle={styles.cell}>
+                        <Tooltip
+                           popover={
+                              <Text style={{ textAlign: 'center', fontSize: 12 }}>
+                                 {student.firstName} {student.lastName}
+                              </Text>
+                           }
+                           containerStyle={{ backgroundColor: '#FE5F55' }}>
+                           <Text>
+                              {student.firstName} {student.lastName}
+                           </Text>
+                        </Tooltip>
+                     </DataTable.Cell>
+                     <DataTable.Cell
+                        style={{ marginLeft: 15, width: '100%', marginBottom: 0 }}
+                        textStyle={styles.cell}>
+                        <Tooltip
+                           popover={
+                              <Text style={{ textAlign: 'center', fontSize: 12 }}>
+                                 {student.email}
+                              </Text>
+                           }
+                           containerStyle={{ backgroundColor: '#FE5F55' }}>
+                           <Text style={{ fontSize: 14, color: '#141B41' }}>{student.email}</Text>
+                        </Tooltip>
                      </DataTable.Cell>
                      <DataTable.Cell numeric textStyle={styles.cell}>
                         {student.isActive ? 'Active' : 'Not Active'}
@@ -97,18 +120,16 @@ const Students = () => {
          user: userData,
          student: student,
       });
-      // console.log(queryResult);
       Alert.alert(queryResult.message);
       await refreshAll();
    };
 
+   const backgroundImage = require('../../assets/students_bg.jpeg');
+
    const screenOptions = () => {
       if (userData.role !== 'Admin') return <></>;
       return (
-         <LinearGradient
-            colors={['#000000', '#69EBD0 ', '#16A286']}
-            start={{ x: 2, y: 1 }}
-            end={{ x: 0, y: 0 }}>
+         <ImageBackground source={backgroundImage}>
             <View style={styles.btnLayout}>
                <TouchableOpacity
                   style={styles.btnContainer}
@@ -132,25 +153,25 @@ const Students = () => {
                   <Text style={styles.txtBtn}>All Students</Text>
                </TouchableOpacity>
             </View>
-         </LinearGradient>
+         </ImageBackground>
       );
    };
 
    return (
-      <View style={{ flex: 1, height: '100%' }}>
+      <View style={styles.containerStudentsScreen}>
          {screenOptions()}
-         {/* <ScrollView> */}
-         <DataTable>
-            <DataTable.Header style={styles.tblHeader}>
-               <DataTable.Title textStyle={{ fontSize: 15 }}>Name</DataTable.Title>
-               <DataTable.Title textStyle={{ fontSize: 15 }}>Last name</DataTable.Title>
-               <DataTable.Title textStyle={{ fontSize: 15, marginLeft: -10 }}>
-                  Active
-               </DataTable.Title>
-            </DataTable.Header>
-            {studentData()}
-         </DataTable>
-         {/* </ScrollView> */}
+         <ScrollView>
+            <DataTable>
+               <DataTable.Header style={styles.tblHeader}>
+                  <DataTable.Title textStyle={{ fontSize: 14 }}>Full name</DataTable.Title>
+                  <DataTable.Title textStyle={{ fontSize: 14 }}>Email</DataTable.Title>
+                  <DataTable.Title textStyle={{ fontSize: 14, marginLeft: -5 }}>
+                     Status
+                  </DataTable.Title>
+               </DataTable.Header>
+               {studentData()}
+            </DataTable>
+         </ScrollView>
       </View>
    );
 };
