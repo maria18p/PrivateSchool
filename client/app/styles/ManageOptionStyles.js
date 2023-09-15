@@ -52,14 +52,12 @@ const ManageStyles = StyleSheet.create({
       textShadowRadius: 35,
    },
 
-   tableTxtTitleStyle: {
-      fontSize: 16,
+   tblTxtTitle: {
+      fontSize: 18,
       color: '#ffff',
       textTransform: 'capitalize',
-      fontWeight: '500',
-      textShadowColor: '#302B27',
+      textShadowColor: '#ffffff',
       textShadowOffset: { width: 1, height: 1 },
-      textShadowRadius: 5,
    },
 
    roomName: {

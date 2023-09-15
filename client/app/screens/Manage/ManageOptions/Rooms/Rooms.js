@@ -103,12 +103,12 @@ export default function Rooms(props) {
       return (
          <DataTable style={{ marginTop: 12 }}>
             <DataTable.Header style={{ backgroundColor: '#0ABED6' }}>
-               <DataTable.Title textStyle={ManageStyles.tableTxtTitleStyle}>room</DataTable.Title>
+               <DataTable.Title textStyle={ManageStyles.tblTxtTitle}>room</DataTable.Title>
                <DataTable.Title onPress={sortRoomsAlphabetically}>{getSortIcon()}</DataTable.Title>
-               <DataTable.Title textStyle={[ManageStyles.tableTxtTitleStyle, { marginLeft: 0 }]}>
+               <DataTable.Title textStyle={[ManageStyles.tblTxtTitle, { marginLeft: 0 }]}>
                   Edit
                </DataTable.Title>
-               <DataTable.Title numeric textStyle={ManageStyles.tableTxtTitleStyle}>
+               <DataTable.Title numeric textStyle={ManageStyles.tblTxtTitle}>
                   Delete
                </DataTable.Title>
             </DataTable.Header>
@@ -120,7 +120,7 @@ export default function Rooms(props) {
                   return (
                      <DataTable.Row key={index} style={{ borderBottomColor: '#201E50' }}>
                         <DataTable.Cell
-                           textStyle={[ManageStyles.tableTxtTitleStyle, ManageStyles.roomName]}>
+                           textStyle={[ManageStyles.tblTxtTitle, ManageStyles.roomName]}>
                            {room.name}
                         </DataTable.Cell>
 
