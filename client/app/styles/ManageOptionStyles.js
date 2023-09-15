@@ -19,7 +19,7 @@ const ManageStyles = StyleSheet.create({
       padding: 6,
    },
 
-   editCell: { justifyContent: 'center', marginLeft: 10 },
+   editCell: { justifyContent: 'center', marginLeft: 50 },
    btnLayout: { width: '100%', height: '12%', marginLeft: 6, marginTop: 5 },
 
    tableLayout: { width: '100%', marginBottom: '100%' },

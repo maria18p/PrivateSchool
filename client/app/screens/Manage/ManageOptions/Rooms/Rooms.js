@@ -8,11 +8,12 @@ import DeleteModal from './DeleteModal';
 import { DataTable } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Icon } from 'react-native-elements';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export default function Rooms(props) {
    const touchableHighlightProps = {
       activeOpacity: 0.8,
-      underlayColor: '#FF331F',
+      underlayColor: '#DD2D4A',
       onHideUnderlay: () => setIsPress(false),
       onShowUnderlay: () => setIsPress(true),
    };
@@ -69,12 +70,42 @@ export default function Rooms(props) {
          );
    };
 
+   const sortRoomsAlphabetically = () => {
+      const sortedData = [...data].sort((room1, room2) => {
+         if (sortAscending) {
+            return room1.name.localeCompare(room2.name);
+         } else {
+            return room2.name.localeCompare(room1.name);
+         }
+      });
+      setData(sortedData);
+      setSortAscending(!sortAscending);
+   };
+
+   const getSortIcon = () => (
+      <View
+         style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderColor: '#4062BB',
+            borderWidth: 1,
+            borderRadius: 7,
+         }}>
+         {sortAscending ? (
+            <MaterialIcons name='sort-by-alpha' size={25} color='#4062BB' />
+         ) : (
+            <MaterialIcons name='sort-by-alpha' size={25} color='#4062BB' />
+         )}
+      </View>
+   );
+
    const getAllObjects = () => {
       return (
          <DataTable style={{ marginTop: 12 }}>
             <DataTable.Header style={{ backgroundColor: '#0ABED6' }}>
                <DataTable.Title textStyle={ManageStyles.tableTxtTitleStyle}>room</DataTable.Title>
-               <DataTable.Title textStyle={[ManageStyles.tableTxtTitleStyle, { marginLeft: 50 }]}>
+               <DataTable.Title onPress={sortRoomsAlphabetically}>{getSortIcon()}</DataTable.Title>
+               <DataTable.Title textStyle={[ManageStyles.tableTxtTitleStyle, { marginLeft: 0 }]}>
                   Edit
                </DataTable.Title>
                <DataTable.Title numeric textStyle={ManageStyles.tableTxtTitleStyle}>
@@ -112,44 +143,24 @@ export default function Rooms(props) {
       );
    };
 
-   const sortRoomsAscending = () => {
-      const sortedData = [...data].sort((room1, room2) => room1.name.localeCompare(room2.name));
-      setData(sortedData);
-      setSortAscending(true);
-   };
-
-   const sortRoomsDescending = () => {
-      const sortedData = [...data].sort((room1, room2) => room2.name.localeCompare(room1.name));
-      setData(sortedData);
-      setSortAscending(false);
-   };
-
    return (
       <>
          {showCreationModal()}
          {showManageModal()}
          {showDeleteModal()}
          <View style={ManageStyles.headBtnLayout}>
-            <View>
-               <TouchableHighlight
-                  onPress={() => props.back()}
-                  {...touchableHighlightProps}
-                  style={[ManageStyles.btnStyle, { backgroundColor: '#009FFD' }]}>
-                  <Text style={ManageStyles.txtBtn}>back</Text>
-               </TouchableHighlight>
-
-               <TouchableHighlight
-                  style={ManageStyles.btnStyle}
-                  {...touchableHighlightProps}
-                  onPress={() => setCreationModalShown(true)}>
-                  <Text style={ManageStyles.txtBtn}>add new</Text>
-               </TouchableHighlight>
-            </View>
             <TouchableHighlight
-               style={[ManageStyles.btnStyle, { backgroundColor: '#FF8811' }]}
+               onPress={() => props.back()}
                {...touchableHighlightProps}
-               onPress={sortAscending ? sortRoomsDescending : sortRoomsAscending}>
-               <Text style={ManageStyles.txtBtn}>Sort {sortAscending ? 'z-a' : 'a-z'}</Text>
+               style={[ManageStyles.btnStyle, { backgroundColor: '#009FFD' }]}>
+               <Text style={ManageStyles.txtBtn}>back</Text>
+            </TouchableHighlight>
+
+            <TouchableHighlight
+               style={ManageStyles.btnStyle}
+               {...touchableHighlightProps}
+               onPress={() => setCreationModalShown(true)}>
+               <Text style={ManageStyles.txtBtn}>add new</Text>
             </TouchableHighlight>
          </View>
          <ScrollView style={{ height: '85%' }}>
