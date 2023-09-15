@@ -20,7 +20,6 @@ export default function Rooms(props) {
    const [isPress, setIsPress] = useState(false);
    const [creationModalShown, setCreationModalShown] = useState(false);
    const [data, setData] = useState([]);
-
    const [roomToDelete, setRoomToDelete] = useState(null);
    const [roomToUpdate, setRoomToUpdate] = useState(null);
 

@@ -29,7 +29,6 @@ Router.post('/registerTeacher', async (req, res) => {
 });
 
 Router.post('/login', async (req, res) => {
-   // console.log(555);
    return respond(await postLoginRequest(req.body), res);
 });
 
