@@ -74,8 +74,9 @@ export default function Rooms(props) {
          <DataTable style={{ marginTop: 12 }}>
             <DataTable.Header style={{ backgroundColor: '#0ABED6' }}>
                <DataTable.Title textStyle={ManageStyles.tableTxtTitleStyle}>room</DataTable.Title>
-               <DataTable.Title textStyle={ManageStyles.tableTxtTitleStyle}>Sort</DataTable.Title>
-               <DataTable.Title textStyle={ManageStyles.tableTxtTitleStyle}>Edit</DataTable.Title>
+               <DataTable.Title textStyle={[ManageStyles.tableTxtTitleStyle, { marginLeft: 50 }]}>
+                  Edit
+               </DataTable.Title>
                <DataTable.Title numeric textStyle={ManageStyles.tableTxtTitleStyle}>
                   Delete
                </DataTable.Title>
@@ -92,9 +93,7 @@ export default function Rooms(props) {
                            {room.name}
                         </DataTable.Cell>
 
-                        <DataTable.Cell
-                           numeric
-                           style={{ justifyContent: 'center', marginLeft: 28 }}>
+                        <DataTable.Cell numeric style={{ justifyContent: 'center' }}>
                            <TouchableOpacity onPress={() => setRoomToUpdate(room)}>
                               <Icon name='edit' type='ionicons' color='#FCEADE' size={26} />
                            </TouchableOpacity>
@@ -118,22 +117,29 @@ export default function Rooms(props) {
          {showCreationModal()}
          {showManageModal()}
          {showDeleteModal()}
-         <View style={[ManageStyles.btnLayout]}>
-            <TouchableHighlight
-               onPress={() => props.back()}
-               {...touchableHighlightProps}
-               style={[ManageStyles.btnStyle, { backgroundColor: '#009FFD' }]}>
-               <Text style={ManageStyles.txtBtn}>back</Text>
-            </TouchableHighlight>
+         <View style={ManageStyles.headBtnLayout}>
+            <View>
+               <TouchableHighlight
+                  onPress={() => props.back()}
+                  {...touchableHighlightProps}
+                  style={[ManageStyles.btnStyle, { backgroundColor: '#009FFD' }]}>
+                  <Text style={ManageStyles.txtBtn}>back</Text>
+               </TouchableHighlight>
 
+               <TouchableHighlight
+                  style={ManageStyles.btnStyle}
+                  {...touchableHighlightProps}
+                  onPress={() => setCreationModalShown(true)}>
+                  <Text style={ManageStyles.txtBtn}>add new</Text>
+               </TouchableHighlight>
+            </View>
             <TouchableHighlight
-               style={ManageStyles.btnStyle}
+               style={[ManageStyles.btnStyle, { backgroundColor: '#FF8811' }]}
                {...touchableHighlightProps}
                onPress={() => setCreationModalShown(true)}>
-               <Text style={ManageStyles.txtBtn}>add new</Text>
+               <Text style={ManageStyles.txtBtn}>sort</Text>
             </TouchableHighlight>
          </View>
-
          <ScrollView style={{ height: '85%' }}>
             <View style={ManageStyles.tableLayout}>{getAllObjects()}</View>
          </ScrollView>

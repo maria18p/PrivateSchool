@@ -12,6 +12,13 @@ const ManageStyles = StyleSheet.create({
       marginLeft: 7,
    },
 
+   headBtnLayout: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignContent: 'center',
+      padding: 6,
+   },
+
    btnLayout: { width: '100%', height: '12%', marginLeft: 6, marginTop: 5 },
 
    tableLayout: { width: '100%', marginBottom: '100%' },
@@ -58,6 +65,7 @@ const ManageStyles = StyleSheet.create({
       color: '#16425B',
       textShadowColor: '#81C3D7',
       textTransform: 'uppercase',
+      marginLeft: 10,
    },
 });
 
