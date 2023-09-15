@@ -74,9 +74,8 @@ export default function Rooms(props) {
          <DataTable style={{ marginTop: 12 }}>
             <DataTable.Header style={{ backgroundColor: '#0ABED6' }}>
                <DataTable.Title textStyle={ManageStyles.tableTxtTitleStyle}>room</DataTable.Title>
-               <DataTable.Title numeric textStyle={ManageStyles.tableTxtTitleStyle}>
-                  Edit
-               </DataTable.Title>
+               <DataTable.Title textStyle={ManageStyles.tableTxtTitleStyle}>Sort</DataTable.Title>
+               <DataTable.Title textStyle={ManageStyles.tableTxtTitleStyle}>Edit</DataTable.Title>
                <DataTable.Title numeric textStyle={ManageStyles.tableTxtTitleStyle}>
                   Delete
                </DataTable.Title>
@@ -93,7 +92,9 @@ export default function Rooms(props) {
                            {room.name}
                         </DataTable.Cell>
 
-                        <DataTable.Cell numeric>
+                        <DataTable.Cell
+                           numeric
+                           style={{ justifyContent: 'center', marginLeft: 28 }}>
                            <TouchableOpacity onPress={() => setRoomToUpdate(room)}>
                               <Icon name='edit' type='ionicons' color='#FCEADE' size={26} />
                            </TouchableOpacity>
