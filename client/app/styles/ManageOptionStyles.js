@@ -41,15 +41,15 @@ const ManageStyles = StyleSheet.create({
    },
 
    txtOption: {
-      fontSize: 20,
-      color: '#ffff',
+      fontSize: 28,
+      color: '#F6FFF8',
       fontWeight: '500',
       fontStyle: 'italic',
       textTransform: 'capitalize',
       textAlign: 'center',
-      textShadowColor: '#F3E0EC',
+      textShadowColor: '#100007',
       textShadowOffset: { width: 2, height: 1 },
-      textShadowRadius: 50,
+      textShadowRadius: 35,
    },
 
    tableTxtTitleStyle: {

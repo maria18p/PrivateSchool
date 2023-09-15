@@ -6,37 +6,48 @@ import styles from '../../styles/NotificationsStyle';
 import ManageStyles from '../../styles/ManageOptionStyles';
 
 export default function Manage() {
-  const [managed, setManaged] = useState('');
+   const [managed, setManaged] = useState('');
 
-  const generateOptions = () => {
-    const manageOptions = ['Rooms'];
-    return (
-      <View>
-        {manageOptions.map((option, key) => {
-          return (
-            <TouchableOpacity
-              style={[styles.eachNotificationContainer, { backgroundColor: '#1F008F' }]}
-              key={key}
-              onPress={() => setManaged(option)}>
-              <Text style={ManageStyles.txtOption}>{option}</Text>
-            </TouchableOpacity>
-          );
-        })}
-      </View>
-    );
-  };
+   const generateOptions = () => {
+      const manageOptions = ['Rooms'];
+      return (
+         <View>
+            {manageOptions.map((option, key) => {
+               return (
+                  <TouchableOpacity
+                     style={{
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignSelf: 'center',
+                        backgroundColor: '#735CDD',
+                        width: '50%',
+                        padding: 10,
+                        marginTop: 15,
+                        borderRadius: 10,
+                        borderBottomWidth: 10,
+                        borderColor: '#96ABED',
+                     }}
+                     key={key}
+                     onPress={() => setManaged(option)}>
+                     <Text style={ManageStyles.txtOption}>{option}</Text>
+                  </TouchableOpacity>
+               );
+            })}
+         </View>
+      );
+   };
 
-  const back = () => {
-    setManaged('');
-  };
+   const back = () => {
+      setManaged('');
+   };
 
-  const showContent = () => {
-    if (managed === '') return generateOptions();
-    if (managed === 'Rooms') return <Rooms title={managed} back={back} />;
-    // if (managed === 'Students') return <Students title={managed} back={back} />;
+   const showContent = () => {
+      if (managed === '') return generateOptions();
+      if (managed === 'Rooms') return <Rooms title={managed} back={back} />;
+      // if (managed === 'Students') return <Students title={managed} back={back} />;
 
-    return <></>;
-  };
+      return <></>;
+   };
 
-  return <View>{showContent()}</View>;
+   return <View>{showContent()}</View>;
 }

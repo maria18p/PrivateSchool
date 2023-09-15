@@ -67,15 +67,12 @@ const Students = () => {
                      </DataTable.Cell>
                      <DataTable.Cell numeric textStyle={styles.cell}>
                         {student.isActive ? (
-                           <TouchableOpacity
-                              style={{ justifyContent: 'center' }}
-                              key={key}
-                              onPress={() => setStudentInactive(student)}>
-                              <Text>Set Inactive</Text>
+                           <TouchableOpacity key={key} onPress={() => setStudentInactive(student)}>
+                              <Text style={{ textAlign: 'center' }}>Set Inactive</Text>
                            </TouchableOpacity>
                         ) : (
                            <TouchableOpacity key={key} onPress={() => setStudentActive(student)}>
-                              <Text>Set Active</Text>
+                              <Text style={{ textAlign: 'center' }}>Set Active</Text>
                            </TouchableOpacity>
                         )}
                      </DataTable.Cell>
@@ -108,29 +105,34 @@ const Students = () => {
    const screenOptions = () => {
       if (userData.role !== 'Admin') return <></>;
       return (
-         <View style={styles.btnLayout}>
-            <TouchableOpacity
-               style={styles.btnContainer}
-               onPress={() => {
-                  refreshAll();
-               }}>
-               <Text style={styles.txtBtn}>Refresh</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-               style={styles.btnContainer}
-               onPress={() => {
-                  setMode(myStudents);
-               }}>
-               <Text style={styles.txtBtn}>My Students</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-               style={styles.btnContainer}
-               onPress={() => {
-                  setMode(allStudents);
-               }}>
-               <Text style={styles.txtBtn}>All Students</Text>
-            </TouchableOpacity>
-         </View>
+         <LinearGradient
+            colors={['#000000', '#69EBD0 ', '#16A286']}
+            start={{ x: 2, y: 1 }}
+            end={{ x: 0, y: 0 }}>
+            <View style={styles.btnLayout}>
+               <TouchableOpacity
+                  style={styles.btnContainer}
+                  onPress={() => {
+                     refreshAll();
+                  }}>
+                  <Text style={styles.txtBtn}>Refresh</Text>
+               </TouchableOpacity>
+               <TouchableOpacity
+                  style={styles.btnContainer}
+                  onPress={() => {
+                     setMode(myStudents);
+                  }}>
+                  <Text style={styles.txtBtn}>My Students</Text>
+               </TouchableOpacity>
+               <TouchableOpacity
+                  style={styles.btnContainer}
+                  onPress={() => {
+                     setMode(allStudents);
+                  }}>
+                  <Text style={styles.txtBtn}>All Students</Text>
+               </TouchableOpacity>
+            </View>
+         </LinearGradient>
       );
    };
 
@@ -140,9 +142,11 @@ const Students = () => {
          {/* <ScrollView> */}
          <DataTable>
             <DataTable.Header style={styles.tblHeader}>
-               <DataTable.Title textStyle={{}}>Name</DataTable.Title>
-               <DataTable.Title textStyle={{}}>Last name</DataTable.Title>
-               <DataTable.Title textStyle={{}}>Active</DataTable.Title>
+               <DataTable.Title textStyle={{ fontSize: 15 }}>Name</DataTable.Title>
+               <DataTable.Title textStyle={{ fontSize: 15 }}>Last name</DataTable.Title>
+               <DataTable.Title textStyle={{ fontSize: 15, marginLeft: -10 }}>
+                  Active
+               </DataTable.Title>
             </DataTable.Header>
             {studentData()}
          </DataTable>
