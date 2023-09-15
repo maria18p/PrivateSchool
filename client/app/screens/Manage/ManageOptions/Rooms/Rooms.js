@@ -20,7 +20,7 @@ export default function Rooms(props) {
    const [isPress, setIsPress] = useState(false);
    const [creationModalShown, setCreationModalShown] = useState(false);
    const [data, setData] = useState([]);
-
+   const [sortAscending, setSortAscending] = useState(true);
    const [roomToDelete, setRoomToDelete] = useState(null);
    const [roomToUpdate, setRoomToUpdate] = useState(null);
 
@@ -93,13 +93,13 @@ export default function Rooms(props) {
                            {room.name}
                         </DataTable.Cell>
 
-                        <DataTable.Cell numeric style={{ justifyContent: 'center' }}>
+                        <DataTable.Cell numeric style={ManageStyles.editCell}>
                            <TouchableOpacity onPress={() => setRoomToUpdate(room)}>
                               <Icon name='edit' type='ionicons' color='#FCEADE' size={26} />
                            </TouchableOpacity>
                         </DataTable.Cell>
 
-                        <DataTable.Cell numeric>
+                        <DataTable.Cell numeric style={{ marginRight: 10 }}>
                            <TouchableOpacity onPress={() => setRoomToDelete(room)}>
                               <Icon name='delete' type='ionicons' color='#EB8F1E' size={26} />
                            </TouchableOpacity>
@@ -110,6 +110,18 @@ export default function Rooms(props) {
             </LinearGradient>
          </DataTable>
       );
+   };
+
+   const sortRoomsAscending = () => {
+      const sortedData = [...data].sort((room1, room2) => room1.name.localeCompare(room2.name));
+      setData(sortedData);
+      setSortAscending(true);
+   };
+
+   const sortRoomsDescending = () => {
+      const sortedData = [...data].sort((room1, room2) => room2.name.localeCompare(room1.name));
+      setData(sortedData);
+      setSortAscending(false);
    };
 
    return (
@@ -136,8 +148,8 @@ export default function Rooms(props) {
             <TouchableHighlight
                style={[ManageStyles.btnStyle, { backgroundColor: '#FF8811' }]}
                {...touchableHighlightProps}
-               onPress={() => setCreationModalShown(true)}>
-               <Text style={ManageStyles.txtBtn}>sort</Text>
+               onPress={sortAscending ? sortRoomsDescending : sortRoomsAscending}>
+               <Text style={ManageStyles.txtBtn}>Sort {sortAscending ? 'z-a' : 'a-z'}</Text>
             </TouchableHighlight>
          </View>
          <ScrollView style={{ height: '85%' }}>

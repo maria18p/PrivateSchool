@@ -24,7 +24,7 @@ export default function RoomCreationModal(props) {
          const roomExists = existingRoomData.some(
             (room) => room.name.toLowerCase() === roomName.toLowerCase(),
          );
-         console.log('roomExists - \n', roomExists);
+         console.log('roomExists - ', roomExists);
          console.log('>>>>>>>>>>>>>');
 
          if (roomExists) {
