@@ -173,9 +173,10 @@ export default function Planner() {
                                  textStyle={[PlannerStyles.plannerText, { marginLeft: 30 }]}>
                                  {lesson.room.name}
                               </DataTable.Cell>
-
                               <DataTable.Cell
-                                 textStyle={{ width: '100%', backgroundColor: '#EAC435' }}>
+                                 textStyle={{
+                                    width: '100%',
+                                 }}>
                                  <Tooltip
                                     popover={
                                        <Text style={PlannerStyles.popover}>

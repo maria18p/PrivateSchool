@@ -30,12 +30,12 @@ export const PlannerStyles = StyleSheet.create({
    titleStyle: { fontSize: 18, color: '#ffff' },
 
    plannerText: {
-      fontSize: 16,
+      fontSize: 15,
       textAlign: 'center',
       textDecorationLine: 'underline',
       textTransform: 'capitalize',
       color: '#013C30',
-      fontWeight: '300',
+      fontWeight: '400',
    },
 
    plannerTitleContainer: {
