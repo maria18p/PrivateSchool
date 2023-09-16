@@ -73,13 +73,14 @@ const styles = StyleSheet.create({
 
    rowMessageContainer: {
       alignItems: 'flex-end',
-      marginBottom: 4,
+      marginBottom: 3,
       borderColor: '#D972FF',
       borderBottomColor: '#8CFFDA',
       borderTopColor: 'transparent',
       width: 'auto',
       height: 'auto',
       padding: 1,
+      borderWidth: 0.5,
    },
 
    selectedChatTxt: { color: '#ffff', fontWeight: '400', fontSize: 22 },
