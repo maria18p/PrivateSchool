@@ -5,7 +5,7 @@ import { getRequestGetLessons, postRequestCreateLesson } from '../middleware/les
 const Router = express.Router();
 
 Router.post('/create', async (req, res) => {
-   console.log('req >>>>', req);
+   // console.log('[REQ] >>>>', req.body.data);
    return respond(await postRequestCreateLesson(req.body), res);
 });
 
