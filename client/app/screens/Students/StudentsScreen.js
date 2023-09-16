@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Alert, ImageBackground } from 'react-native';
 import { DataTable } from 'react-native-paper';
 import { getAllUsers, updateStudentActive, updateStudentInactive } from '../../api/User_requests';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getTeacherStudents } from '../../api/Pairing_requests';
 import styles from '../../styles/StudentsStyle';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -13,6 +13,7 @@ const Students = () => {
    const [myStudents, setMyStudents] = useState(null);
    const [allStudents, setAllStudents] = useState(null);
    const userData = useSelector((state) => state.user);
+   const dispatch = useDispatch();
    const [mode, setMode] = useState(null);
 
    useEffect(() => {
@@ -25,20 +26,10 @@ const Students = () => {
 
    const refreshAll = async () => {
       getMyStudents();
-      if (userData.role === 'Admin') updateAllStudents();
+      if (userData.role === 'Admin' || userData.role === 'Teacher') updateAllStudents();
    };
 
    const handleStudentPressed = (student) => {};
-
-   const getMyStudents = async () => {
-      // console.log('userData ', userData);
-      const myStudents = await getTeacherStudents({
-         user: userData,
-         token: userData.token,
-      });
-      setMyStudents(myStudents.data);
-      // console.log('myStudents ', myStudents.data);
-   };
 
    const updateAllStudents = async () => {
       const queryResult = await getAllUsers({
@@ -47,6 +38,14 @@ const Students = () => {
       });
 
       setAllStudents(queryResult.data);
+   };
+
+   const getMyStudents = async () => {
+      const myStudents = await getTeacherStudents({
+         user: userData,
+         token: userData.token,
+      });
+      setMyStudents(myStudents.data);
    };
 
    const studentData = () => {
@@ -115,34 +114,58 @@ const Students = () => {
    };
 
    const screenOptions = () => {
-      if (userData.role !== 'Admin') return <></>;
-      return (
-         <ImageBackground source={backgroundImage}>
-            <View style={styles.btnLayout}>
-               <TouchableOpacity
-                  style={styles.btnContainer}
-                  onPress={() => {
-                     refreshAll();
-                  }}>
-                  <Text style={styles.txtBtn}>Refresh</Text>
-               </TouchableOpacity>
-               <TouchableOpacity
-                  style={styles.btnContainer}
-                  onPress={() => {
-                     setMode(myStudents);
-                  }}>
-                  <Text style={styles.txtBtn}>My Students</Text>
-               </TouchableOpacity>
-               <TouchableOpacity
-                  style={styles.btnContainer}
-                  onPress={() => {
-                     setMode(allStudents);
-                  }}>
-                  <Text style={styles.txtBtn}>All Students</Text>
-               </TouchableOpacity>
-            </View>
-         </ImageBackground>
-      );
+      if (userData.role === 'Admin') {
+         return (
+            <ImageBackground source={backgroundImage}>
+               <View style={styles.btnLayout}>
+                  <TouchableOpacity
+                     style={styles.btnContainer}
+                     onPress={() => {
+                        refreshAll();
+                     }}>
+                     <Text style={styles.txtBtn}>Refresh</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                     style={styles.btnContainer}
+                     onPress={() => {
+                        setMode(myStudents);
+                     }}>
+                     <Text style={styles.txtBtn}>My Students</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                     style={styles.btnContainer}
+                     onPress={() => {
+                        setMode(allStudents);
+                     }}>
+                     <Text style={styles.txtBtn}>All Students</Text>
+                  </TouchableOpacity>
+               </View>
+            </ImageBackground>
+         );
+      } else if (userData.role === 'Teacher') {
+         return (
+            <ImageBackground source={backgroundImage}>
+               <View style={styles.btnLayout}>
+                  <TouchableOpacity
+                     style={styles.btnContainer}
+                     onPress={() => {
+                        refreshAll();
+                     }}>
+                     <Text style={styles.txtBtn}>Refresh</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                     style={styles.btnContainer}
+                     onPress={() => {
+                        setMode(myStudents);
+                     }}>
+                     <Text style={styles.txtBtn}>My Students</Text>
+                  </TouchableOpacity>
+               </View>
+            </ImageBackground>
+         );
+      } else {
+         return <></>; // Handle other roles here
+      }
    };
 
    return (

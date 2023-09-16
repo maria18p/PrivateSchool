@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
    btnContainer: {
       height: 35,
       width: '30%',
-      backgroundColor: '#0A54FF',
+      backgroundColor: '#009FFD',
       borderRadius: 10,
       marginTop: '4%',
       marginBottom: '4%',

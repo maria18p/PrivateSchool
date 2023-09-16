@@ -124,26 +124,42 @@ export const getPairings = async (req) => {
    }
 };
 
+// export const teacherStudents = async (req) => {
+//    try {
+//       const pairings = await ODM.models.Pairing.find({
+//          teacher: req.teacher._id,
+//          status: 'active',
+//       });
+//       const studentIds = pairings.map((pairing) => pairing.student);
+//       const students = await getUsers({
+//          _id: { $in: studentIds },
+//          isActive: true,
+//       });
+//       return { success: true, data: students };
+//    } catch (error) {
+//       console.error('Error fetching teacher students:', error);
+//       return { success: false, message: 'Error fetching teacher students' };
+//    }
+// };
 export const teacherStudents = async (req) => {
-   let pairings = (
-      await ODM.models.Pairing.find(
-         {
-            teacher: req.teacher,
-            status: 'active',
-         },
-         'student',
-      ).populate('student', { strictPopulate: false })
-   ).map((pairing) => pairing.student);
+   try {
+      const pairings = await ODM.models.Pairing.find({
+         teacher: req.teacher._id,
+         status: 'active',
+      });
 
-   pairings = pairings.filter((student) => student.isActive === true);
+      const studentIds = pairings.map((pairing) => pairing.student);
 
-   pairings = pairings.reduce((accumulator, current) => {
-      const isDuplicate = accumulator.some((item) => item._id === current._id);
-      if (!isDuplicate) accumulator.push(current);
-      return accumulator;
-   }, []);
+      const students = await getUsers({
+         _id: { $in: studentIds },
+         isActive: true,
+      });
 
-   return { success: true, data: pairings };
+      return { success: true, data: students };
+   } catch (error) {
+      console.error('Error fetching teacher students:', error);
+      return { success: false, message: 'Error fetching teacher students' };
+   }
 };
 
 export const findPairingSubjects = async (req) => {
