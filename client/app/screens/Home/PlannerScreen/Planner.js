@@ -199,7 +199,7 @@ export default function Planner() {
       return (
          <View style={PlannerStyles.titleColContainer}>
             <DataTable>
-               <DataTable.Header style={{ backgroundColor: '#708DFF' }}>
+               <DataTable.Header style={{ backgroundColor: '#D78C09' }}>
                   <DataTable.Title textStyle={[ManageStyles.tblTxtTitle, colorTxt]}>
                      Event
                   </DataTable.Title>
