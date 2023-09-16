@@ -31,11 +31,13 @@ const Students = () => {
    const handleStudentPressed = (student) => {};
 
    const getMyStudents = async () => {
+      // console.log('userData ', userData);
       const myStudents = await getTeacherStudents({
          user: userData,
          token: userData.token,
       });
       setMyStudents(myStudents.data);
+      // console.log('myStudents ', myStudents.data);
    };
 
    const updateAllStudents = async () => {
