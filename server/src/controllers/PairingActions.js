@@ -124,23 +124,6 @@ export const getPairings = async (req) => {
    }
 };
 
-// export const teacherStudents = async (req) => {
-//    try {
-//       const pairings = await ODM.models.Pairing.find({
-//          teacher: req.teacher._id,
-//          status: 'active',
-//       });
-//       const studentIds = pairings.map((pairing) => pairing.student);
-//       const students = await getUsers({
-//          _id: { $in: studentIds },
-//          isActive: true,
-//       });
-//       return { success: true, data: students };
-//    } catch (error) {
-//       console.error('Error fetching teacher students:', error);
-//       return { success: false, message: 'Error fetching teacher students' };
-//    }
-// };
 export const teacherStudents = async (req) => {
    try {
       const pairings = await ODM.models.Pairing.find({

@@ -31,10 +31,10 @@ export const pairTeacherToStudent = async (params) => {
 export const getTeacherStudents = async (params) => {
    try {
       params.user = {
-         user: { _id: params.user._id, token: params.user.token },
+         user: { _id: params.user._id, token: params.user.token, email: params.user.email },
       };
       const queryResult = await axios.get(BASE_URL + '/getTeacherStudents', {
-         params,
+         params: params.user,
       });
       return queryResult.data;
    } catch (error) {
