@@ -6,10 +6,9 @@ import {
    ImageBackground,
    ScrollView,
    RefreshControl,
-   Keyboard,
-   TouchableWithoutFeedback,
-   SafeAreaView,
+   KeyboardAvoidingView,
 } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllUsers, getUserChat, sendChatMessage } from '../../api/User_requests';
@@ -25,7 +24,6 @@ export default function Messages() {
    const [messageText, setMessageText] = useState('');
    const [selectedPartner, setSelectedPartner] = useState(null);
    const [chats, setChats] = useState(null);
-   const [isTextInputFocused, setIsTextInputFocused] = useState(false);
 
    const [refreshing, setRefreshing] = useState(false);
    const onRefresh = useCallback(() => {
@@ -120,7 +118,7 @@ export default function Messages() {
       }
 
       return (
-         <ScrollView style={chatStyle.selectedChatLayout}>
+         <View style={chatStyle.selectedChatLayout}>
             {chosenChat &&
                chosenChat.messages.map((message, key) => {
                   let rowMessage = <></>;
@@ -173,85 +171,77 @@ export default function Messages() {
                   }
                   return rowMessage;
                })}
-
             <View style={chatStyle.sendRow}>
                <TextInput
                   style={chatStyle.txtInputContainer}
+                  placeholder='Enter message'
                   value={messageText}
+                  returnKeyType='send'
+                  blurOnSubmit={false}
                   onChangeText={(text) => setMessageText(text)}
-                  // onFocus={() => setIsTextInputFocused(true)} // Set the flag to true when the input is focused
-                  // onBlur={() => setIsTextInputFocused(false)} // Set the flag to false when the input is blurred
+                  autoFocus
                />
-               <TouchableOpacity
-                  onPress={() => sendMessage(chosenChat)}
-                  style={[chatStyle.btnSend, { display: isTextInputFocused ? 'flex' : 'none' }]}>
-                  <MaterialCommunityIcons name='send' size={26} color='#ffff' />
+               <TouchableOpacity onPress={() => sendMessage(chosenChat)} style={chatStyle.btnSend}>
+                  <MaterialCommunityIcons
+                     name='send'
+                     size={24}
+                     color='#ffff'
+                     style={{ marginRight: 5 }}
+                  />
                </TouchableOpacity>
             </View>
-         </ScrollView>
+         </View>
       );
    };
 
    return (
-      <ScrollView style={{ marginBottom: 0 }}>
-         {/* <SafeAreaView style={{}}> */}
-         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-            <View style={{ flex: 1 }}>
-               <ImageBackground source={bcImage} style={{ flex: 1 }}>
-                  <View
-                     style={{
-                        flex: 1,
-                        backgroundColor: 'rgba(112, 110, 178, 0.7)',
-                        position: 'relative',
-                     }}>
-                     <ScrollView
-                        style={chatStyle.container}
-                        contentContainerStyle={chatStyle.contentContainer}
-                        refreshControl={
-                           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-                        }>
-                        <View style={chatStyle.headingLayout}>
-                           {selectedPartner && (
-                              <View style={{ flexDirection: 'row' }}>
-                                 <TouchableOpacity onPress={() => setSelectedPartner(null)}>
-                                    <MaterialCommunityIcons
-                                       name='arrow-left-bold-circle-outline'
-                                       size={35}
-                                       color='#ffff'
-                                    />
-                                 </TouchableOpacity>
-                                 <TouchableOpacity
-                                    onPress={() => refreshMessages()}
-                                    activeOpacity={0.5}>
-                                    <MaterialCommunityIcons
-                                       name='refresh-circle'
-                                       size={35}
-                                       color='#ffff'
-                                    />
-                                 </TouchableOpacity>
-                              </View>
-                           )}
-                           <View style={chatStyle.nameContainer}>
-                              {!selectedPartner ? (
-                                 <Text
-                                    style={[
-                                       chatStyle.txtStyle,
-                                       { fontSize: 25, color: '#E8C547' },
-                                    ]}>
-                                    Contacts
-                                 </Text>
-                              ) : (
-                                 <Text style={chatStyle.txtStyle}>{selectedPartner.name}</Text>
-                              )}
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : null} style={{ flex: 1 }}>
+         <View style={{ flex: 1 }}>
+            <ImageBackground source={bcImage} style={{ flex: 1 }}>
+               <View style={chatStyle.layoutSelectedChat}>
+                  <ScrollView
+                     style={chatStyle.container}
+                     contentContainerStyle={chatStyle.contentContainer}
+                     refreshControl={
+                        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                     }>
+                     <View style={chatStyle.headingLayout}>
+                        {selectedPartner && (
+                           <View style={{ flexDirection: 'row' }}>
+                              <TouchableOpacity onPress={() => setSelectedPartner(null)}>
+                                 <MaterialCommunityIcons
+                                    name='arrow-left-bold-circle-outline'
+                                    size={35}
+                                    color='#ffff'
+                                 />
+                              </TouchableOpacity>
+                              <TouchableOpacity
+                                 onPress={() => refreshMessages()}
+                                 activeOpacity={0.5}>
+                                 <MaterialCommunityIcons
+                                    name='refresh-circle'
+                                    size={35}
+                                    color='#ffff'
+                                 />
+                              </TouchableOpacity>
                            </View>
+                        )}
+                        <View style={chatStyle.nameContainer}>
+                           {!selectedPartner ? (
+                              <Text
+                                 style={[chatStyle.txtStyle, { fontSize: 25, color: '#E8C547' }]}>
+                                 Contacts
+                              </Text>
+                           ) : (
+                              <Text style={chatStyle.txtStyle}>{selectedPartner.name}</Text>
+                           )}
                         </View>
-                        {selectedPartner ? showSelectedChat() : showChats()}
-                     </ScrollView>
-                  </View>
-               </ImageBackground>
-            </View>
-         </TouchableWithoutFeedback>
-         {/* </SafeAreaView> */}
-      </ScrollView>
+                     </View>
+                     {selectedPartner ? showSelectedChat() : showChats()}
+                  </ScrollView>
+               </View>
+            </ImageBackground>
+         </View>
+      </KeyboardAvoidingView>
    );
 }

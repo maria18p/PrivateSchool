@@ -51,6 +51,11 @@ const styles = StyleSheet.create({
       marginBottom: 10,
    },
 
+   layoutSelectedChat: {
+      flex: 1,
+      backgroundColor: 'rgba(112, 110, 178, 0.7)',
+   },
+
    nameContainer: {
       backgroundColor: 'transparent',
       width: '80%',
@@ -98,14 +103,17 @@ const styles = StyleSheet.create({
    sendRow: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      marginLeft: 2,
+      // alignSelf: 'center',
+      marginHorizontal: '2%',
       borderWidth: 1,
+      borderStyle: 'solid',
       borderColor: '#ffff',
       borderRadius: 16,
-      marginTop: '4%',
+      marginTop: '2%',
+      marginBottom: '5%',
    },
 
-   btnSend: { width: '9%', alignItems: 'center', justifyContent: 'center' },
+   btnSend: { width: 25, alignItems: 'center', justifyContent: 'center' },
 
    txtInputContainer: {
       backgroundColor: '#B7C6E1',

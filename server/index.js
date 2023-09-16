@@ -3,7 +3,6 @@ import { createDBConnection as dbConnection } from './src/middleware/commonModul
 
 const main = async () => {
    config_app();
-   // console.log(555);
    await dbConnection();
 };
 

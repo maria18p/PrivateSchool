@@ -30,11 +30,11 @@ export const PlannerStyles = StyleSheet.create({
    titleStyle: { fontSize: 18, color: '#ffff' },
 
    plannerText: {
-      fontSize: 18,
+      fontSize: 16,
       textAlign: 'center',
       textDecorationLine: 'underline',
       textTransform: 'capitalize',
-      color: '#27534D',
+      color: '#013C30',
       fontWeight: '300',
    },
 
@@ -69,16 +69,17 @@ export const PlannerStyles = StyleSheet.create({
       backgroundColor: '#00CFC1',
       width: '14%',
       borderTopWidth: 4,
-      borderBottomColor: '#024e51',
-      borderBottomWidth: 10,
-      borderColor: '#AC92A6',
-      shadowColor: 'rgba(0, 0, 0, 0.4)',
+      borderBottomColor: '#00CEE0',
+      borderTopColor: '#03CEA4',
+      borderBottomWidth: 7,
       shadowOpacity: 0.8,
       elevation: 30,
       shadowRadius: 15,
       alignItems: 'center',
       justifyContent: 'center',
    },
+
+   popover: { textAlign: 'center', fontSize: 14 },
 
    txtDay: { fontSize: 18, color: '#ffff' },
 

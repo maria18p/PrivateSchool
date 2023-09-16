@@ -15,7 +15,7 @@ import { Tooltip } from 'react-native-elements';
 export default function Planner() {
    const colorTxt = {
       textShadowColor: '#ffff',
-      color: '#0A54FF',
+      color: '#FCF7F8',
       fontWeight: '600',
    };
 
@@ -174,15 +174,18 @@ export default function Planner() {
                                  {lesson.room.name}
                               </DataTable.Cell>
 
-                              <DataTable.Cell textStyle={{ width: '100%' }}>
+                              <DataTable.Cell
+                                 textStyle={{ width: '100%', backgroundColor: '#EAC435' }}>
                                  <Tooltip
                                     popover={
-                                       <Text style={{ textAlign: 'center', fontSize: 14 }}>
+                                       <Text style={PlannerStyles.popover}>
                                           {userData.role === 'Teacher' || userData.role === 'Admin'
                                              ? lesson.pairing.student.firstName +
                                                ' ' +
                                                lesson.pairing.student.lastName
-                                             : lesson.pairing.teacher.firstName}
+                                             : lesson.pairing.teacher.firstName +
+                                               ' ' +
+                                               lesson.pairing.teacher.lastName}
                                        </Text>
                                     }
                                     containerStyle={{ backgroundColor: '#FE5F55' }}>
@@ -211,7 +214,7 @@ export default function Planner() {
       return (
          <View style={PlannerStyles.titleColContainer}>
             <DataTable>
-               <DataTable.Header style={{ backgroundColor: '#87BFFF' }}>
+               <DataTable.Header style={{ backgroundColor: '#708DFF' }}>
                   <DataTable.Title textStyle={[ManageStyles.tblTxtTitle, colorTxt]}>
                      Event
                   </DataTable.Title>
