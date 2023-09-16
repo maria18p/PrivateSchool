@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 import { getTeacherStudents } from '../../api/Pairing_requests';
 import styles from '../../styles/StudentsStyle';
 import { LinearGradient } from 'expo-linear-gradient';
-// import { Tooltip } from 'react-native-elements';
 
 const Students = () => {
    const backgroundImage = require('../../assets/students_bg.jpeg');

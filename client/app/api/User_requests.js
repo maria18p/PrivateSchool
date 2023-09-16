@@ -3,13 +3,13 @@ import { PORT } from '@env';
 import IP from './config';
 
 const BASE_URL = `http://${IP}:${PORT}/api/`;
-// const BASE_URL = `http://192.168.1.31:3010/api/`;
 
 export const makeLoginRequest = async (data) => {
    try {
       console.log('Making login request...');
       console.log('Request data:', data);
       const result = await axios.post(BASE_URL + 'login', data);
+      console.log('role ', result.data.data.role);
       return await result.data;
    } catch (error) {
       console.error('Error:', error);

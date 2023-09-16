@@ -31,24 +31,19 @@ export const login = async (req) => {
          };
       const isMatch = await bcryptjs.compare(req.password, account.password);
       if (!isMatch) return { user: null, message: 'Password or email does not match' };
-
       if (!account.isActive) return { user: null, message: 'Your account is not active' };
-
       //Generate JWT token
       const tokenizationData = {
          _id: account._id,
          name: account.firstName + ' ' + account.lastName,
          email: account.email,
       };
-
       const token = jwt.sign({ dataToken: tokenizationData }, process.env.JWT_KEY, {
          expiresIn: '30d',
       });
-
       await updateToken(account, token);
       await account.save();
-      console.log('[LOGGED IN]', account.email);
-
+      console.log(`[LOGGED IN] ${account.email} [ROLE] ${account.role}`);
       return {
          user: {
             _id: account._id,

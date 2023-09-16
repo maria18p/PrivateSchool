@@ -10,7 +10,6 @@ import EditLessonsModal from './EditLessonsModal';
 import { Calendar } from 'react-native-calendars';
 import modalStyle from '../../../styles/ModalStyles';
 import ManageStyles from '../../../styles/ManageOptionStyles';
-// import { Tooltip } from 'react-native-elements';
 
 export default function Planner() {
    const colorTxt = {
