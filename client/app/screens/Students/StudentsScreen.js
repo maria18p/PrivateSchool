@@ -6,9 +6,11 @@ import { useSelector } from 'react-redux';
 import { getTeacherStudents } from '../../api/Pairing_requests';
 import styles from '../../styles/StudentsStyle';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Tooltip } from 'react-native-elements';
+// import { Tooltip } from 'react-native-elements';
 
 const Students = () => {
+   const backgroundImage = require('../../assets/students_bg.jpeg');
+
    const [myStudents, setMyStudents] = useState(null);
    const [allStudents, setAllStudents] = useState(null);
    const userData = useSelector((state) => state.user);
@@ -60,32 +62,19 @@ const Students = () => {
                      onPress={() => handleStudentPressed(student)}
                      style={{ marginBottom: 5, borderBottomWidth: 2 }}>
                      <DataTable.Cell textStyle={styles.cell}>
-                        <Tooltip
-                           popover={
-                              <Text style={{ textAlign: 'center', fontSize: 12 }}>
-                                 {student.firstName} {student.lastName}
-                              </Text>
-                           }
-                           containerStyle={{ backgroundColor: '#FE5F55' }}>
-                           <Text>
-                              {student.firstName} {student.lastName}
-                           </Text>
-                        </Tooltip>
+                        <Text>
+                           {student.firstName} {student.lastName}
+                        </Text>
                      </DataTable.Cell>
                      <DataTable.Cell
-                        style={{ marginLeft: 15, width: '100%', marginBottom: 0 }}
+                        style={{ marginLeft: 35, marginBottom: 0 }}
                         textStyle={styles.cell}>
-                        <Tooltip
-                           popover={
-                              <Text style={{ textAlign: 'center', fontSize: 12 }}>
-                                 {student.email}
-                              </Text>
-                           }
-                           containerStyle={{ backgroundColor: '#FE5F55' }}>
-                           <Text style={{ fontSize: 14, color: '#141B41' }}>{student.email}</Text>
-                        </Tooltip>
+                        <Text style={{ fontSize: 14, color: '#141B41' }}>{student.email}</Text>
                      </DataTable.Cell>
-                     <DataTable.Cell numeric textStyle={styles.cell}>
+                     <DataTable.Cell
+                        numeric
+                        textStyle={styles.cell}
+                        style={{ marginLeft: 25, marginBottom: 0 }}>
                         {student.isActive ? 'Active' : 'Not Active'}
                      </DataTable.Cell>
                      <DataTable.Cell numeric textStyle={styles.cell}>
@@ -123,8 +112,6 @@ const Students = () => {
       Alert.alert(queryResult.message);
       await refreshAll();
    };
-
-   const backgroundImage = require('../../assets/students_bg.jpeg');
 
    const screenOptions = () => {
       if (userData.role !== 'Admin') return <></>;
@@ -165,7 +152,7 @@ const Students = () => {
                <DataTable.Header style={styles.tblHeader}>
                   <DataTable.Title textStyle={{ fontSize: 14 }}>Full name</DataTable.Title>
                   <DataTable.Title textStyle={{ fontSize: 14 }}>Email</DataTable.Title>
-                  <DataTable.Title textStyle={{ fontSize: 14, marginLeft: -5 }}>
+                  <DataTable.Title textStyle={{ fontSize: 14, marginLeft: -30 }}>
                      Status
                   </DataTable.Title>
                </DataTable.Header>

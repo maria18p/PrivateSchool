@@ -10,7 +10,7 @@ import EditLessonsModal from './EditLessonsModal';
 import { Calendar } from 'react-native-calendars';
 import modalStyle from '../../../styles/ModalStyles';
 import ManageStyles from '../../../styles/ManageOptionStyles';
-import { Tooltip } from 'react-native-elements';
+// import { Tooltip } from 'react-native-elements';
 
 export default function Planner() {
    const colorTxt = {
@@ -163,7 +163,6 @@ export default function Planner() {
                               <DataTable.Cell textStyle={PlannerStyles.plannerText}>
                                  {lesson.pairing.subject.name}
                               </DataTable.Cell>
-
                               <DataTable.Cell textStyle={PlannerStyles.plannerText}>
                                  {new Date(lesson.start).toTimeString().slice(0, 5)}-
                                  {new Date(lesson.finish).toTimeString().slice(0, 5)}
@@ -177,29 +176,15 @@ export default function Planner() {
                                  textStyle={{
                                     width: '100%',
                                  }}>
-                                 <Tooltip
-                                    popover={
-                                       <Text style={PlannerStyles.popover}>
-                                          {userData.role === 'Teacher' || userData.role === 'Admin'
-                                             ? lesson.pairing.student.firstName +
-                                               ' ' +
-                                               lesson.pairing.student.lastName
-                                             : lesson.pairing.teacher.firstName +
-                                               ' ' +
-                                               lesson.pairing.teacher.lastName}
-                                       </Text>
-                                    }
-                                    containerStyle={{ backgroundColor: '#FE5F55' }}>
-                                    <Text style={PlannerStyles.plannerText}>
-                                       {userData.role === 'Teacher' || userData.role === 'Admin'
-                                          ? lesson.pairing.student.firstName +
-                                            ' ' +
-                                            lesson.pairing.student.lastName
-                                          : lesson.pairing.teacher.firstName +
-                                            ' ' +
-                                            lesson.pairing.teacher.lastName}
-                                    </Text>
-                                 </Tooltip>
+                                 <Text style={PlannerStyles.plannerText}>
+                                    {userData.role === 'Teacher' || userData.role === 'Admin'
+                                       ? lesson.pairing.student.firstName +
+                                         ' ' +
+                                         lesson.pairing.student.lastName
+                                       : lesson.pairing.teacher.firstName +
+                                         ' ' +
+                                         lesson.pairing.teacher.lastName}
+                                 </Text>
                               </DataTable.Cell>
                            </DataTable.Row>
                         );

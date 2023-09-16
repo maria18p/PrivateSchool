@@ -19,7 +19,7 @@ export default function Login({ navigation }) {
       };
       try {
          const requestResult = await makeLoginRequest(params);
-         console.log('RequestResult:', requestResult);
+         // console.log('RequestResult:', requestResult);
          if (requestResult.success) {
             dispatch(updateUser(requestResult.data));
             Alert.alert('You logged in successfully');

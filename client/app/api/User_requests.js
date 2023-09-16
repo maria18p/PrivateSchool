@@ -35,11 +35,10 @@ export const makeRegisterTeacherRequest = async (data) => {
 };
 
 export const checkLoggedIn = async (params) => {
-   console.log(params);
+   // console.log(params);
    try {
       const result = await axios.post(BASE_URL + 'checkLoggedIn', params);
       return result.data;
-      console.log(123);
    } catch (error) {
       console.error('Error:', error);
    }

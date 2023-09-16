@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
    },
    tblHeader: { padding: 2, marginLeft: 0 },
-   cell: { fontSize: 14, textTransform: 'capitalize' },
+   cell: { fontSize: 14, textTransform: 'capitalize', width: '100%' },
    txtBtn: { color: '#ffffff', textAlign: 'center', fontSize: 20 },
 });
 
