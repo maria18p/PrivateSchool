@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
       borderWidth: 0.5,
    },
 
-   selectedChatTxt: { color: '#ffff', fontWeight: '400', fontSize: 22 },
+   selectedChatTxt: { color: '#00CEE0', fontWeight: '400', fontSize: 20 },
 
    dateMessage: { color: '#141B41', fontSize: 13, marginTop: 5 },
 

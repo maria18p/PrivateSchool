@@ -144,6 +144,7 @@ export default function Messages() {
                         <View style={chatStyle.rowMessageContainer} key={key}>
                            <Text style={chatStyle.selectedChatTxt}>{message.message}</Text>
                            <Text style={[chatStyle.selectedChatTxt, chatStyle.dateMessage]}>
+                              You{' '}
                               {messageDateString === today
                                  ? `today ${messageTimeString}`
                                  : `${messageDay} ${messageMonth}${
