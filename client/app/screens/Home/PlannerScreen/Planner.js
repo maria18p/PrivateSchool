@@ -27,6 +27,7 @@ export default function Planner() {
       'Friday',
       'Saturday',
    ];
+
    const markedDates = {
       [selectedDate]: { selected: true, selectedColor: 'blue' },
    };
@@ -34,7 +35,6 @@ export default function Planner() {
    const userData = useSelector((state) => state.user);
 
    const [selectedDate, setSelectedDate] = useState(null);
-
    const [selectedDateWeekDates, setSelectedDateWeekDates] = useState(null);
    const [weekPlan, setWeekPlan] = useState(null);
    const [showNewEvent, setShowNewEvent] = useState(null);
@@ -42,26 +42,26 @@ export default function Planner() {
    const [lessons, setLessons] = useState(null);
    const [calendarShown, setCalendarShown] = useState(false);
 
-   useEffect(() => {
-      if (showNewEvent !== null) fetchLessons();
-   }, [showNewEvent]);
+   // useEffect(() => {
+   //    if (showNewEvent !== null) fetchLessons();
+   // }, [showNewEvent]);
 
    useEffect(() => {
       fetchLessons();
    }, []);
 
    useEffect(() => {
-      if (lessons && lessons.length > 0) updateWeekPlan();
-   }, [lessons]);
+      if (lessons && selectedDateWeekDates && lessons.length > 0) updateWeekPlan();
+   }, [lessons, selectedDateWeekDates]);
+
+   // useEffect(() => {
+   //    if (lessons && selectedDateWeekDates && lessons.length > 0) updateWeekPlan();
+   // }, [selectedDateWeekDates]);
 
    useEffect(() => {
       if (!selectedDate || selectedDate.toString() === 'Invalid Date') setSelectedDate(new Date());
       else updateCurrentWeekDates();
    }, [selectedDate]);
-
-   useEffect(() => {
-      if (lessons && selectedDateWeekDates && lessons.length > 0) updateWeekPlan();
-   }, [selectedDateWeekDates]);
 
    const fetchLessons = async () => {
       const lessons = await getUserLessons({
@@ -157,6 +157,7 @@ export default function Planner() {
                return (
                   <View key={index}>
                      {dayObj.dayLessons.map((lesson, index) => {
+                        console.log(555);
                         return (
                            <DataTable.Row key={index} onPress={() => setSelectedLesson(lesson)}>
                               <DataTable.Cell textStyle={PlannerStyles.plannerText}>
@@ -261,16 +262,7 @@ export default function Planner() {
                      ) : (
                         <></>
                      )}
-
-                     {selectedLesson ? (
-                        <EditLessonsModal
-                           closeModal={() => setSelectedLesson(null)}
-                           lesson={selectedLesson}
-                        />
-                     ) : (
-                        <></>
-                     )}
-
+                     {/* //Edit lesson */}
                      <Text style={[styles.loginButtonText, { fontSize: 15 }]}>Add event</Text>
                   </TouchableOpacity>
                </View>
@@ -280,4 +272,15 @@ export default function Planner() {
          </View>
       </View>
    );
+}
+
+{
+   /* {selectedLesson ? (
+                        <EditLessonsModal
+                           closeModal={() => setSelectedLesson(null)}
+                           lesson={selectedLesson}
+                        />
+                     ) : (
+                        <></>
+                     )} */
 }

@@ -29,7 +29,7 @@ export const getUserLessons = async (params) => {
          _id: params.user._id,
          token: params.token,
       };
-      const result = await axios.get(BASE_URL + '/getUserLessons', { params });
+      const result = await axios.get(BASE_URL + 'getUserLessons', { params });
       return result.data.data;
    } catch (error) {
       console.error('Error:', error);

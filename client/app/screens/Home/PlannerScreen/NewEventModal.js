@@ -68,6 +68,7 @@ export default function NewEventModal(props) {
          subject: subject,
       });
       Alert.alert(queryResult.message);
+      console.log('[QUERYRESULT]', queryResult);
    };
 
    const fetchRooms = async () => {
