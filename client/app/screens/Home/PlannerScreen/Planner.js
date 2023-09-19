@@ -6,7 +6,7 @@ import NewEventModal from './NewEventModal';
 import { PlannerStyles } from '../../../styles/Planner_HomeScreenStyles';
 import { DataTable } from 'react-native-paper';
 import { getUserLessons } from '../../../api/Lesson_requests';
-import EditLessonsModal from './EditLessonsModal';
+// import EditLessonsModal from './EditLessonsModal';
 import { Calendar } from 'react-native-calendars';
 import modalStyle from '../../../styles/ModalStyles';
 import ManageStyles from '../../../styles/ManageOptionStyles';
@@ -157,17 +157,25 @@ export default function Planner() {
                return (
                   <View key={index}>
                      {dayObj.dayLessons.map((lesson, index) => {
-                        console.log(555);
                         return (
                            <DataTable.Row key={index} onPress={() => setSelectedLesson(lesson)}>
                               <DataTable.Cell textStyle={PlannerStyles.plannerText}>
                                  {lesson.pairing.subject.name}
                               </DataTable.Cell>
                               <DataTable.Cell textStyle={PlannerStyles.plannerText}>
-                                 {new Date(lesson.start).toTimeString().slice(0, 5)}-
-                                 {new Date(lesson.finish).toTimeString().slice(0, 5)}
+                                 {new Date(lesson.start).getUTCHours().toString().padStart(2, '0')}:
+                                 {new Date(lesson.start)
+                                    .getUTCMinutes()
+                                    .toString()
+                                    .padStart(2, '0')}
+                                 -
+                                 {new Date(lesson.finish).getUTCHours().toString().padStart(2, '0')}
+                                 :
+                                 {new Date(lesson.start)
+                                    .getUTCMinutes()
+                                    .toString()
+                                    .padStart(2, '0')}
                               </DataTable.Cell>
-
                               <DataTable.Cell
                                  textStyle={[PlannerStyles.plannerText, { marginLeft: 30 }]}>
                                  {lesson.room.name}
