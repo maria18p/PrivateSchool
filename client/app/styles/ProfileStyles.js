@@ -6,13 +6,21 @@ const profile = StyleSheet.create({
       flexDirection: 'column',
       justifyContent: 'center',
    },
+
    nameContainer: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       marginTop: 10,
       marginHorizontal: 15,
    },
-   txtStyle: { lineHeight: 25, fontSize: 20, color: '#000000' },
+
+   txtStyle: {
+      lineHeight: 25,
+      fontSize: 20,
+      color: '#000000',
+      fontFamily: 'PlayfairDisplay-Medium',
+   },
+
    btnContainer: {
       height: 35,
       width: '40%',
@@ -24,7 +32,17 @@ const profile = StyleSheet.create({
       alignSelf: 'center',
       marginBottom: 10,
    },
-   txtBtnStyle: { color: '#ffff', textTransform: 'capitalize' },
+
+   layoutChangePassSection: { flexDirection: 'row', justifyContent: 'space-around' },
+
+   txtChangePassSection: { fontSize: 15, fontFamily: 'Poppins-Light' },
+
+   txtInput: { height: '90%', fontSize: 15, color: '#1D1E2C', fontFamily: 'Poppins-Light' },
+
+   txtBtnStyle: {
+      color: '#ffff',
+      textTransform: 'capitalize',
+   },
 });
 
 export default profile;

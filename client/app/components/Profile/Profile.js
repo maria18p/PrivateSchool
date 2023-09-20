@@ -44,10 +44,10 @@ export default function Profile() {
       if (!showChangePassword) return <></>;
       return (
          <View>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-               <Text style={{ fontSize: 15 }}>Enter old password:</Text>
+            <View style={profile.layoutChangePassSection}>
+               <Text style={profile.txtChangePassSection}>Enter old password:</Text>
                <TextInput
-                  style={{ height: '90%', fontSize: 15, color: '#1D1E2C' }}
+                  style={profile.txtInput}
                   placeholder='enter password'
                   keyboardType='default'
                   secureTextEntry={
@@ -82,7 +82,7 @@ export default function Profile() {
             <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                <Text style={[profile.txtStyle, { fontSize: 15 }]}>{placeholder}:</Text>
                <TextInput
-                  style={{ height: '90%', fontSize: 15, color: '#1D1E2C' }}
+                  style={profile.txtInput}
                   placeholder={placeholder}
                   keyboardType='default'
                   secureTextEntry={

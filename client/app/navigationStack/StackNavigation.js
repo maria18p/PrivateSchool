@@ -20,6 +20,7 @@ const styleOptions = {
    headerTitleStyle: {
       fontSize: 25,
       fontWeight: '500',
+      fontFamily: 'CroissantOne-Regular',
    },
 };
 

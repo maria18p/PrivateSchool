@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-between',
    },
+
    btnContainer: {
       height: 35,
       width: '30%',
@@ -21,9 +22,22 @@ const styles = StyleSheet.create({
       marginRight: 5,
       justifyContent: 'center',
    },
+
    tblHeader: { padding: 2, marginLeft: 0 },
-   cell: { fontSize: 14, textTransform: 'capitalize', width: '100%' },
+
+   cell: {
+      fontSize: 14,
+      textTransform: 'capitalize',
+      width: '100%',
+      color: '#141B41',
+      fontFamily: 'Raleway-SemiBoldItalic',
+   },
+
    txtBtn: { color: '#ffffff', textAlign: 'center', fontSize: 20 },
+
+   cellTxt: {
+      fontSize: 14,
+   },
 });
 
 export default styles;

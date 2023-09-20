@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
       flex: 1,
       marginTop: 10,
    },
+
    contentContainer: {
       alignItems: 'center',
    },
@@ -31,7 +32,7 @@ const styles = StyleSheet.create({
 
    txtRowChat: {
       textTransform: 'capitalize',
-      fontSize: 20,
+      fontSize: 18,
       lineHeight: 30,
       textAlign: 'left',
       color: '#ffff',
@@ -39,6 +40,7 @@ const styles = StyleSheet.create({
       textShadowOffset: { width: 1, height: 0.5 },
       textShadowRadius: 3,
       marginLeft: 10,
+      fontFamily: 'Poppins-Light',
    },
 
    headingLayout: {
@@ -88,7 +90,12 @@ const styles = StyleSheet.create({
       borderWidth: 0.5,
    },
 
-   selectedChatTxt: { color: '#00CEE0', fontWeight: '400', fontSize: 20 },
+   selectedChatTxt: {
+      color: '#00CEE0',
+      fontWeight: '400',
+      fontSize: 16,
+      fontFamily: 'Poppins-Light',
+   },
 
    dateMessage: { color: '#141B41', fontSize: 13, marginTop: 5 },
 
@@ -96,8 +103,8 @@ const styles = StyleSheet.create({
       color: '#ffff',
       textTransform: 'capitalize',
       textAlign: 'center',
-      fontWeight: '500',
-      fontSize: 20,
+      fontSize: 18,
+      fontFamily: 'Poppins-Light',
    },
 
    sendRow: {
@@ -119,11 +126,12 @@ const styles = StyleSheet.create({
       backgroundColor: '#B7C6E1',
       width: '92%',
       color: '#40404F',
-      fontSize: 20,
+      fontSize: 18,
       borderRadius: 15,
       marginLeft: 0,
       textAlign: 'left',
       padding: 6,
+      fontFamily: 'PlayfairDisplay-VariableFont_wght',
    },
 });
 

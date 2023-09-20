@@ -69,7 +69,7 @@ const Students = () => {
                      <DataTable.Cell
                         style={{ marginLeft: 35, marginBottom: 0 }}
                         textStyle={styles.cell}>
-                        <Text style={{ fontSize: 14, color: '#141B41' }}>{student.email}</Text>
+                        <Text style={styles.cell}>{student.email}</Text>
                      </DataTable.Cell>
                      <DataTable.Cell
                         numeric

@@ -13,8 +13,8 @@ import ManageStyles from '../../../styles/ManageOptionStyles';
 
 export default function Planner() {
    const colorTxt = {
-      textShadowColor: '#ffff',
-      color: '#FCF7F8',
+      textShadowColor: '#46B1C9',
+      color: '#363946',
       fontWeight: '600',
    };
 
@@ -208,7 +208,7 @@ export default function Planner() {
       return (
          <View style={PlannerStyles.titleColContainer}>
             <DataTable>
-               <DataTable.Header style={{ backgroundColor: '#D78C09' }}>
+               <DataTable.Header style={{ backgroundColor: '#F5F749' }}>
                   <DataTable.Title textStyle={[ManageStyles.tblTxtTitle, colorTxt]}>
                      Event
                   </DataTable.Title>

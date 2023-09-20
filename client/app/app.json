@@ -1,30 +1,121 @@
 {
-  "expo": {
-    "name": "app",
-    "slug": "app",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+   "expo": {
+      "name": "app",
+      "slug": "app",
+      "version": "1.0.0",
+      "orientation": "portrait",
+      "icon": "./assets/icon.png",
+      "userInterfaceStyle": "light",
+      "splash": {
+         "image": "./assets/splash.png",
+         "resizeMode": "contain",
+         "backgroundColor": "#ffffff"
+      },
+      "assetBundlePatterns": ["**/*"],
+      "assets": ["./assets/fonts/"],
+      "fonts": [
+         {
+            "asset": "./assets/fonts/CroissantOne-Regular.ttf",
+            "fontWeight": "normal",
+            "fontStyle": "normal"
+         },
+         {
+            "asset": "./assets/fonts/Montserrat-Italic-VariableFont_wght.ttf",
+            "fontWeight": "normal",
+            "fontStyle": "normal"
+         },
+         {
+            "asset": "./assets/fonts/Montserrat-VariableFont_wght.ttf",
+            "fontWeight": "normal",
+            "fontStyle": "normal"
+         },
+         {
+            "asset": "./assets/fonts/PlayfairDisplay-Black.ttf'",
+            "fontWeight": "normal",
+            "fontStyle": "normal"
+         },
+         {
+            "asset": "./assets/fonts/PlayfairDisplay-BlackItalic.ttf",
+            "fontWeight": "normal",
+            "fontStyle": "normal"
+         },
+         {
+            "asset": "./assets/fonts/PlayfairDisplay-Italic-VariableFont_wght.ttf",
+            "fontWeight": "normal",
+            "fontStyle": "normal"
+         },
+         {
+            "asset": "./assets/fonts/PlayfairDisplay-Medium.ttf",
+            "fontWeight": "normal",
+            "fontStyle": "normal"
+         },
+         {
+            "asset": "./assets/fonts/PlayfairDisplay-VariableFont_wght.ttf",
+            "fontWeight": "normal",
+            "fontStyle": "normal"
+         },
+         {
+            "asset": "./assets/fonts/Poppins-Blackt.ttf",
+            "fontWeight": "normal",
+            "fontStyle": "normal"
+         },
+         {
+            "asset": "./assets/fonts/Poppins-BlackItalic.ttf",
+            "fontWeight": "normal",
+            "fontStyle": "normal"
+         },
+         {
+            "asset": "./assets/fonts/Poppins-Bold.ttf",
+            "fontWeight": "normal",
+            "fontStyle": "normal"
+         },
+         {
+            "asset": "./assets/fonts/Poppins-BoldItalic.ttf",
+            "fontWeight": "normal",
+            "fontStyle": "normal"
+         },
+         {
+            "asset": "./assets/fonts/Raleway-BlackItalic.ttf",
+            "fontWeight": "normal",
+            "fontStyle": "normal"
+         },
+         {
+            "asset": "./assets/fonts/Raleway-Italic-VariableFont_wght.ttf",
+            "fontWeight": "normal",
+            "fontStyle": "normal"
+         },
+         {
+            "asset": "./assets/fonts/Raleway-SemiBoldItalic.ttf",
+            "fontWeight": "normal",
+            "fontStyle": "normal"
+         },
+         {
+            "asset": "./assets/fonts/Raleway-VariableFont_wght.ttf",
+            "fontWeight": "normal",
+            "fontStyle": "normal"
+         },
+         {
+            "asset": "./assets/fonts/Poppins-Light.ttf",
+            "fontWeight": "normal",
+            "fontStyle": "normal"
+         },
+         {
+            "asset": "./assets/fonts/DMSerifText-Italic.ttf",
+            "fontWeight": "normal",
+            "fontStyle": "normal"
+         }
+      ],
+      "ios": {
+         "supportsTablet": true
+      },
+      "android": {
+         "adaptiveIcon": {
+            "foregroundImage": "./assets/adaptive-icon.png",
+            "backgroundColor": "#ffffff"
+         }
+      },
+      "web": {
+         "favicon": "./assets/favicon.png"
       }
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    }
-  }
+   }
 }

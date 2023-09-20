@@ -228,8 +228,7 @@ export default function Messages() {
                         )}
                         <View style={chatStyle.nameContainer}>
                            {!selectedPartner ? (
-                              <Text
-                                 style={[chatStyle.txtStyle, { fontSize: 25, color: '#E8C547' }]}>
+                              <Text style={[chatStyle.txtStyle, { color: '#E8C547' }]}>
                                  Contacts
                               </Text>
                            ) : (
