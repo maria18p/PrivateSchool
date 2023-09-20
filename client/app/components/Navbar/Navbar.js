@@ -57,11 +57,13 @@ export default function Navbar(props) {
                return (
                   <LinearGradient
                      key={index}
-                     colors={['#FDCA40', '#C5E6A6', '#ffff']}
+                     colors={['#48ACF0', '#F5EDF0', '#424C55']}
                      start={[0.9, 0.55]}
                      end={[0.7, -0.4]}
                      style={navBar.linearGradientContainer}>
-                     <TouchableOpacity style={navBar.navTab} onPress={() => handleOnPress(option)}>
+                     <TouchableOpacity
+                        style={navBar.navTab}
+                        onPress={() => handleOnPress(option, index)}>
                         <Text style={navBar.txtHamburgerOption}>{option.title}</Text>
                      </TouchableOpacity>
                   </LinearGradient>

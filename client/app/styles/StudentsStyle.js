@@ -13,10 +13,11 @@ const styles = StyleSheet.create({
 
    btnContainer: {
       height: 35,
-      width: '30%',
+      width: '28%',
       backgroundColor: '#009FFD',
-      borderRadius: 10,
-      marginTop: '4%',
+      borderTopLeftRadius: 25,
+      borderBottomRightRadius: 25,
+      borderTopRightRadius: 10,
       marginBottom: '4%',
       marginLeft: 5,
       marginRight: 5,
@@ -45,7 +46,12 @@ const styles = StyleSheet.create({
 
    setInactive: { textAlign: 'right', marginTop: 9, fontFamily: 'Raleway-SemiBoldItalic' },
 
-   txtBtn: { color: '#ffffff', textAlign: 'center', fontSize: 20 },
+   txtBtn: {
+      color: '#ffffff',
+      textAlign: 'center',
+      fontSize: 16,
+      fontFamily: 'PlayfairDisplay-VariableFont_wght',
+   },
 });
 
 export default styles;

@@ -13,14 +13,14 @@ const styles = StyleSheet.create({
 
    eachNotificationContainer: {
       width: '100%',
-      padding: 10,
-      borderBottomWidth: 4,
-      borderColor: '#2AF5FF',
-      marginTop: 5,
+      padding: 8,
+      borderBottomWidth: 2,
+      borderColor: '#91CAF2',
+      marginTop: 2,
       flexDirection: 'column',
    },
 
-   readNotificationContainer: { backgroundColor: '#D6FFB7' },
+   readNotificationContainer: { backgroundColor: '#C9DCE4' },
 
    dataTableTxtStyle: {
       textTransform: 'capitalize',
@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
    },
 
    txtLayout: { width: '75%' },
+
    txt: { fontSize: 18, lineHeight: 18, color: '#003844' },
 
    btn: {

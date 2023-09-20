@@ -8,18 +8,17 @@ const navBar = StyleSheet.create({
 
    navContainer: {
       flexDirection: 'column',
-      marginTop: 25,
-      marginLeft: 20,
-      width: 180,
+      width: '50%',
       height: 'auto',
-      padding: 3,
-      borderRadius: 6,
-      backgroundColor: '#F2E94E',
+      padding: 0,
+      // borderRadius: 6,
+      borderTopEndRadius: 25,
+      backgroundColor: '#EDEBFF',
       position: 'absolute',
-      top: 0,
-      left: 0,
+      top: 15,
+      left: 10,
       overflow: 'scroll',
-      borderWidth: 1,
+      borderWidth: 0,
       borderColor: '#D7FDF0',
       shadowColor: '#080357',
       shadowOffset: {
@@ -49,14 +48,17 @@ const navBar = StyleSheet.create({
    navTab: {
       justifyContent: 'flex-start',
       alignContent: 'center',
-      marginLeft: 5,
+      marginLeft: 20,
+      marginBottom: 5,
+      borderTopWidth: 2,
+      borderTopColor: '#161925',
    },
 
    txtHamburgerOption: {
-      color: '#0B5563',
+      color: '#fff',
       fontSize: 18,
       lineHeight: 35,
-      fontWeight: '500',
+      fontFamily: 'Poppins-ExtraLight',
    },
 });
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Alert, ImageBackground } from 'react-native';
 import { DataTable } from 'react-native-paper';
 import { getAllUsers, updateStudentActive, updateStudentInactive } from '../../api/User_requests';
@@ -6,15 +6,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getTeacherStudents } from '../../api/Pairing_requests';
 import styles from '../../styles/StudentsStyle';
 import { LinearGradient } from 'expo-linear-gradient';
+import Popover from 'react-native-popover-view';
 
 const Students = () => {
    const backgroundImage = require('../../assets/students_bg.jpeg');
 
+   const popoverRef = useRef(null);
    const [myStudents, setMyStudents] = useState(null);
    const [allStudents, setAllStudents] = useState(null);
    const userData = useSelector((state) => state.user);
    const dispatch = useDispatch();
    const [mode, setMode] = useState(null);
+   const [openPopoverKey, setOpenPopoverKey] = useState([]);
 
    useEffect(() => {
       refreshAll();
@@ -28,8 +31,6 @@ const Students = () => {
       getMyStudents();
       if (userData.role === 'Admin' || userData.role === 'Teacher') updateAllStudents();
    };
-
-   const handleStudentPressed = (student) => {};
 
    const updateAllStudents = async () => {
       const queryResult = await getAllUsers({
@@ -48,8 +49,52 @@ const Students = () => {
       setMyStudents(myStudents.data);
    };
 
+   const handlePopoverOpen = (key) => {
+      const updatedPopoverKeys = [...openPopoverKey];
+      updatedPopoverKeys[key] = key;
+      setOpenPopoverKey(updatedPopoverKeys);
+   };
+
+   const handleStudentClick = (key) => {
+      const updatedPopoverKeys = [...openPopoverKey];
+      updatedPopoverKeys[key] = key;
+      setOpenPopoverKey(updatedPopoverKeys);
+   };
+
+   const handlePopoverClose = (key) => {
+      const updatedPopoverKeys = [...openPopoverKey];
+      updatedPopoverKeys[key] = null;
+      setOpenPopoverKey(updatedPopoverKeys);
+   };
+
+   const ShowPopover = (student, key) => {
+      const isStudentPopoverVisible = openPopoverKey[key] !== null;
+      return (
+         <Popover
+            ref={popoverRef}
+            isVisible={isStudentPopoverVisible}
+            popoverStyle={{
+               padding: 10,
+               backgroundColor: 'white',
+               borderRadius: 5,
+               shadowColor: '#000000',
+               shadowOffset: { width: 0, height: 2 },
+               shadowOpacity: 0.3,
+               shadowRadius: 4,
+            }}>
+            <TouchableOpacity onPress={() => handlePopoverClose(key)}>
+               <Text>
+                  {student.firstName} {student.lastName}
+               </Text>
+            </TouchableOpacity>
+         </Popover>
+      );
+   };
+
    const studentData = () => {
-      if (!mode) return <></>;
+      if (!mode || !Array.isArray(mode)) {
+         return <></>;
+      }
       return (
          <LinearGradient
             colors={['#B7B5E4', '#95F9E3', '#E0CA3C']}
@@ -59,13 +104,27 @@ const Students = () => {
                return (
                   <DataTable.Row
                      key={key}
-                     onPress={() => handleStudentPressed(student)}
+                     onPress={() => handleStudentClick(key)}
                      style={styles.rowStyle}>
                      <DataTable.Cell textStyle={styles.cellTxt}>
-                        {student.firstName} {student.lastName}
+                        <TouchableOpacity
+                           onPress={() => handlePopoverOpen(key)}
+                           onMouseEnter={() => handlePopoverOpen(key)}
+                           onMouseLeave={() => handlePopoverClose(key)}>
+                           <Text style={styles.cellTxt}>
+                              {student.firstName} {student.lastName}
+                           </Text>
+                        </TouchableOpacity>
+                        {ShowPopover(student, key)}
                      </DataTable.Cell>
-                     <DataTable.Cell style={styles.cellStyleEmail} textStyle={styles.cellTxt}>
-                        {student.email}
+                     <DataTable.Cell textStyle={styles.cellTxt} style={styles.cellStyleEmail}>
+                        <TouchableOpacity
+                           onPress={() => handlePopoverOpen(key)}
+                           onMouseEnter={() => handlePopoverOpen(key)}
+                           onMouseLeave={() => handlePopoverClose(key)}>
+                           <Text>{student.email}</Text>
+                        </TouchableOpacity>
+                        {ShowPopover(student, key)}
                      </DataTable.Cell>
                      <DataTable.Cell numeric textStyle={styles.cellTxt} style={styles.status}>
                         {student.isActive ? 'Active' : 'Not Active'}

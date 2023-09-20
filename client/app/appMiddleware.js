@@ -55,10 +55,14 @@ const LoadApp = () => {
 
             'DMSerifText-Italic': require('./assets/fonts/DMSerifText-Italic.ttf'),
 
-            // 'PlayfairDisplay-Medium': require('./assets/fonts/PlayfairDisplay-Medium.ttf'),
-            // 'PlayfairDisplay-Medium': require('./assets/fonts/PlayfairDisplay-Medium.ttf'),
-            // 'PlayfairDisplay-Medium': require('./assets/fonts/PlayfairDisplay-Medium.ttf'),
-            // 'PlayfairDisplay-Medium': require('./assets/fonts/PlayfairDisplay-Medium.ttf'),
+            'DMSerifText-Regular': require('./assets/fonts/DMSerifText-Regular.ttf'),
+
+            'Inter-VariableFont_slnt,wght': require('./assets/fonts/Inter-VariableFont_slnt,wght.ttf'),
+
+            'Poppins-ExtraLight': require('./assets/fonts/Poppins-ExtraLight.ttf'),
+
+            'Poppins-Thin': require('./assets/fonts/Poppins-Thin.ttf'),
+
             // 'PlayfairDisplay-Medium': require('./assets/fonts/PlayfairDisplay-Medium.ttf'),
             // 'PlayfairDisplay-Medium': require('./assets/fonts/PlayfairDisplay-Medium.ttf'),
             // 'PlayfairDisplay-Medium': require('./assets/fonts/PlayfairDisplay-Medium.ttf'),
@@ -75,28 +79,20 @@ const LoadApp = () => {
    }, []);
 
    const openApp = async () => {
-      // if (store.getState().user.token !== null) {
       if (userData.token !== null) {
          setLoaded(true);
          return;
       }
       const savedState = await actions.loadUserData();
-
       if (savedState && savedState.token) {
          let userAdaptedObj = store.getState().user;
          const res = await checkLoggedIn({
             _id: userAdaptedObj._id,
             token: userAdaptedObj.token,
          });
-         //  const res = await checkLoggedIn({
-         //     _id: savedState._id,
-         //     token: savedState.token,
-         //  });
-
          if (!res.data) dispatch(resetUserData());
          else dispatch(updateUser(savedState));
       }
-
       setLoaded(true);
    };
 

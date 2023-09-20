@@ -5,6 +5,7 @@ import { getNotifications, markNotificationsRead } from '../../api/Notification_
 import NotificationActionModal from './NotificationActionModal';
 import notificationStyles from '../../styles/NotificationsStyle';
 import { setUserNotifications } from '../../store/reducer';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Notifications = () => {
    const [notifications, setNotifications] = useState(null);
@@ -118,18 +119,24 @@ const Notifications = () => {
    };
 
    return (
-      <ScrollView style={notificationStyles.container}>
-         {showNotifications()}
-         {actionData ? (
-            <NotificationActionModal
-               type={actionData.type}
-               data={actionData.data}
-               closeModal={() => setActionData(null)}
-            />
-         ) : (
-            <></>
-         )}
-      </ScrollView>
+      <LinearGradient
+         style={{ justifyContent: 'center', flex: 1, borderWidth: 2 }}
+         colors={['#fff', '#91CAF2', '#E7ECEF']}
+         start={{ x: 2, y: 0 }}
+         end={{ x: 1, y: 1 }}>
+         <ScrollView style={notificationStyles.container}>
+            {showNotifications()}
+            {actionData ? (
+               <NotificationActionModal
+                  type={actionData.type}
+                  data={actionData.data}
+                  closeModal={() => setActionData(null)}
+               />
+            ) : (
+               <></>
+            )}
+         </ScrollView>
+      </LinearGradient>
    );
 };
 
