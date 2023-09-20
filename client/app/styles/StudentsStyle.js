@@ -25,7 +25,17 @@ const styles = StyleSheet.create({
 
    tblHeader: { padding: 2, marginLeft: 0 },
 
-   cell: {
+   rowStyle: {
+      marginBottom: 4,
+      borderBottomWidth: 2,
+      borderWidth: 1,
+   },
+
+   cellStyleEmail: { marginLeft: 35, marginBottom: 0 },
+
+   status: { marginLeft: 25, marginBottom: 0 },
+
+   cellTxt: {
       fontSize: 14,
       textTransform: 'capitalize',
       width: '100%',
@@ -33,11 +43,9 @@ const styles = StyleSheet.create({
       fontFamily: 'Raleway-SemiBoldItalic',
    },
 
-   txtBtn: { color: '#ffffff', textAlign: 'center', fontSize: 20 },
+   setInactive: { textAlign: 'right', marginTop: 9, fontFamily: 'Raleway-SemiBoldItalic' },
 
-   cellTxt: {
-      fontSize: 14,
-   },
+   txtBtn: { color: '#ffffff', textAlign: 'center', fontSize: 20 },
 });
 
 export default styles;

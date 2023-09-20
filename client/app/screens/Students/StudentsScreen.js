@@ -60,31 +60,24 @@ const Students = () => {
                   <DataTable.Row
                      key={key}
                      onPress={() => handleStudentPressed(student)}
-                     style={{ marginBottom: 5, borderBottomWidth: 2 }}>
-                     <DataTable.Cell textStyle={styles.cell}>
-                        <Text>
-                           {student.firstName} {student.lastName}
-                        </Text>
+                     style={styles.rowStyle}>
+                     <DataTable.Cell textStyle={styles.cellTxt}>
+                        {student.firstName} {student.lastName}
                      </DataTable.Cell>
-                     <DataTable.Cell
-                        style={{ marginLeft: 35, marginBottom: 0 }}
-                        textStyle={styles.cell}>
-                        <Text style={styles.cell}>{student.email}</Text>
+                     <DataTable.Cell style={styles.cellStyleEmail} textStyle={styles.cellTxt}>
+                        {student.email}
                      </DataTable.Cell>
-                     <DataTable.Cell
-                        numeric
-                        textStyle={styles.cell}
-                        style={{ marginLeft: 25, marginBottom: 0 }}>
+                     <DataTable.Cell numeric textStyle={styles.cellTxt} style={styles.status}>
                         {student.isActive ? 'Active' : 'Not Active'}
                      </DataTable.Cell>
-                     <DataTable.Cell numeric textStyle={styles.cell}>
+                     <DataTable.Cell textStyle={styles.cellTxt}>
                         {student.isActive ? (
                            <TouchableOpacity key={key} onPress={() => setStudentInactive(student)}>
-                              <Text style={{ textAlign: 'center' }}>Set Inactive</Text>
+                              <Text style={styles.setInactive}>Set Inactive</Text>
                            </TouchableOpacity>
                         ) : (
                            <TouchableOpacity key={key} onPress={() => setStudentActive(student)}>
-                              <Text style={{ textAlign: 'center' }}>Set Active</Text>
+                              <Text style={styles.setInactive}>Set Active</Text>
                            </TouchableOpacity>
                         )}
                      </DataTable.Cell>
@@ -164,7 +157,7 @@ const Students = () => {
             </ImageBackground>
          );
       } else {
-         return <></>; // Handle other roles here
+         return <></>;
       }
    };
 
