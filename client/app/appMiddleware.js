@@ -57,8 +57,6 @@ const LoadApp = () => {
 
             'DMSerifText-Regular': require('./assets/fonts/DMSerifText-Regular.ttf'),
 
-            'Inter-VariableFont_slnt,wght': require('./assets/fonts/Inter-VariableFont_slnt,wght.ttf'),
-
             'Poppins-ExtraLight': require('./assets/fonts/Poppins-ExtraLight.ttf'),
 
             'Poppins-Thin': require('./assets/fonts/Poppins-Thin.ttf'),

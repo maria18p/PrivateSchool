@@ -67,7 +67,7 @@ const Students = () => {
       setOpenPopoverKey(updatedPopoverKeys);
    };
 
-   const ShowPopover = (student, key) => {
+   const ShowPopover = ({ student, key }) => {
       const isStudentPopoverVisible = openPopoverKey[key] !== null;
       return (
          <Popover
@@ -83,9 +83,7 @@ const Students = () => {
                shadowRadius: 4,
             }}>
             <TouchableOpacity onPress={() => handlePopoverClose(key)}>
-               <Text>
-                  {student.firstName} {student.lastName}
-               </Text>
+               <Text>{student.email}</Text>
             </TouchableOpacity>
          </Popover>
       );
@@ -115,16 +113,15 @@ const Students = () => {
                               {student.firstName} {student.lastName}
                            </Text>
                         </TouchableOpacity>
-                        {ShowPopover(student, key)}
                      </DataTable.Cell>
                      <DataTable.Cell textStyle={styles.cellTxt} style={styles.cellStyleEmail}>
                         <TouchableOpacity
                            onPress={() => handlePopoverOpen(key)}
                            onMouseEnter={() => handlePopoverOpen(key)}
                            onMouseLeave={() => handlePopoverClose(key)}>
-                           <Text>{student.email}</Text>
-                        </TouchableOpacity>
-                        {ShowPopover(student, key)}
+                           <Text style={styles.cellTxt}>{student.email}</Text>
+                        </TouchableOpacity>{' '}
+                        <ShowPopover student={student} key={key} />
                      </DataTable.Cell>
                      <DataTable.Cell numeric textStyle={styles.cellTxt} style={styles.status}>
                         {student.isActive ? 'Active' : 'Not Active'}

@@ -13,14 +13,14 @@ const styles = StyleSheet.create({
 
    eachNotificationContainer: {
       width: '100%',
-      padding: 8,
+      padding: 5,
       borderBottomWidth: 2,
       borderColor: '#91CAF2',
-      marginTop: 2,
+      marginTop: '2%',
       flexDirection: 'column',
    },
 
-   readNotificationContainer: { backgroundColor: '#C9DCE4' },
+   readNotificationContainer: { backgroundColor: '#FBFBFF' },
 
    dataTableTxtStyle: {
       textTransform: 'capitalize',
@@ -29,10 +29,11 @@ const styles = StyleSheet.create({
    },
 
    nameTxt: {
-      fontSize: 19,
+      fontSize: 18,
       color: '#0E402D',
       textTransform: 'capitalize',
-      marginBottom: 5,
+      marginBottom: 8,
+      fontFamily: 'PlayfairDisplay-VariableFont_wght',
    },
 
    notificationContainer: {
@@ -42,9 +43,14 @@ const styles = StyleSheet.create({
       justifyContent: 'space-between',
    },
 
-   txtLayout: { width: '75%' },
+   txtLayout: { width: '75%', marginVertical: 6 },
 
-   txt: { fontSize: 18, lineHeight: 18, color: '#003844' },
+   txt: {
+      fontSize: 17,
+      lineHeight: 16,
+      color: '#003844',
+      fontFamily: 'Poppins-Light',
+   },
 
    btn: {
       padding: 5,

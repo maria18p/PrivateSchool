@@ -32,6 +32,11 @@ const Notifications = () => {
       dispatch(setUserNotifications({ notifications: updatedNotification }));
    };
 
+   const determineNotificationType = (notification) => {
+      if (notification.type === 'pair') return pairingRequestNotification(notification);
+      if (notification.type === 'newTeacher') return messageRequestNotification(notification);
+   };
+
    const showNotifications = () => {
       if (notifications === null) return <></>;
       return (
@@ -55,12 +60,9 @@ const Notifications = () => {
       );
    };
 
-   const determineNotificationType = (notification) => {
-      if (notification.type === 'pair') return pairingRequestNotification(notification);
-      return messageRequestNotification(notification);
-   };
-
    const messageRequestNotification = (notification) => {
+      // console.log('[NOTIFICATION ] ', notification.type);
+      // console.log('========');
       return (
          <>
             <Text
@@ -68,13 +70,13 @@ const Notifications = () => {
                   notificationStyles.nameTxt,
                   notification.read && [notificationStyles.nameTxt, { color: '#2E5EAA' }],
                ]}>
-               {userData.firstName + ' ' + userData.lastName}
+               {notification.payload.firstName + ' ' + notification.payload.lastName}
             </Text>
             <View style={notificationStyles.txtLayout}>
                <Text
                   style={[
                      [notificationStyles.txt, { color: '#000' }],
-                     notification.read && [notificationStyles.txt, { fontWeight: '500' }],
+                     notification.read && notificationStyles.txt,
                   ]}>
                   {notification.text}
                </Text>
@@ -97,8 +99,8 @@ const Notifications = () => {
                <View style={notificationStyles.txtLayout}>
                   <Text
                      style={[
-                        [notificationStyles.txt, { color: '#ffff' }],
-                        notification.read && [notificationStyles.txt, { fontWeight: '500' }],
+                        [notificationStyles.txt, { color: '#ffff', fontWeight: '500' }],
+                        notification.read && notificationStyles.txt,
                      ]}>
                      {notification.text}
                   </Text>

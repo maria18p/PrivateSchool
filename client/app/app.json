@@ -110,11 +110,6 @@
             "fontStyle": "normal"
          },
          {
-            "asset": "./assets/fonts/Inter-VariableFont_slnt,wght.ttf",
-            "fontWeight": "normal",
-            "fontStyle": "normal"
-         },
-         {
             "asset": "./assets/fonts/Poppins-ExtraLight.ttf",
             "fontWeight": "normal",
             "fontStyle": "normal"
