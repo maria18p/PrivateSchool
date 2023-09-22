@@ -109,6 +109,40 @@ export default function Planner() {
       setSelectedDateWeekDates(weekDays);
    };
 
+   // const renderWeekMenu = () => {
+   //    if (!selectedDate) return <></>;
+   //    if (!selectedDateWeekDates) return <></>;
+   //    return (
+   //       <View style={PlannerStyles.weekDaysContainer}>
+   //          {selectedDateWeekDates.map((weekDay, index) => {
+   //             if (weekDay.dayName === daysOfWeek[selectedDate.getDay()]) {
+   //                return (
+   //                   <TouchableOpacity
+   //                      key={index}
+   //                      style={[PlannerStyles.weekDayBtn, { backgroundColor: '#ffffff' }]}>
+   //                      <Text
+   //                         style={[PlannerStyles.txtDay, { color: '#281B88', fontWeight: '500' }]}>
+   //                         {weekDay.dayName.slice(0, 3)}
+   //                      </Text>
+   //                   </TouchableOpacity>
+   //                );
+   //             } else {
+   //                return (
+   //                   <TouchableOpacity
+   //                      key={index}
+   //                      style={PlannerStyles.weekDayBtn}
+   //                      onPress={() => {
+   //                         setSelectedDate(weekDay.date);
+   //                      }}>
+   //                      <Text style={PlannerStyles.txtDay}>{weekDay.dayName.slice(0, 3)}</Text>
+   //                   </TouchableOpacity>
+   //                );
+   //             }
+   //          })}
+   //       </View>
+   //    );
+   // };
+
    const renderWeekMenu = () => {
       if (!selectedDate) return <></>;
       if (!selectedDateWeekDates) return <></>;
@@ -118,7 +152,7 @@ export default function Planner() {
                if (weekDay.dayName === daysOfWeek[selectedDate.getDay()]) {
                   return (
                      <TouchableOpacity
-                        key={index}
+                        key={`weekDay-${index}`} // Provide a unique key
                         style={[PlannerStyles.weekDayBtn, { backgroundColor: '#ffffff' }]}>
                         <Text
                            style={[PlannerStyles.txtDay, { color: '#281B88', fontWeight: '500' }]}>
@@ -129,7 +163,7 @@ export default function Planner() {
                } else {
                   return (
                      <TouchableOpacity
-                        key={index}
+                        key={`weekDay-${index}`} // Provide a unique key
                         style={PlannerStyles.weekDayBtn}
                         onPress={() => {
                            setSelectedDate(weekDay.date);

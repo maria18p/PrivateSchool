@@ -53,7 +53,7 @@ const ManageStyles = StyleSheet.create({
    },
 
    tblTxtTitle: {
-      fontSize: 18,
+      fontSize: 16,
       color: '#ffff',
       textTransform: 'capitalize',
       textShadowColor: '#ffffff',
