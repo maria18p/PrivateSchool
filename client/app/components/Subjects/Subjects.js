@@ -13,7 +13,6 @@ export default function Subjects() {
    const userData = useSelector((state) => state.user);
    const dispatch = useDispatch();
    const [mySubjects, setMySubjects] = useState([]);
-   const [subModalShown, setSubModalShown] = useState(false);
    const [selectedSubject, setSelectedSubject] = useState(null);
    const [newSubModalShown, setNewSubModalShown] = useState(false);
 
@@ -120,9 +119,15 @@ export default function Subjects() {
       <>
          <View style={subjectStyle.showSubModalContainer}>
             {showSubjectModal()}
-            <View style={subjectStyle.subLayout}>
+            <View style={[subjectStyle.subLayout, { overflow: 'hidden' }]}>
                <Image
-                  style={{ resizeMode: 'cover', height: 60, width: 100 }}
+                  style={{
+                     resizeMode: 'cover',
+                     height: 55,
+                     width: 100,
+                     opacity: 0.6,
+                     transform: [{ scale: 5 }, { rotate: '15deg' }],
+                  }}
                   source={require('../../assets/musicLogo2.jpeg')}
                />
                <Text style={subjectStyle.txtMySubjects}>My Subjects</Text>
