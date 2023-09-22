@@ -61,7 +61,8 @@ const LoadApp = () => {
 
             'Poppins-Thin': require('./assets/fonts/Poppins-Thin.ttf'),
 
-            // 'PlayfairDisplay-Medium': require('./assets/fonts/PlayfairDisplay-Medium.ttf'),
+            'Poppins-MediumItalic': require('./assets/fonts/Poppins-MediumItalic.ttf'),
+
             // 'PlayfairDisplay-Medium': require('./assets/fonts/PlayfairDisplay-Medium.ttf'),
             // 'PlayfairDisplay-Medium': require('./assets/fonts/PlayfairDisplay-Medium.ttf'),
             // 'PlayfairDisplay-Medium': require('./assets/fonts/PlayfairDisplay-Medium.ttf'),

@@ -50,9 +50,17 @@ const styles = StyleSheet.create({
    },
 
    txtMySubjects: {
-      fontSize: 25,
-      color: '#454ADE',
-      textTransform: 'uppercase',
+      fontSize: 22,
+      color: '#40476D',
+      textTransform: 'capitalize',
+      fontFamily: 'Poppins-MediumItalic',
+      textShadowColor: '#826754',
+      textShadowOffset: { width: 1, height: 1 },
+      textShadowRadius: 2,
+      letterSpacing: 1,
+      lineHeight: 25,
+      textDecorationLine: 'underline',
+      backgroundColor: 'rgba(255, 255, 255, 0.2)',
    },
 
    roleNewSubjectActionLayout: {

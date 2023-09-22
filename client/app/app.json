@@ -118,6 +118,11 @@
             "asset": "./assets/fonts/Poppins-Thin.ttf",
             "fontWeight": "normal",
             "fontStyle": "normal"
+         },
+         {
+            "asset": "./assets/fonts/Poppins-MediumItalic.ttf",
+            "fontWeight": "normal",
+            "fontStyle": "normal"
          }
       ],
       "ios": {

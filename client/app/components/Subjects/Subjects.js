@@ -126,11 +126,12 @@ export default function Subjects() {
                      height: 55,
                      width: 100,
                      opacity: 0.6,
+                     zIndex: -1000,
                      transform: [{ scale: 5 }, { rotate: '15deg' }],
                   }}
                   source={require('../../assets/musicLogo2.jpeg')}
                />
-               <Text style={subjectStyle.txtMySubjects}>My Subjects</Text>
+               <Text style={subjectStyle.txtMySubjects}>my subjects</Text>
             </View>
             {generateSubjects()}
             {showNewSubjectModal()}
