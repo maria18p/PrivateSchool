@@ -58,6 +58,7 @@ const ManageStyles = StyleSheet.create({
       textTransform: 'capitalize',
       textShadowColor: '#ffffff',
       textShadowOffset: { width: 1, height: 1 },
+      fontFamily: 'PlayfairDisplay-VariableFont_wght',
    },
 
    roomName: {

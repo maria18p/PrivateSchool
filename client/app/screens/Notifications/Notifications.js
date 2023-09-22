@@ -76,73 +76,9 @@ const Notifications = () => {
       );
    };
 
-   // const messageRequestNotification = (notification) => {
-   //    const teacherSign = '📚';
-   //    return (
-   //       <>
-   //          <Text
-   //             style={[
-   //                notificationStyles.nameTxt,
-   //                notification.read && [notificationStyles.nameTxt, { color: '#40476D' }],
-   //             ]}>
-   //             {notification.payload?.firstName + ' ' + notification.payload?.lastName}{' '}
-   //             {teacherSign}
-   //          </Text>
-   //          <View style={notificationStyles.txtLayout}>
-   //             <Text
-   //                style={[
-   //                   [notificationStyles.txt, { color: '#fff' }],
-   //                   notification.read && notificationStyles.txt,
-   //                ]}>
-   //                {notification.text}
-   //             </Text>
-   //          </View>
-   //       </>
-   //    );
-   // };
-
-   // const pairingRequestNotification = (notification) => {
-   //    const someSign = '🎓';
-   //    return (
-   //       <>
-   //          <Text
-   //             style={[
-   //                notificationStyles.nameTxt,
-   //                notification.read && [notificationStyles.nameTxt, { color: '#40476D' }],
-   //             ]}>
-   //             {notification.payload?.firstName + ' ' + notification.payload?.lastName} {someSign}
-   //          </Text>
-   //          <View style={notificationStyles.notificationContainer}>
-   //             <View style={notificationStyles.txtLayout}>
-   //                <Text
-   //                   style={[
-   //                      [notificationStyles.txt, { color: '#000' }],
-   //                      notification.read && notificationStyles.txt,
-   //                   ]}>
-   //                   {notification.text}
-   //                </Text>
-   //             </View>
-   //             {notification.type === 'pair' && ( // Show button only for 'pair' notifications
-   //                <TouchableOpacity
-   //                   style={notificationStyles.btn}
-   //                   onPress={() =>
-   //                      setActionData({
-   //                         type: notification.type,
-   //                         data: notification.payload,
-   //                      })
-   //                   }>
-   //                   <Text style={notificationStyles.btnTxt}>Show</Text>
-   //                </TouchableOpacity>
-   //             )}
-   //          </View>
-   //       </>
-   //    );
-   // };
-
    const messageRequestNotification = (notification) => {
       const teacherSign = '📚';
-      console.log('[NOTIFICATION ]', notification);
-      // console.log('[USERDATA.ID ]', userData._id);
+      // console.log('[NOTIFICATION ]', notification);
       const firstName = notification.payload?.firstName || '';
       const lastName = notification.payload?.lastName || '';
       return (
