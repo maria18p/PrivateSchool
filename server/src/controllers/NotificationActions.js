@@ -10,14 +10,12 @@ export const addNotification = async (req) => {
          text: req.text,
          type: req.type ? req.type : 'message',
          payload: req.payload ? req.payload : null,
+         hidden: false,
       });
-
       if (!queryResult) return { success: false, message: 'SOMETHING WENT WRONG' };
-
       const userRef = await ODM.models.User.findOne({ _id: req.user._id });
       userRef.notifications.push(queryResult._id);
       await userRef.save();
-
       return { success: true, message: 'Notification saved successfully' };
    } catch (e) {
       console.log('ERROR CREATING NOTIFICATION', e);

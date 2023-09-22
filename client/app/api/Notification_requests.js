@@ -26,21 +26,3 @@ export const markNotificationsRead = async (data) => {
       console.error('Error:', error);
    }
 };
-
-export const archiveNotifications = async (data) => {
-   try {
-      const queryResult = await axios.post(BASE_URL + '/archive', data);
-      return queryResult.data;
-   } catch (error) {
-      console.error('Error:', error);
-   }
-};
-
-export const unarchiveNotification = async (data) => {
-   try {
-      const queryResult = await axios.post(BASE_URL + '/unarchive', data);
-      return queryResult.data;
-   } catch (error) {
-      console.error('Error:', error);
-   }
-};

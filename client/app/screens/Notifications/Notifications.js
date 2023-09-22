@@ -6,6 +6,7 @@ import NotificationActionModal from './NotificationActionModal';
 import notificationStyles from '../../styles/NotificationsStyle';
 import { setUserNotifications } from '../../store/reducer';
 import { LinearGradient } from 'expo-linear-gradient';
+import SwipeListView from 'react-native-swipe-list-view';
 
 const Notifications = () => {
    const [notifications, setNotifications] = useState(null);
