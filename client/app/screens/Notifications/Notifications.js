@@ -23,13 +23,23 @@ const Notifications = () => {
    }, [notifications]);
 
    const fetchNotifications = async () => {
-      setNotifications((await getNotifications({ user: userData })).data);
+      try {
+         const response = await getNotifications({ user: userData });
+         const fetchedNotifications = response.data;
+         setNotifications(fetchedNotifications);
+      } catch (error) {
+         console.error('Error fetching notifications:', error);
+      }
    };
 
    const makeNotificationsRead = async () => {
-      await markNotificationsRead({ notifications: notifications });
-      const updatedNotification = (await getNotifications({ user: userData })).data;
-      dispatch(setUserNotifications({ notifications: updatedNotification }));
+      try {
+         await markNotificationsRead({ notifications: notifications });
+         const updatedNotification = (await getNotifications({ user: userData })).data;
+         dispatch(setUserNotifications({ notifications: updatedNotification }));
+      } catch (error) {
+         console.error('Error marking notifications as read:', error);
+      }
    };
 
    const determineNotificationType = (notification) => {
@@ -37,12 +47,19 @@ const Notifications = () => {
       return messageRequestNotification(notification);
    };
 
+   const toggleNotificationDetails = (notification) => {
+      notification.expanded = !notification.expanded;
+      setNotifications([...notifications]);
+   };
+
    const showNotifications = () => {
-      if (notifications === null) return <></>;
+      if (notifications === null) return <Text>Loading notifications...</Text>;
+      if (notifications.length === 0) return <Text>No notifications available.</Text>;
+
       return (
          <>
-            {notifications.map((notification, key) => {
-               return (
+            {notifications.map((notification, key) => (
+               <TouchableOpacity onPress={() => toggleNotificationDetails(notification)} key={key}>
                   <View
                      style={[
                         [
@@ -50,18 +67,84 @@ const Notifications = () => {
                            { backgroundColor: '#00B8F5' },
                         ],
                         notification.read && notificationStyles.readNotificationContainer,
-                     ]}
-                     key={key}>
+                     ]}>
                      {determineNotificationType(notification)}
                   </View>
-               );
-            })}
+               </TouchableOpacity>
+            ))}
          </>
       );
    };
 
+   // const messageRequestNotification = (notification) => {
+   //    const teacherSign = '📚';
+   //    return (
+   //       <>
+   //          <Text
+   //             style={[
+   //                notificationStyles.nameTxt,
+   //                notification.read && [notificationStyles.nameTxt, { color: '#40476D' }],
+   //             ]}>
+   //             {notification.payload?.firstName + ' ' + notification.payload?.lastName}{' '}
+   //             {teacherSign}
+   //          </Text>
+   //          <View style={notificationStyles.txtLayout}>
+   //             <Text
+   //                style={[
+   //                   [notificationStyles.txt, { color: '#fff' }],
+   //                   notification.read && notificationStyles.txt,
+   //                ]}>
+   //                {notification.text}
+   //             </Text>
+   //          </View>
+   //       </>
+   //    );
+   // };
+
+   // const pairingRequestNotification = (notification) => {
+   //    const someSign = '🎓';
+   //    return (
+   //       <>
+   //          <Text
+   //             style={[
+   //                notificationStyles.nameTxt,
+   //                notification.read && [notificationStyles.nameTxt, { color: '#40476D' }],
+   //             ]}>
+   //             {notification.payload?.firstName + ' ' + notification.payload?.lastName} {someSign}
+   //          </Text>
+   //          <View style={notificationStyles.notificationContainer}>
+   //             <View style={notificationStyles.txtLayout}>
+   //                <Text
+   //                   style={[
+   //                      [notificationStyles.txt, { color: '#000' }],
+   //                      notification.read && notificationStyles.txt,
+   //                   ]}>
+   //                   {notification.text}
+   //                </Text>
+   //             </View>
+   //             {notification.type === 'pair' && ( // Show button only for 'pair' notifications
+   //                <TouchableOpacity
+   //                   style={notificationStyles.btn}
+   //                   onPress={() =>
+   //                      setActionData({
+   //                         type: notification.type,
+   //                         data: notification.payload,
+   //                      })
+   //                   }>
+   //                   <Text style={notificationStyles.btnTxt}>Show</Text>
+   //                </TouchableOpacity>
+   //             )}
+   //          </View>
+   //       </>
+   //    );
+   // };
+
    const messageRequestNotification = (notification) => {
       const teacherSign = '📚';
+      console.log('[NOTIFICATION ]', notification);
+      // console.log('[USERDATA.ID ]', userData._id);
+      const firstName = notification.payload?.firstName || '';
+      const lastName = notification.payload?.lastName || '';
       return (
          <>
             <Text
@@ -69,7 +152,9 @@ const Notifications = () => {
                   notificationStyles.nameTxt,
                   notification.read && [notificationStyles.nameTxt, { color: '#40476D' }],
                ]}>
-               {notification.payload.firstName + ' ' + notification.payload.lastName} {teacherSign}
+               {firstName !== '' && lastName !== ''
+                  ? firstName + ' ' + lastName + ' ' + teacherSign
+                  : ''}
             </Text>
             <View style={notificationStyles.txtLayout}>
                <Text
@@ -86,6 +171,8 @@ const Notifications = () => {
 
    const pairingRequestNotification = (notification) => {
       const someSign = '🎓';
+      const firstName = notification.payload?.firstName || 'Unknown';
+      const lastName = notification.payload?.lastName || 'Unknown';
       return (
          <>
             <Text
@@ -93,7 +180,7 @@ const Notifications = () => {
                   notificationStyles.nameTxt,
                   notification.read && [notificationStyles.nameTxt, { color: '#40476D' }],
                ]}>
-               {notification.payload.firstName + ' ' + notification.payload.lastName} {someSign}
+               {firstName + ' ' + lastName} {someSign}
             </Text>
             <View style={notificationStyles.notificationContainer}>
                <View style={notificationStyles.txtLayout}>
@@ -105,16 +192,18 @@ const Notifications = () => {
                      {notification.text}
                   </Text>
                </View>
-               <TouchableOpacity
-                  style={notificationStyles.btn}
-                  onPress={() =>
-                     setActionData({
-                        type: notification.type,
-                        data: notification.payload,
-                     })
-                  }>
-                  <Text style={notificationStyles.btnTxt}>Show</Text>
-               </TouchableOpacity>
+               {notification.type === 'pair' && (
+                  <TouchableOpacity
+                     style={notificationStyles.btn}
+                     onPress={() =>
+                        setActionData({
+                           type: notification.type,
+                           data: notification.payload,
+                        })
+                     }>
+                     <Text style={notificationStyles.btnTxt}>Show</Text>
+                  </TouchableOpacity>
+               )}
             </View>
          </>
       );
