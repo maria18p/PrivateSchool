@@ -15,7 +15,6 @@ export const createLesson = async (data) => {
          room: data.room,
          subject: data.subject,
       };
-
       const result = await axios.post(BASE_URL + 'create', data);
       return result.data;
    } catch (error) {

@@ -34,7 +34,7 @@ const Notifications = () => {
 
    const determineNotificationType = (notification) => {
       if (notification.type === 'pair') return pairingRequestNotification(notification);
-      if (notification.type === 'newTeacher') return messageRequestNotification(notification);
+      return messageRequestNotification(notification);
    };
 
    const showNotifications = () => {
@@ -47,7 +47,7 @@ const Notifications = () => {
                      style={[
                         [
                            notificationStyles.eachNotificationContainer,
-                           { backgroundColor: '#FFC15E' },
+                           { backgroundColor: '#008BF5' },
                         ],
                         notification.read && notificationStyles.readNotificationContainer,
                      ]}
@@ -61,21 +61,20 @@ const Notifications = () => {
    };
 
    const messageRequestNotification = (notification) => {
-      // console.log('[NOTIFICATION ] ', notification.type);
-      // console.log('========');
+      const teacherSign = '📚';
       return (
          <>
             <Text
                style={[
                   notificationStyles.nameTxt,
-                  notification.read && [notificationStyles.nameTxt, { color: '#2E5EAA' }],
+                  notification.read && [notificationStyles.nameTxt, { color: '#40476D' }],
                ]}>
-               {notification.payload.firstName + ' ' + notification.payload.lastName}
+               {notification.payload.firstName + ' ' + notification.payload.lastName} {teacherSign}
             </Text>
             <View style={notificationStyles.txtLayout}>
                <Text
                   style={[
-                     [notificationStyles.txt, { color: '#000' }],
+                     [notificationStyles.txt, { color: '#fff' }],
                      notification.read && notificationStyles.txt,
                   ]}>
                   {notification.text}
@@ -86,20 +85,21 @@ const Notifications = () => {
    };
 
    const pairingRequestNotification = (notification) => {
+      const someSign = '🎓';
       return (
          <>
             <Text
                style={[
                   notificationStyles.nameTxt,
-                  notification.read && [notificationStyles.nameTxt, { color: '#2E5EAA' }],
+                  notification.read && [notificationStyles.nameTxt, { color: '#40476D' }],
                ]}>
-               {notification.payload.firstName + ' ' + notification.payload.lastName}
+               {notification.payload.firstName + ' ' + notification.payload.lastName} {someSign}
             </Text>
             <View style={notificationStyles.notificationContainer}>
                <View style={notificationStyles.txtLayout}>
                   <Text
                      style={[
-                        [notificationStyles.txt, { color: '#ffff', fontWeight: '500' }],
+                        [notificationStyles.txt, { color: '#000' }],
                         notification.read && notificationStyles.txt,
                      ]}>
                      {notification.text}

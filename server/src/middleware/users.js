@@ -29,7 +29,7 @@ export const postTeacherRequest = async (req) => {
       const queryResult = await createTeacher(req);
       await sendAdminNotification({
          text: 'A new teacher has joined !',
-         type: 'newTeacher',
+         // type: '',
          payload: queryResult.data,
       });
       return queryResult.success

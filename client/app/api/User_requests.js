@@ -6,11 +6,11 @@ const BASE_URL = `http://${IP}:${PORT}/api/`;
 
 export const makeLoginRequest = async (data) => {
    try {
-      console.log('Making login request...');
-      console.log('Request data:', data);
-      const result = await axios.post(BASE_URL + 'login', data);
-      console.log('role ', result.data.data.role);
-      return await result.data;
+      console.log('[MAKING LOGIN REQUEST...]');
+      console.log('[REQUEST DATA: ]', data);
+      const response = await axios.post(BASE_URL + 'login', data);
+      console.log('[ROLE ] ', response.data.data.role);
+      return response.data;
    } catch (error) {
       console.error('Error:', error);
    }

@@ -20,20 +20,12 @@ const styles = StyleSheet.create({
       flexDirection: 'column',
    },
 
-   readNotificationContainer: { backgroundColor: '#FBFBFF' },
+   readNotificationContainer: { backgroundColor: '#ffffff' },
 
    dataTableTxtStyle: {
       textTransform: 'capitalize',
       fontSize: 14,
       textAlign: 'justify',
-   },
-
-   nameTxt: {
-      fontSize: 18,
-      color: '#0E402D',
-      textTransform: 'capitalize',
-      marginBottom: 8,
-      fontFamily: 'PlayfairDisplay-VariableFont_wght',
    },
 
    notificationContainer: {
@@ -47,9 +39,17 @@ const styles = StyleSheet.create({
 
    txt: {
       fontSize: 17,
-      lineHeight: 16,
-      color: '#003844',
+      lineHeight: 20,
+      color: '#000',
       fontFamily: 'Poppins-Light',
+   },
+
+   nameTxt: {
+      fontSize: 18,
+      color: '#000',
+      textTransform: 'capitalize',
+      marginBottom: 8,
+      fontFamily: 'Poppins-ExtraLight',
    },
 
    btn: {
