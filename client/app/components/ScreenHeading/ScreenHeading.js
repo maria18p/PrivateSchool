@@ -94,7 +94,11 @@ const ScreenHeading = () => {
                   <View style={{ width: '59%' }}>
                      <Text style={styles.txtHelloUser}>
                         Hello {userData.name}{' '}
-                        {userData.role === 'Student' ? '🎓' : userData.role === 'Admin' ? '💼' : ''}
+                        {userData.role === 'Student'
+                           ? '🎓'
+                           : userData.role === 'Admin'
+                           ? '💼'
+                           : '🧑‍🎓'}
                      </Text>
                   </View>
                </View>
