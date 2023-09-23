@@ -67,8 +67,8 @@ const Students = () => {
       setOpenPopoverKey(updatedPopoverKeys);
    };
 
-   const ShowPopover = ({ student, key }) => {
-      const isStudentPopoverVisible = openPopoverKey[key] !== null;
+   const ShowPopover = ({ student, popoverKey }) => {
+      const isStudentPopoverVisible = openPopoverKey[popoverKey] !== null;
       return (
          <Popover
             ref={popoverRef}
@@ -82,7 +82,7 @@ const Students = () => {
                shadowOpacity: 0.3,
                shadowRadius: 4,
             }}>
-            <TouchableOpacity onPress={() => handlePopoverClose(key)}>
+            <TouchableOpacity onPress={() => handlePopoverClose(popoverKey)}>
                <Text>{student.email}</Text>
             </TouchableOpacity>
          </Popover>

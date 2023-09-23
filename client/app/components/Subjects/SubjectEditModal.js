@@ -26,9 +26,15 @@ export default function SubjectEditModal(props) {
          animationIn='slideInUp'
          backdropColor='#6969B3'
          backdropOpacity={0.35}>
-         <View style={modalStyle.editSubModalCOntainer}>
-            <Text>Update:</Text>
-            <TextInput value={subjectName} onChangeText={(text) => setSubjectName(text)} />
+         <View style={modalStyle.editSubModalContainer}>
+            <View style={modalStyle.txtModalSubjectLayout}>
+               <Text style={modalStyle.txtCurNameSubject}>Current name subject:</Text>
+               <TextInput
+                  style={modalStyle.txtInputUpdateSubject}
+                  value={subjectName}
+                  onChangeText={(text) => setSubjectName(text)}
+               />
+            </View>
 
             <View style={{ marginTop: 15 }}>
                <Button title='Update' onPress={() => handleUpdateSubject()} />
