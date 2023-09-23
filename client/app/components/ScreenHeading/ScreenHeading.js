@@ -69,8 +69,7 @@ const ScreenHeading = () => {
             aspect: [1, 1],
             quality: 1,
          });
-         // console.log('[RESULT ]', result);
-         if (!result.assets.uri !== '') {
+         if (!result.canceled) {
             const selectedImageUri = result.assets.length > 0 ? result.assets[0].uri : null;
             setSelectedAvatar(selectedImageUri);
          }
