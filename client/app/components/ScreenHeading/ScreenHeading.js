@@ -1,6 +1,6 @@
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import React, { useEffect, useState } from 'react';
-import { View, SafeAreaView, TouchableOpacity, Text } from 'react-native';
+import { View, SafeAreaView, TouchableOpacity, Text, Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Navbar from '../Navbar/Navbar';
 import { resetUserData, setUserChats, setUserNotifications } from '../../store/reducer';
@@ -10,6 +10,7 @@ import headingStyles from '../../styles/ScreenHeadingStyles';
 import { LinearGradient } from 'expo-linear-gradient';
 import { getNotifications } from '../../api/Notification_requests';
 import { getUserChat } from '../../api/User_requests';
+import * as ImagePicker from 'expo-image-picker';
 
 const ScreenHeading = () => {
    const navigation = useNavigation();
@@ -18,6 +19,7 @@ const ScreenHeading = () => {
    const [hamburgerShown, setHamburgerShown] = useState(false);
    const [notifications, setNotifications] = useState(null);
    const [chats, setChats] = useState(null);
+   const [selectedAvatar, setSelectedAvatar] = useState(null);
 
    useEffect(() => {
       updateNotifications();
@@ -58,6 +60,41 @@ const ScreenHeading = () => {
       await updateNotifications();
    };
 
+   const pickAvatar = async () => {
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status === 'granted') {
+         const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [1, 1],
+            quality: 1,
+         });
+         // console.log('[RESULT ]', result);
+         if (!result.assets.uri !== '') {
+            const selectedImageUri = result.assets.length > 0 ? result.assets[0].uri : null;
+            setSelectedAvatar(selectedImageUri);
+         }
+      } else {
+         Alert.alert('Permission denied');
+      }
+   };
+
+   const renderProfilePicture = () => {
+      if (selectedAvatar) {
+         return (
+            <Image
+               source={{ uri: selectedAvatar }}
+               style={{ width: 40, height: 40, borderRadius: 20 }}
+            />
+         );
+      }
+      return (
+         <TouchableOpacity onPress={pickAvatar} style={headingStyles.avatarBtn}>
+            <MaterialCommunityIcons name='camera' size={26} color='#5352ed' />
+         </TouchableOpacity>
+      );
+   };
+
    return (
       <SafeAreaView style={styles.safeAreaViewHomePage}>
          <LinearGradient
@@ -78,7 +115,6 @@ const ScreenHeading = () => {
                         style={headingStyles.threeD_EffectButton}>
                         <MaterialCommunityIcons name='android-messages' size={26} color='#5352ed' />
                      </TouchableOpacity>
-
                      <TouchableOpacity
                         onPress={() => navigation.navigate('Chats')}
                         style={headingStyles.threeD_EffectButton}>
@@ -90,19 +126,13 @@ const ScreenHeading = () => {
                         <MaterialCommunityIcons name='refresh' size={26} color='#5352ed' />
                      </TouchableOpacity>
                   </View>
-
-                  <View style={{ width: '59%' }}>
-                     <Text style={styles.txtHelloUser}>
-                        Hello {userData.name}{' '}
-                        {userData.role === 'Student'
-                           ? '🎓'
-                           : userData.role === 'Admin'
-                           ? '💼'
-                           : '🧑‍🎓'}
-                     </Text>
+                  <View style={headingStyles.nameAvatarLayout}>
+                     <Text style={styles.txtHelloUser}>Hello {userData.name}</Text>
+                     <TouchableOpacity style={headingStyles.avatarBtn} onPress={pickAvatar}>
+                        {renderProfilePicture()}
+                     </TouchableOpacity>
                   </View>
                </View>
-
                <View style={headingStyles.logoutBtnLayout}>
                   <TouchableOpacity onPress={Logout}>
                      <MaterialCommunityIcons name='account-arrow-left' size={30} color='#5352ed' />
