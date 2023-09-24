@@ -10,7 +10,7 @@ export const createDBConnection = async () => {
    // await addAdmin();
 };
 
-// ============================== Utility functions ==============================
+// =================== Utility functions ===================
 
 export const requestSuccess = async (data) => {
    data.success = true;
