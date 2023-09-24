@@ -83,7 +83,6 @@ export default function Registration({ navigation }) {
    }, [regMode]);
 
    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-   // const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
    const getSubjects = async () => {
       const res = await getAllSubjects();
