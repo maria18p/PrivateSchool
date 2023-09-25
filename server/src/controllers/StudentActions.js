@@ -23,6 +23,7 @@ export const createStudent = async (reqObj) => {
       password: hashedPassword,
       role: 'Student',
       subjects: reqObj.subjects,
+      resetCode: '',
    });
 
    await _account.save();

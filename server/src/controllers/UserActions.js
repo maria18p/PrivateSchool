@@ -63,7 +63,6 @@ export const login = async (req) => {
 
 const updateToken = async (account, token) => {
    await ODM.models.User.findOneAndUpdate({ _id: account._id }, { token: token });
-   // await ODM.models.User.findOneAndUpdate({ _id: account.id }, { token: token });
 };
 
 export const checkUserLoggedIn = async (reqObj) => {
@@ -74,6 +73,18 @@ export const checkUserLoggedIn = async (reqObj) => {
    return res
       ? { success: true, message: 'User logged in' }
       : { success: false, message: 'User not logged in' };
+};
+
+export const getUserSecretKey = async (req) => {
+   try {
+      const userKey = await ODM.models.User.findOne({ secretKey: req.user.secretKey });
+      console.log('[USERKEY \n======]', userKey);
+      return req.secretKey === 'mom'
+         ? { success: true, message: 'Correct key' }
+         : { success: false, message: 'Invalid key' };
+   } catch (err) {
+      throw err;
+   }
 };
 
 export const getUsers = async (req) => {
@@ -201,10 +212,6 @@ export const removeAllUsersByType = async (type) => {
 
 export const getUserChats = async (req) => {
    try {
-      // if (!req.user || !req.user._id) {
-      //   throw new Error('Invalid request: req.user or req.user._id is undefined');
-      // }
-
       let userChats = await ODM.models.Chat.find({
          users: { $in: req.user._id },
       }).populate('users');

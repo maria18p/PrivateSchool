@@ -10,6 +10,7 @@ import {
    updateLastName,
    updateStudentActive,
    updateStudentInactive,
+   getUserSecretKey,
 } from '../controllers/UserActions.js';
 import { requestFailure, requestSuccess, userHasAdminPermission } from './commonModule.js';
 import { sendAdminNotification } from './notifications.js';
@@ -141,4 +142,11 @@ export const postRequestUpdateStudentInactive = async (req) => {
    return queryResult.success
       ? requestSuccess({ message: queryResult.json.message })
       : requestFailure({ message: queryResult.json.message });
+};
+
+export const postRequestCheckSecretKey = async (req) => {
+   const queryResult = await getUserSecretKey(req);
+   return queryResult.success
+      ? requestSuccess({ message: queryResult.message })
+      : requestFailure({ message: queryResult.message });
 };

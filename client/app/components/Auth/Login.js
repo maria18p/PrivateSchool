@@ -1,7 +1,7 @@
 import { Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
 import React, { useState } from 'react';
 import { Icon } from 'react-native-elements';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { updateUser } from '../../store/reducer';
 import { makeLoginRequest } from '../../api/User_requests';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -63,6 +63,11 @@ export default function Login({ navigation }) {
             <TouchableOpacity style={styles.loginButton} onPress={login}>
                <Text style={styles.loginButtonText}>Login</Text>
             </TouchableOpacity>
+            {/* <TouchableOpacity
+               style={styles.registerOptionLoginScreen}
+               onPress={() => navigation.navigate('ResetPassword')}>
+               <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+            </TouchableOpacity> */}
             <View style={styles.registerOptionLoginScreen}>
                <Text style={styles.registerText}>Don't have an account? </Text>
                <TouchableOpacity onPress={() => navigation.navigate('Registration')}>

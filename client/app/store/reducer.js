@@ -1,84 +1,83 @@
-import { createSlice } from "@reduxjs/toolkit";
-import actions from "./actions";
+import { createSlice } from '@reduxjs/toolkit';
+import actions from './actions';
 
 export const loadState = async () => {
-	return await actions.loadUserData();
+   return await actions.loadUserData();
 };
 
 export const initialState = {
-	_id: "none",
-	name: "none",
-	email: "none",
-	role: "none",
-	token: null,
-	notifications: null,
-	chats: null,
-	firstName: null,
-	lastName: null,
+   _id: 'none',
+   name: 'none',
+   email: 'none',
+   role: 'none',
+   token: null,
+   notifications: null,
+   chats: null,
+   firstName: null,
+   lastName: null,
 };
 
 export const user = createSlice({
-	name: "user",
-	initialState,
-	reducers: {
-		getData: async (state, payload) => {},
-		updateUser: (state, action) => {
-			const { _id, name, email, role, token, firstName, lastName } =
-				action.payload;
-			return {
-				...state,
-				_id,
-				name,
-				email,
-				role,
-				token,
-				firstName,
-				lastName,
-			};
-		},
-		loadState: async (state) => {
-			state = await loadState();
-		},
+   name: 'user',
+   initialState,
+   reducers: {
+      getData: async (state, payload) => {},
+      updateUser: (state, action) => {
+         const { _id, name, email, role, token, firstName, lastName } = action.payload;
+         return {
+            ...state,
+            _id,
+            name,
+            email,
+            role,
+            token,
+            firstName,
+            lastName,
+         };
+      },
 
-		resetUserData: (state) => {
-			console.log("DELETING TOKEN:");
-			actions.logout();
-			return {
-				initialState,
-			};
-		},
+      loadState: async (state) => {
+         state = await loadState();
+      },
 
-		setUserNotifications: (state, action) => {
-			const notifications = action.payload.notifications;
+      resetUserData: (state) => {
+         console.log('DELETING TOKEN:');
+         actions.logout();
+         return {
+            initialState,
+         };
+      },
 
-			return { ...state, notifications };
-		},
+      setUserNotifications: (state, action) => {
+         const notifications = action.payload.notifications;
+         return { ...state, notifications };
+      },
 
-		setUserChats: (state, action) => {
-			const chats = action.payload.chats;
+      setUserChats: (state, action) => {
+         const chats = action.payload.chats;
+         return { ...state, chats };
+      },
 
-			return { ...state, chats };
-		},
-
-		updateUserName: (state, action) => {
-			const { firstName, lastName } = action.payload;
-			const name = firstName;
-			return {
-				...state,
-				name,
-				firstName,
-				lastName,
-			};
-		},
-	},
+      updateUserName: (state, action) => {
+         const { firstName, lastName } = action.payload;
+         const name = firstName;
+         return {
+            ...state,
+            name,
+            firstName,
+            lastName,
+         };
+      },
+   },
 });
 
 export const {
-	getData,
-	updateUser,
-	resetUserData,
-	setUserNotifications,
-	setUserChats,
-	updateUserName,
+   getData,
+   updateUser,
+   resetUserData,
+   setUserNotifications,
+   setUserChats,
+   updateUserName,
 } = user.actions;
+
 export default user.reducer;

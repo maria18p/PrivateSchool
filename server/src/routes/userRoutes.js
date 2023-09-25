@@ -12,6 +12,7 @@ import {
    postRequestUpdateUserLastName,
    postRequestUpdateStudentActive,
    postRequestUpdateStudentInactive,
+   postRequestCheckSecretKey,
 } from '../middleware/users.js';
 import { userLoggedIn } from '../middleware/commonModule.js';
 import { getRequestUserChat, postCreateMessage } from '../middleware/messages.js';
@@ -96,6 +97,10 @@ Router.post('/updateStudentActive', async (req, res) => {
 
 Router.post('/updateStudentInactive', async (req, res) => {
    return respond(await postRequestUpdateStudentInactive(req.body), res);
+});
+
+Router.post('/checkKey', async (req, res) => {
+   return respond(await postRequestCheckSecretKey(req.body), res);
 });
 
 export default Router;

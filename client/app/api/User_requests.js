@@ -56,6 +56,17 @@ export const checkPassword = async (params) => {
    }
 };
 
+export const checkSecretKey = async (params) => {
+   try {
+      const result = await axios.get(BASE_URL + 'checkKey', {
+         secretKey: params.secretKey,
+      });
+      return result.data;
+   } catch (error) {
+      console.error('Error:', error);
+   }
+};
+
 export const getAllUsers = async (params) => {
    try {
       params.user = {

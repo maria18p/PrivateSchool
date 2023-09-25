@@ -21,6 +21,7 @@ export const createTeacher = async (reqObj) => {
       password: hashedPassword,
       role: 'Teacher',
       subjects: reqObj.subjects,
+      resetCode: '',
    });
 
    await _account.save();

@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, TextInput, Alert } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
    checkPassword,
@@ -19,7 +19,7 @@ export default function Profile() {
    const [oldPassword, setOldPassword] = useState(null);
    const [showNewPassword, setShowNewPassword] = useState(null);
    const [newParameterValue, setNewParameterValue] = useState(null);
-   const [passwordVisible, setPasswordVisible] = useState(false); // State variable for password visibility
+   const [passwordVisible, setPasswordVisible] = useState(false); // password visibility
    const [changeParameter, setChangeParameter] = useState(null);
 
    const togglePasswordVisibility = () => {
