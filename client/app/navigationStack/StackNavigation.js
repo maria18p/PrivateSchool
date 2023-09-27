@@ -7,7 +7,6 @@ import Registration from '../screens/Registration/Registration';
 import Messages from '../screens/Messages/Messages';
 import img1 from '../assets/chats_bg.jpeg';
 import { Image } from 'react-native';
-// import ResetPasswordScreen from '../screens/ResetPassword/resetPassword';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,7 +28,6 @@ export const LoginStack = () => {
       <Stack.Navigator>
          <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
          <Stack.Screen name='Registration' component={Registration} options={styleOptions} />
-         {/* <Stack.Screen name='ResetPassword' component={ResetPasswordScreen} /> */}
       </Stack.Navigator>
    );
 };

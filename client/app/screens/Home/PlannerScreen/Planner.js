@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import styles from '../../../styles/carcassStyles';
 import { useSelector } from 'react-redux';
@@ -33,6 +33,8 @@ export default function Planner() {
    };
 
    const userData = useSelector((state) => state.user);
+   const popoverRef = useRef(null);
+   const [openPopoverKey, setOpenPopoverKey] = useState([]);
 
    const [selectedDate, setSelectedDate] = useState(null);
    const [selectedDateWeekDates, setSelectedDateWeekDates] = useState(null);
@@ -42,10 +44,6 @@ export default function Planner() {
    const [lessons, setLessons] = useState(null);
    const [calendarShown, setCalendarShown] = useState(false);
 
-   // useEffect(() => {
-   //    if (showNewEvent !== null) fetchLessons();
-   // }, [showNewEvent]);
-
    useEffect(() => {
       fetchLessons();
    }, []);
@@ -53,10 +51,6 @@ export default function Planner() {
    useEffect(() => {
       if (lessons && selectedDateWeekDates && lessons.length > 0) updateWeekPlan();
    }, [lessons, selectedDateWeekDates]);
-
-   // useEffect(() => {
-   //    if (lessons && selectedDateWeekDates && lessons.length > 0) updateWeekPlan();
-   // }, [selectedDateWeekDates]);
 
    useEffect(() => {
       if (!selectedDate || selectedDate.toString() === 'Invalid Date') setSelectedDate(new Date());
@@ -108,40 +102,6 @@ export default function Planner() {
 
       setSelectedDateWeekDates(weekDays);
    };
-
-   // const renderWeekMenu = () => {
-   //    if (!selectedDate) return <></>;
-   //    if (!selectedDateWeekDates) return <></>;
-   //    return (
-   //       <View style={PlannerStyles.weekDaysContainer}>
-   //          {selectedDateWeekDates.map((weekDay, index) => {
-   //             if (weekDay.dayName === daysOfWeek[selectedDate.getDay()]) {
-   //                return (
-   //                   <TouchableOpacity
-   //                      key={index}
-   //                      style={[PlannerStyles.weekDayBtn, { backgroundColor: '#ffffff' }]}>
-   //                      <Text
-   //                         style={[PlannerStyles.txtDay, { color: '#281B88', fontWeight: '500' }]}>
-   //                         {weekDay.dayName.slice(0, 3)}
-   //                      </Text>
-   //                   </TouchableOpacity>
-   //                );
-   //             } else {
-   //                return (
-   //                   <TouchableOpacity
-   //                      key={index}
-   //                      style={PlannerStyles.weekDayBtn}
-   //                      onPress={() => {
-   //                         setSelectedDate(weekDay.date);
-   //                      }}>
-   //                      <Text style={PlannerStyles.txtDay}>{weekDay.dayName.slice(0, 3)}</Text>
-   //                   </TouchableOpacity>
-   //                );
-   //             }
-   //          })}
-   //       </View>
-   //    );
-   // };
 
    const renderWeekMenu = () => {
       if (!selectedDate) return <></>;

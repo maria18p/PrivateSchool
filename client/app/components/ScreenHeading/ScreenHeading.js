@@ -70,7 +70,7 @@ const ScreenHeading = () => {
             quality: 1,
          });
          if (result) {
-            const selectedImageUri = result.assets.length > 0 ? result.assets[0].uri : null;
+            const selectedImageUri = result?.assets[0]?.uri ?? null;
             setSelectedAvatar(selectedImageUri);
          }
       } else {
