@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import styles from '../../../styles/carcassStyles';
 import { useSelector } from 'react-redux';
@@ -33,8 +33,6 @@ export default function Planner() {
    };
 
    const userData = useSelector((state) => state.user);
-   const popoverRef = useRef(null);
-   const [openPopoverKey, setOpenPopoverKey] = useState([]);
 
    const [selectedDate, setSelectedDate] = useState(null);
    const [selectedDateWeekDates, setSelectedDateWeekDates] = useState(null);
