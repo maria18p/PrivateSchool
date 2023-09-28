@@ -187,7 +187,6 @@ export const removeUser = async (user) => {
          email: user.email,
       });
       console.log('USER DELETE RESULT:', result);
-
       return result
          ? { success: true, message: 'User deleted' }
          : { success: false, message: 'User not deleted' };

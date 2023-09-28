@@ -34,3 +34,18 @@ export const getUserLessons = async (params) => {
       console.error('Error:', error);
    }
 };
+
+export const removeLesson = async (data) => {
+   try {
+      const result = await axios.delete(BASE_URL + 'remove', {
+         data: {
+            user: { _id: data.user._id, token: data.user.token },
+            lessonId: data.lessonId,
+         },
+      });
+      console.log('[RESULT.DATA]', result.data);
+      return result.data;
+   } catch (error) {
+      console.error('Error:', error);
+   }
+};

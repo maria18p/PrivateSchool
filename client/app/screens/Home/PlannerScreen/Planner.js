@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View, Alert } from 'react-native';
 import styles from '../../../styles/carcassStyles';
 import { useSelector } from 'react-redux';
 import NewEventModal from './NewEventModal';
 import { PlannerStyles } from '../../../styles/Planner_HomeScreenStyles';
 import { DataTable } from 'react-native-paper';
-import { getUserLessons } from '../../../api/Lesson_requests';
+import { getUserLessons, removeLesson } from '../../../api/Lesson_requests';
 import EditLessonsModal from './EditLessonsModal';
 import { Calendar } from 'react-native-calendars';
 import modalStyle from '../../../styles/ModalStyles';
@@ -45,6 +45,10 @@ export default function Planner() {
    useEffect(() => {
       fetchLessons();
    }, []);
+
+   useEffect(() => {
+      fetchLessons();
+   }, [lessons]);
 
    useEffect(() => {
       if (lessons && selectedDateWeekDates && lessons.length > 0) updateWeekPlan();
@@ -134,6 +138,24 @@ export default function Planner() {
       );
    };
 
+   const handleRemoveLesson = async (lessonId) => {
+      try {
+         const result = await removeLesson({
+            user: userData,
+            lessonId: lessonId,
+         });
+         !result.success ? Alert.alert('Failed to remove lesson') : fetchLessons();
+         // if (result.success) {
+         //    // Lesson removed successfully
+         //    fetchLessons();
+         // } else {
+         //    Alert.alert('Failed to remove lesson');
+         // }
+      } catch (error) {
+         console.error('Error removing lesson:', error);
+      }
+   };
+
    const showDayPlan = () => {
       if (!weekPlan) return <></>;
       return (
@@ -184,6 +206,17 @@ export default function Planner() {
                                          ' ' +
                                          lesson.pairing.teacher.lastName}
                                  </Text>
+                              </DataTable.Cell>
+                              <DataTable.Cell textStyle={PlannerStyles.plannerText}>
+                                 {userData.role === 'Student' ? ( // Check if the user is a student
+                                    <></>
+                                 ) : (
+                                    <TouchableOpacity
+                                       onPress={() => handleRemoveLesson(lesson._id)}
+                                       style={{ padding: 5 }}>
+                                       <Text>🗑️</Text>
+                                    </TouchableOpacity>
+                                 )}
                               </DataTable.Cell>
                            </DataTable.Row>
                         );

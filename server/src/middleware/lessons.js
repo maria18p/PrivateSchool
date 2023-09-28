@@ -4,6 +4,7 @@ import {
    createLesson,
    getUserLessons,
    userHasAnotherLesson,
+   removeLesson,
 } from '../controllers/LessonActions.js';
 import { getPairings } from '../controllers/PairingActions.js';
 import { getSubjects } from '../controllers/SubjectActions.js';
@@ -70,4 +71,18 @@ export const getRequestGetLessons = async (req) => {
    return queryResult.success
       ? requestSuccess({ data: queryResult.data })
       : requestFailure({ message: queryResult.message });
+};
+
+export const deleteRequestRemoveLesson = async (req) => {
+   try {
+      // Extract the lessonId from the request
+      const lessonId = req.lessonId;
+      const queryResult = await removeLesson(lessonId);
+      return queryResult.success
+         ? requestSuccess({ data: queryResult.data })
+         : requestFailure({ message: queryResult.message });
+   } catch (err) {
+      console.error('Error removing lesson:', err);
+      return requestFailure({ message: 'SOMETHING WENT WRONG' });
+   }
 };
