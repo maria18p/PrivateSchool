@@ -12,6 +12,7 @@ export default function Login({ navigation }) {
    const [email, setEmail] = useState('');
    const [password, setPassword] = useState('');
    const dispatch = useDispatch();
+
    const login = async () => {
       const params = {
          email: email,
@@ -63,6 +64,7 @@ export default function Login({ navigation }) {
             <TouchableOpacity style={styles.loginButton} onPress={login}>
                <Text style={styles.loginButtonText}>Login</Text>
             </TouchableOpacity>
+
             <View style={styles.registerOptionLoginScreen}>
                <Text style={styles.registerText}>Don't have an account? </Text>
                <TouchableOpacity onPress={() => navigation.navigate('Registration')}>
