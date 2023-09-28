@@ -34,7 +34,7 @@ export const PlannerStyles = StyleSheet.create({
       textAlign: 'center',
       textDecorationLine: 'underline',
       textTransform: 'capitalize',
-      color: '#013C30',
+      color: '#000',
       fontWeight: '400',
    },
 

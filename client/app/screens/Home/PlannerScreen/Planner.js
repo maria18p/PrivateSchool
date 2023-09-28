@@ -6,7 +6,7 @@ import NewEventModal from './NewEventModal';
 import { PlannerStyles } from '../../../styles/Planner_HomeScreenStyles';
 import { DataTable } from 'react-native-paper';
 import { getUserLessons } from '../../../api/Lesson_requests';
-// import EditLessonsModal from './EditLessonsModal';
+import EditLessonsModal from './EditLessonsModal';
 import { Calendar } from 'react-native-calendars';
 import modalStyle from '../../../styles/ModalStyles';
 import ManageStyles from '../../../styles/ManageOptionStyles';
@@ -14,7 +14,7 @@ import ManageStyles from '../../../styles/ManageOptionStyles';
 export default function Planner() {
    const colorTxt = {
       textShadowColor: '#46B1C9',
-      color: '#363946',
+      color: '#000',
       fontWeight: '600',
    };
 
@@ -112,8 +112,7 @@ export default function Planner() {
                      <TouchableOpacity
                         key={`weekDay-${index}`} // Provide a unique key
                         style={[PlannerStyles.weekDayBtn, { backgroundColor: '#ffffff' }]}>
-                        <Text
-                           style={[PlannerStyles.txtDay, { color: '#281B88', fontWeight: '500' }]}>
+                        <Text style={[PlannerStyles.txtDay, { color: '#000', fontWeight: '500' }]}>
                            {weekDay.dayName.slice(0, 3)}
                         </Text>
                      </TouchableOpacity>
@@ -263,6 +262,14 @@ export default function Planner() {
                         <></>
                      )}
                      {/* //Edit lesson */}
+                     {selectedLesson ? (
+                        <EditLessonsModal
+                           closeModal={() => setSelectedLesson(null)}
+                           lesson={selectedLesson}
+                        />
+                     ) : (
+                        <></>
+                     )}
                      <Text style={[styles.loginButtonText, { fontSize: 15 }]}>Add event</Text>
                   </TouchableOpacity>
                </View>
@@ -272,15 +279,4 @@ export default function Planner() {
          </View>
       </View>
    );
-}
-
-{
-   /* {selectedLesson ? (
-                        <EditLessonsModal
-                           closeModal={() => setSelectedLesson(null)}
-                           lesson={selectedLesson}
-                        />
-                     ) : (
-                        <></>
-                     )} */
 }

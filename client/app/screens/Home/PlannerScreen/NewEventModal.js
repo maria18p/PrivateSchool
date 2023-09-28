@@ -58,17 +58,33 @@ export default function NewEventModal(props) {
    };
 
    const submit = async () => {
-      const queryResult = await createLesson({
-         user: userData,
-         date: date,
-         start: start,
-         end: end,
-         student: student,
-         room: room,
-         subject: subject,
-      });
-      Alert.alert(queryResult.message);
-      console.log('[QUERYRESULT]', queryResult);
+      const today = new Date();
+      const selectedDate = new Date(date);
+      const currentTime = today.getHours() * 60 + today.getMinutes();
+      const startTimeMinutes = parseInt(start.split(':')[0]) * 60 + parseInt(start.split(':')[1]);
+      const endTimeMinutes = parseInt(end.split(':')[0]) * 60 + parseInt(end.split(':')[1]);
+
+      if (
+         start >= end ||
+         (selectedDate < today &&
+            (startTimeMinutes < currentTime || endTimeMinutes < currentTime)) ||
+         endTimeMinutes <= startTimeMinutes ||
+         selectedDate < today
+      ) {
+         Alert.alert('Invalid lesson details');
+      } else {
+         const queryResult = await createLesson({
+            user: userData,
+            date: date,
+            start: start,
+            end: end,
+            student: student,
+            room: room,
+            subject: subject,
+         });
+         Alert.alert(queryResult.message);
+         console.log('[QUERY RESULT]', queryResult);
+      }
    };
 
    const fetchRooms = async () => {
