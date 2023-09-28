@@ -10,12 +10,12 @@ import Popover from 'react-native-popover-view';
 
 const Students = () => {
    const backgroundImage = require('../../assets/students_bg.jpeg');
+   const dispatch = useDispatch();
 
    const popoverRef = useRef(null);
    const [myStudents, setMyStudents] = useState(null);
    const [allStudents, setAllStudents] = useState(null);
    const userData = useSelector((state) => state.user);
-   const dispatch = useDispatch();
    const [mode, setMode] = useState(null);
    const [openPopoverKey, setOpenPopoverKey] = useState([]);
 

@@ -32,7 +32,6 @@ export default function Planner() {
    };
 
    const userData = useSelector((state) => state.user);
-
    const [selectedDate, setSelectedDate] = useState(null);
    const [selectedDateWeekDates, setSelectedDateWeekDates] = useState(null);
    const [weekPlan, setWeekPlan] = useState(null);
@@ -197,18 +196,29 @@ export default function Planner() {
                                  {lesson.pairing.subject.name}
                               </DataTable.Cell>
                               <DataTable.Cell textStyle={PlannerStyles.plannerText}>
-                                 {new Date(lesson.start).getUTCHours().toString().padStart(2, '0')}:
-                                 {new Date(lesson.start)
-                                    .getUTCMinutes()
-                                    .toString()
-                                    .padStart(2, '0')}
-                                 -
-                                 {new Date(lesson.finish).getUTCHours().toString().padStart(2, '0')}
-                                 :
-                                 {new Date(lesson.start)
-                                    .getUTCMinutes()
-                                    .toString()
-                                    .padStart(2, '0')}
+                                 <TouchableOpacity>
+                                    <Text>
+                                       {new Date(lesson.start)
+                                          .getUTCHours()
+                                          .toString()
+                                          .padStart(2, '0')}
+                                       :
+                                       {new Date(lesson.start)
+                                          .getUTCMinutes()
+                                          .toString()
+                                          .padStart(2, '0')}
+                                       -
+                                       {new Date(lesson.finish)
+                                          .getUTCHours()
+                                          .toString()
+                                          .padStart(2, '0')}
+                                       :
+                                       {new Date(lesson.start)
+                                          .getUTCMinutes()
+                                          .toString()
+                                          .padStart(2, '0')}
+                                    </Text>
+                                 </TouchableOpacity>
                               </DataTable.Cell>
                               <DataTable.Cell
                                  textStyle={[PlannerStyles.plannerText, { marginLeft: 30 }]}>
@@ -218,15 +228,17 @@ export default function Planner() {
                                  textStyle={{
                                     width: '100%',
                                  }}>
-                                 <Text style={PlannerStyles.plannerText}>
-                                    {isStudent
-                                       ? lesson.pairing.teacher.firstName +
-                                         ' ' +
-                                         lesson.pairing.teacher.lastName
-                                       : lesson.pairing.student.firstName +
-                                         ' ' +
-                                         lesson.pairing.student.lastName}
-                                 </Text>
+                                 <TouchableOpacity>
+                                    <Text style={PlannerStyles.plannerText}>
+                                       {isStudent
+                                          ? lesson.pairing.teacher.firstName +
+                                            ' ' +
+                                            lesson.pairing.teacher.lastName
+                                          : lesson.pairing.student.firstName +
+                                            ' ' +
+                                            lesson.pairing.student.lastName}
+                                    </Text>
+                                 </TouchableOpacity>
                               </DataTable.Cell>
                               {!isStudent && (
                                  <DataTable.Cell numeric>
