@@ -32,7 +32,7 @@ export default function Login({ navigation }) {
    };
 
    return (
-      <LinearGradient colors={['#EAF4F4', '#1E1B18', '#424B54']} style={styles.container}>
+      <LinearGradient colors={['#F2E9DC', '#1E1B18', '#746D75']} style={styles.container}>
          <View style={styles.welcomeAnimationContainer}>
             <Animatable.Image
                source={require('../../assets/welcome1.jpg')}
