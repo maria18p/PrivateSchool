@@ -53,12 +53,9 @@ const ManageStyles = StyleSheet.create({
    },
 
    tblTxtTitle: {
-      fontSize: 16,
-      color: '#ffff',
+      fontSize: 14,
       textTransform: 'capitalize',
-      textShadowColor: '#ffffff',
-      textShadowOffset: { width: 1, height: 1 },
-      fontFamily: 'PlayfairDisplay-VariableFont_wght',
+      fontFamily: 'Poppins-ExtraLight',
    },
 
    roomName: {

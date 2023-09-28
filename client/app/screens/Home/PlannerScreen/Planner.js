@@ -196,8 +196,11 @@ export default function Planner() {
                                  {lesson.pairing.subject.name}
                               </DataTable.Cell>
                               <DataTable.Cell textStyle={PlannerStyles.plannerText}>
-                                 <TouchableOpacity>
-                                    <Text>
+                                 <TouchableOpacity style={PlannerStyles.rowBtn}>
+                                    <Text
+                                       numberOfLines={3}
+                                       ellipsizeMode='tail'
+                                       style={PlannerStyles.plannerText}>
                                        {new Date(lesson.start)
                                           .getUTCHours()
                                           .toString()
@@ -228,8 +231,11 @@ export default function Planner() {
                                  textStyle={{
                                     width: '100%',
                                  }}>
-                                 <TouchableOpacity>
-                                    <Text style={PlannerStyles.plannerText}>
+                                 <TouchableOpacity style={PlannerStyles.rowBtn}>
+                                    <Text
+                                       style={PlannerStyles.plannerText}
+                                       numberOfLines={3}
+                                       ellipsizeMode='tail'>
                                        {isStudent
                                           ? lesson.pairing.teacher.firstName +
                                             ' ' +
