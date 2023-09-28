@@ -39,7 +39,7 @@ export default function Planner() {
    const [weekPlan, setWeekPlan] = useState(null);
    const [showNewEvent, setShowNewEvent] = useState(null);
    const [selectedLesson, setSelectedLesson] = useState(null);
-   const [lessons, setLessons] = useState(null);
+   const [lessons, setLessons] = useState([]);
    const [calendarShown, setCalendarShown] = useState(false);
 
    useEffect(() => {
@@ -51,7 +51,7 @@ export default function Planner() {
    }, [lessons]);
 
    useEffect(() => {
-      if (lessons && selectedDateWeekDates && lessons.length > 0) updateWeekPlan();
+      if (lessons || selectedDateWeekDates || lessons.length > 0) updateWeekPlan();
    }, [lessons, selectedDateWeekDates]);
 
    useEffect(() => {
@@ -67,6 +67,10 @@ export default function Planner() {
    };
 
    const updateWeekPlan = () => {
+      if (!lessons || !selectedDateWeekDates) {
+         setWeekPlan([]);
+         return;
+      }
       setWeekPlan(
          selectedDateWeekDates.map((weekDayObj) => {
             let dayLessons = [];
@@ -74,7 +78,7 @@ export default function Planner() {
                const lessonDate = new Date(lesson.date);
                let dayEquals = lessonDate.getDay() == weekDayObj.date.getDay();
                let monthEquals = lessonDate.getMonth() == weekDayObj.date.getMonth();
-               let yearEquals = lessonDate.getYear() == weekDayObj.date.getYear();
+               let yearEquals = lessonDate.getFullYear() == weekDayObj.date.getFullYear();
                let sameDate = ((dayEquals == monthEquals) == yearEquals) == true;
 
                if (sameDate) dayLessons.push(lesson);
@@ -144,13 +148,12 @@ export default function Planner() {
             user: userData,
             lessonId: lessonId,
          });
-         !result.success ? Alert.alert('Failed to remove lesson') : fetchLessons();
-         // if (result.success) {
-         //    // Lesson removed successfully
-         //    fetchLessons();
-         // } else {
-         //    Alert.alert('Failed to remove lesson');
-         // }
+         if (result.success) {
+            Alert.alert(result.message);
+            fetchLessons();
+         } else {
+            Alert.alert('Failed to remove lesson');
+         }
       } catch (error) {
          console.error('Error removing lesson:', error);
       }

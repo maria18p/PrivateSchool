@@ -66,7 +66,6 @@ export const postRequestCreateLesson = async (req) => {
 export const getRequestGetLessons = async (req) => {
    req.user = (await getUsers(req.user))[0];
    req.pairings = (await getPairings({ role: req.user.role, participant: req.user._id })).data;
-
    const queryResult = await getUserLessons(req);
    return queryResult.success
       ? requestSuccess({ data: queryResult.data })
@@ -74,15 +73,10 @@ export const getRequestGetLessons = async (req) => {
 };
 
 export const deleteRequestRemoveLesson = async (req) => {
-   try {
-      // Extract the lessonId from the request
-      const lessonId = req.lessonId;
-      const queryResult = await removeLesson(lessonId);
-      return queryResult.success
-         ? requestSuccess({ data: queryResult.data })
-         : requestFailure({ message: queryResult.message });
-   } catch (err) {
-      console.error('Error removing lesson:', err);
-      return requestFailure({ message: 'SOMETHING WENT WRONG' });
-   }
+   // Extract the lessonId from the request
+   const lessonId = req.lessonId;
+   const queryResult = await removeLesson(lessonId);
+   return queryResult.success
+      ? requestSuccess({ message: queryResult.message })
+      : requestFailure({ message: queryResult.message });
 };

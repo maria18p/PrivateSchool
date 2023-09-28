@@ -121,7 +121,6 @@ export const removeLesson = async (req) => {
       const lessonToDelete = await ODM.models.Lesson.findOne({ _id: req });
       // Check if the lesson exists
       if (!lessonToDelete) {
-         // console.log('[***lessonToDelete*** ]', lessonToDelete);
          return {
             success: false,
             message: 'LESSON NOT FOUND.',
@@ -129,10 +128,9 @@ export const removeLesson = async (req) => {
       }
       // Delete the lesson
       const result = await ODM.models.Lesson.deleteOne({ _id: req });
-      console.log('LESSON DELETE RESULT:', result);
       if (result.deletedCount === 1) {
          // Remove the lesson reference from the teacher's lessons (if pairing exists)
-         if (lessonToDelete.pairing) {
+         if (lessonToDelete.pairing.length > 0) {
             const teacherPairing = await ODM.models.Pairing.findOne({
                _id: lessonToDelete.pairing,
             });
@@ -144,7 +142,7 @@ export const removeLesson = async (req) => {
             }
          }
          // Remove the lesson reference from the student's lessons (if pairing exists)
-         if (lessonToDelete.pairing) {
+         if (lessonToDelete.pairing.length > 0) {
             const studentPairing = await ODM.models.Pairing.findOne({
                _id: lessonToDelete.pairing,
             });
@@ -156,7 +154,7 @@ export const removeLesson = async (req) => {
             }
          }
          // Remove the lesson reference from the room (if room exists)
-         if (lessonToDelete.room) {
+         if (lessonToDelete.room.length > 0) {
             const room = await ODM.models.Room.findOne({ _id: lessonToDelete.room });
             if (room) {
                room.lessons = room.lessons.filter((lesson) => lesson.toString() !== req);
@@ -178,3 +176,77 @@ export const removeLesson = async (req) => {
       return { success: false, message: 'SOMETHING WENT WRONG' };
    }
 };
+
+// export const removeLesson = async (req) => {
+//    try {
+//       // Find the lesson to be removed
+//       const lessonToDelete = await ODM.models.Lesson.findOne({ _id: req });
+//       // console.log('***1***\n***LESSONTODELETE***', lessonToDelete);
+//       if (!lessonToDelete) {
+//          return {
+//             success: false,
+//             message: 'LESSON NOT FOUND.',
+//          };
+//       }
+//       return new Promise(async (resolve, reject) => {
+//          try {
+//             const result = await ODM.models.Lesson.deleteOne({ _id: req }).exec();
+//             if (result.deletedCount === 1) {
+//                // Remove the lesson reference from the teacher's lessons (if pairing exists)
+//                if (lessonToDelete.pairing.length > 0) {
+//                   const teacherPairing = await ODM.models.Pairing.findOne({
+//                      _id: lessonToDelete.pairing,
+//                   });
+//                   if (teacherPairing) {
+//                      teacherPairing.lessons = teacherPairing.lessons.filter(
+//                         (lesson) => lesson.toString() !== req,
+//                      );
+//                      await teacherPairing.save();
+//                   }
+//                }
+//                // Remove the lesson reference from the student's lessons (if pairing exists)
+//                if (lessonToDelete.pairing.length > 0) {
+//                   const studentPairing = await ODM.models.Pairing.findOne({
+//                      _id: lessonToDelete.pairing,
+//                   });
+//                   if (studentPairing) {
+//                      studentPairing.lessons = studentPairing.lessons.filter(
+//                         (lesson) => lesson.toString() !== req,
+//                      );
+//                      await studentPairing.save();
+//                   }
+//                }
+//                // Remove the lesson reference from the room (if room exists)
+//                if (lessonToDelete.room.length > 0) {
+//                   const room = await ODM.models.Room.findOne({ _id: lessonToDelete.room });
+//                   if (room) {
+//                      room.lessons = room.lessons.filter((lesson) => lesson.toString() !== req);
+//                      await room.save();
+//                   }
+//                }
+//                resolve({
+//                   success: true,
+//                   message: 'Lesson Removed Successfully!',
+//                });
+//             } else {
+//                resolve({
+//                   success: false,
+//                   message: 'Lesson not found or could not be removed.',
+//                });
+//             }
+//          } catch (err) {
+//             console.error('Error removing lesson:', err);
+//             reject({
+//                success: false,
+//                message: 'SOMETHING WENT WRONG',
+//             });
+//          }
+//       });
+//    } catch (err) {
+//       console.error('Error removing lesson:', err);
+//       return {
+//          success: false,
+//          message: 'SOMETHING WENT WRONG',
+//       };
+//    }
+// };
