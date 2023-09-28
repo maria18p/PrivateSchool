@@ -6,7 +6,7 @@ import HomeContext from './HomeContext';
 import ScreenHeading from '../../components/ScreenHeading/ScreenHeading';
 import styles from '../../styles/carcassStyles';
 import homeStyle from '../../styles/HomePageStyle';
-import img1 from '../../assets/Unknown.jpeg';
+import img1 from '../../assets/homepage2.jpg';
 
 const HomeScreen = ({ navigation }) => {
    const [content, setContent] = useState(<Planner />);

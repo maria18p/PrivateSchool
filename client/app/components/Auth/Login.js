@@ -1,4 +1,4 @@
-import { Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity, Alert, Image } from 'react-native';
 import React, { useState } from 'react';
 import { Icon } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
@@ -32,11 +32,20 @@ export default function Login({ navigation }) {
    };
 
    return (
-      <LinearGradient colors={['#F2F4FF', '#96C5F7', '#454ADE']} style={styles.container}>
+      <LinearGradient colors={['#EAF4F4', '#1E1B18', '#424B54']} style={styles.container}>
          <View style={styles.welcomeAnimationContainer}>
-            <Animatable.Text style={styles.titleText} animation='zoomInUp' delay={300}>
-               Welcome
-            </Animatable.Text>
+            <Animatable.Image
+               source={require('../../assets/welcome1.jpg')}
+               style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+               }}
+               animation='fadeIn'
+               delay={500}
+            />
          </View>
          <View style={styles.bottomView}>
             <View style={styles.inputView}>

@@ -8,9 +8,10 @@ const styles = StyleSheet.create({
    },
 
    welcomeAnimationContainer: {
-      height: '25%',
+      height: '26%',
       alignItems: 'center',
       justifyContent: 'center',
+      marginBottom: 35,
    },
 
    registerOptionLoginScreen: {
@@ -20,10 +21,9 @@ const styles = StyleSheet.create({
       height: 50,
    },
 
-   titleText: { fontSize: 20, fontWeight: 'bold', color: '#0D21A1' },
-
    bottomView: {
       width: '88%',
+      padding: 10,
       alignSelf: 'center',
       flexDirection: 'column',
       backgroundColor: '#ffffff ',
@@ -54,7 +54,8 @@ const styles = StyleSheet.create({
       width: '75%',
       backgroundColor: '#5352ed',
       borderRadius: 10,
-      marginTop: '4%',
+      marginTop: '5%',
+      marginBottom: 10,
       justifyContent: 'center',
       alignSelf: 'center',
    },
@@ -82,6 +83,7 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       marginTop: 15,
       fontSize: 17,
+      color: '#fff',
    },
 
    safeAreaViewHomePage: {

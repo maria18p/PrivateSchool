@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
       justifyContent: 'space-between',
    },
 
-   nameAvatarLayout: {
+   nameScreenHeadingLayout: {
       width: '59%',
       flexDirection: 'row',
       justifyContent: 'space-evenly',

@@ -10,7 +10,6 @@ import headingStyles from '../../styles/ScreenHeadingStyles';
 import { LinearGradient } from 'expo-linear-gradient';
 import { getNotifications } from '../../api/Notification_requests';
 import { getUserChat } from '../../api/User_requests';
-import * as ImagePicker from 'expo-image-picker';
 
 const ScreenHeading = () => {
    const navigation = useNavigation();
@@ -19,7 +18,6 @@ const ScreenHeading = () => {
    const [hamburgerShown, setHamburgerShown] = useState(false);
    const [notifications, setNotifications] = useState(null);
    const [chats, setChats] = useState(null);
-   const [selectedAvatar, setSelectedAvatar] = useState(null);
 
    useEffect(() => {
       updateNotifications();
@@ -60,40 +58,6 @@ const ScreenHeading = () => {
       await updateNotifications();
    };
 
-   const pickAvatar = async () => {
-      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (status === 'granted') {
-         const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: [1, 1],
-            quality: 1,
-         });
-         if (result) {
-            const selectedImageUri = result?.assets[0]?.uri ?? null;
-            setSelectedAvatar(selectedImageUri);
-         }
-      } else {
-         Alert.alert('Permission denied');
-      }
-   };
-
-   const renderProfilePicture = () => {
-      if (selectedAvatar) {
-         return (
-            <Image
-               source={{ uri: selectedAvatar }}
-               style={{ width: 40, height: 40, borderRadius: 20 }}
-            />
-         );
-      }
-      return (
-         <TouchableOpacity onPress={pickAvatar} style={headingStyles.avatarBtn}>
-            <MaterialCommunityIcons name='camera' size={26} color='#5352ed' />
-         </TouchableOpacity>
-      );
-   };
-
    return (
       <SafeAreaView style={styles.safeAreaViewHomePage}>
          <LinearGradient
@@ -125,11 +89,8 @@ const ScreenHeading = () => {
                         <MaterialCommunityIcons name='refresh' size={26} color='#5352ed' />
                      </TouchableOpacity>
                   </View>
-                  <View style={headingStyles.nameAvatarLayout}>
+                  <View style={headingStyles.nameScreenHeadingLayout}>
                      <Text style={styles.txtHelloUser}>Hello {userData.name}</Text>
-                     <TouchableOpacity style={headingStyles.avatarBtn} onPress={pickAvatar}>
-                        {renderProfilePicture()}
-                     </TouchableOpacity>
                   </View>
                </View>
                <View style={headingStyles.logoutBtnLayout}>

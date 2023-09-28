@@ -5,7 +5,7 @@ import HomeScreen from '../screens/Home/HomePage';
 import Notifications from '../screens/Notifications';
 import Registration from '../screens/Registration/Registration';
 import Messages from '../screens/Messages/Messages';
-import img1 from '../assets/chats_bg.jpeg';
+import img1 from '../assets/chats_bg3.avif';
 import { Image } from 'react-native';
 
 const Stack = createNativeStackNavigator();
@@ -13,7 +13,10 @@ const Stack = createNativeStackNavigator();
 const styleOptions = {
    headerShown: true,
    headerBackground: () => (
-      <Image source={img1} style={{ width: '100%', height: '100%', resizeMode: 'cover' }} />
+      <Image
+         source={img1}
+         style={{ width: '100%', height: '100%', resizeMode: 'cover', opacity: 0.9 }}
+      />
    ),
    headerTintColor: '#ffff',
    headerTitleStyle: {
