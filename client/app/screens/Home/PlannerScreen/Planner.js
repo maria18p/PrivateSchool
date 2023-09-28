@@ -6,7 +6,6 @@ import NewEventModal from './NewEventModal';
 import { PlannerStyles } from '../../../styles/Planner_HomeScreenStyles';
 import { DataTable } from 'react-native-paper';
 import { getUserLessons, removeLesson } from '../../../api/Lesson_requests';
-import EditLessonsModal from './EditLessonsModal';
 import { Calendar } from 'react-native-calendars';
 import modalStyle from '../../../styles/ModalStyles';
 import ManageStyles from '../../../styles/ManageOptionStyles';
@@ -51,13 +50,13 @@ export default function Planner() {
    }, [lessons]); // 'lessons' as a dependency
 
    useEffect(() => {
-      if (lessons || selectedDateWeekDates || lessons.length > 0) updateWeekPlan();
-   }, [lessons, selectedDateWeekDates]);
-
-   useEffect(() => {
       if (!selectedDate || selectedDate.toString() === 'Invalid Date') setSelectedDate(new Date());
       else updateCurrentWeekDates();
    }, [selectedDate]);
+
+   useEffect(() => {
+      if (lessons || selectedDateWeekDates || lessons.length > 0) updateWeekPlan();
+   }, [lessons, selectedDateWeekDates]);
 
    const fetchLessons = async () => {
       const lessons = await getUserLessons({
@@ -66,22 +65,42 @@ export default function Planner() {
       setLessons(lessons);
    };
 
+   // const updateWeekPlan = () => {
+   //    if (!lessons || !selectedDateWeekDates) {
+   //       setWeekPlan([]);
+   //       return;
+   //    }
+   //    setWeekPlan(
+   //       selectedDateWeekDates.map((weekDayObj) => {
+   //          let dayLessons = [];
+   //          lessons.forEach((lesson) => {
+   //             const lessonDate = new Date(lesson.date);
+   //             let dayEquals = lessonDate.getDay() == weekDayObj.date.getDay();
+   //             let monthEquals = lessonDate.getMonth() == weekDayObj.date.getMonth();
+   //             let yearEquals = lessonDate.getFullYear() == weekDayObj.date.getFullYear();
+   //             let sameDate = ((dayEquals == monthEquals) == yearEquals) == true;
+
+   //             if (sameDate) dayLessons.push(lesson);
+   //          });
+   //          weekDayObj.dayLessons = dayLessons;
+   //          return weekDayObj;
+   //       }),
+   //    );
+   // };
    const updateWeekPlan = () => {
-      if (!lessons || !selectedDateWeekDates) {
+      if (!selectedDateWeekDates || !lessons) {
          setWeekPlan([]);
          return;
       }
       setWeekPlan(
          selectedDateWeekDates.map((weekDayObj) => {
-            let dayLessons = [];
-            lessons.forEach((lesson) => {
+            let dayLessons = lessons.filter((lesson) => {
                const lessonDate = new Date(lesson.date);
-               let dayEquals = lessonDate.getDay() == weekDayObj.date.getDay();
-               let monthEquals = lessonDate.getMonth() == weekDayObj.date.getMonth();
-               let yearEquals = lessonDate.getFullYear() == weekDayObj.date.getFullYear();
-               let sameDate = ((dayEquals == monthEquals) == yearEquals) == true;
-
-               if (sameDate) dayLessons.push(lesson);
+               return (
+                  lessonDate.getDay() === weekDayObj.date.getDay() &&
+                  lessonDate.getMonth() === weekDayObj.date.getMonth() &&
+                  lessonDate.getFullYear() === weekDayObj.date.getFullYear()
+               );
             });
             weekDayObj.dayLessons = dayLessons;
             return weekDayObj;
@@ -110,8 +129,7 @@ export default function Planner() {
    };
 
    const renderWeekMenu = () => {
-      if (!selectedDate) return <></>;
-      if (!selectedDateWeekDates) return <></>;
+      if (!selectedDate || !selectedDateWeekDates) return <></>;
       return (
          <View style={PlannerStyles.weekDaysContainer}>
             {selectedDateWeekDates.map((weekDay, index) => {
@@ -172,6 +190,7 @@ export default function Planner() {
                return (
                   <View key={index}>
                      {dayObj.dayLessons.map((lesson, index) => {
+                        const isStudent = userData.role === 'Student';
                         return (
                            <DataTable.Row key={index} onPress={() => setSelectedLesson(lesson)}>
                               <DataTable.Cell textStyle={PlannerStyles.plannerText}>
@@ -200,26 +219,27 @@ export default function Planner() {
                                     width: '100%',
                                  }}>
                                  <Text style={PlannerStyles.plannerText}>
-                                    {userData.role === 'Teacher' || userData.role === 'Admin'
-                                       ? lesson.pairing.student.firstName +
+                                    {isStudent
+                                       ? lesson.pairing.teacher.firstName +
                                          ' ' +
-                                         lesson.pairing.student.lastName
-                                       : lesson.pairing.teacher.firstName +
+                                         lesson.pairing.teacher.lastName
+                                       : lesson.pairing.student.firstName +
                                          ' ' +
-                                         lesson.pairing.teacher.lastName}
+                                         lesson.pairing.student.lastName}
                                  </Text>
                               </DataTable.Cell>
-                              <DataTable.Cell textStyle={PlannerStyles.plannerText}>
-                                 {userData.role === 'Student' ? ( // Check if the user is a student
-                                    <></>
-                                 ) : (
+                              {!isStudent && (
+                                 <DataTable.Cell numeric>
                                     <TouchableOpacity
                                        onPress={() => handleRemoveLesson(lesson._id)}
-                                       style={{ padding: 5 }}>
+                                       style={{
+                                          justifyContent: 'center',
+                                          alignItems: 'center',
+                                       }}>
                                        <Text>🗑️</Text>
                                     </TouchableOpacity>
-                                 )}
-                              </DataTable.Cell>
+                                 </DataTable.Cell>
+                              )}
                            </DataTable.Row>
                         );
                      })}
@@ -251,6 +271,14 @@ export default function Planner() {
                   <DataTable.Title textStyle={[ManageStyles.tblTxtTitle, colorTxt]}>
                      {userData.role === 'Student' ? 'Teacher' : 'Student'}
                   </DataTable.Title>
+
+                  {userData.role !== 'Student' ? (
+                     <DataTable.Title
+                        numeric
+                        textStyle={[ManageStyles.tblTxtTitle, colorTxt, { marginLeft: 15 }]}>
+                        Edit
+                     </DataTable.Title>
+                  ) : null}
                </DataTable.Header>
                {showDayPlan()}
             </DataTable>
@@ -293,15 +321,6 @@ export default function Planner() {
                      onPress={() => setShowNewEvent(true)}>
                      {showNewEvent ? (
                         <NewEventModal closeModal={() => setShowNewEvent(!showNewEvent)} />
-                     ) : (
-                        <></>
-                     )}
-                     {/* //Edit lesson */}
-                     {selectedLesson ? (
-                        <EditLessonsModal
-                           closeModal={() => setSelectedLesson(null)}
-                           lesson={selectedLesson}
-                        />
                      ) : (
                         <></>
                      )}
