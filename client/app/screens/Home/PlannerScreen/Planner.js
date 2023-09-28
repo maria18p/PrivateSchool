@@ -9,6 +9,7 @@ import { getUserLessons, removeLesson } from '../../../api/Lesson_requests';
 import { Calendar } from 'react-native-calendars';
 import modalStyle from '../../../styles/ModalStyles';
 import ManageStyles from '../../../styles/ManageOptionStyles';
+import { Icon } from 'react-native-elements';
 
 export default function Planner() {
    const colorTxt = {
@@ -254,7 +255,12 @@ export default function Planner() {
                                           justifyContent: 'center',
                                           alignItems: 'center',
                                        }}>
-                                       <Text>🗑️</Text>
+                                       <Icon
+                                          name='delete'
+                                          type='ionicons'
+                                          color='#3A445D'
+                                          size={24}
+                                       />
                                     </TouchableOpacity>
                                  </DataTable.Cell>
                               )}
