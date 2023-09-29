@@ -7,6 +7,7 @@ import {
    Button,
    ScrollView,
    SafeAreaView,
+   ImageBackground,
 } from 'react-native';
 import React, { useEffect, useReducer, useState } from 'react';
 import { Icon } from 'react-native-elements';
@@ -20,6 +21,7 @@ import { RadioButton } from 'react-native-paper';
 import { SelectList } from 'react-native-dropdown-select-list';
 import { getAllSubjects } from '../../api/Subject_requests';
 import registerStyle from '../../styles/RegisterFormStyles';
+import backgroundImage from '../../assets/bgRegistration3.jpeg';
 
 const STUDENT_MODE = 1;
 const TEACHER_MODE = 2;
@@ -268,9 +270,7 @@ export default function Registration({ navigation }) {
    };
 
    return (
-      <LinearGradient
-         colors={['#7A6F9B', '#8B85C1', '#D4CDF4']}
-         style={[styles.container, { justifyContent: 'center' }]}>
+      <ImageBackground source={backgroundImage} resizeMode='stretch'>
          <ScrollView style={[styles.bottomView, { height: '100%', width: '97%' }]}>
             <SafeAreaView style={registerStyle.safeAreaContainer}>
                <View style={registerStyle.radioBtnLayout}>
@@ -369,6 +369,6 @@ export default function Registration({ navigation }) {
                </TouchableOpacity>
             </View>
          </ScrollView>
-      </LinearGradient>
+      </ImageBackground>
    );
 }

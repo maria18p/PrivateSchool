@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
       marginLeft: 20,
    },
 
-   fontAddedSub: { fontSize: 17 },
+   fontAddedSub: { fontSize: 17, color: '#fff' },
 
    containerDeleteBtn: {
       justifyContent: 'flex-end',
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
 
    radioBtnLayout: { flexDirection: 'row', alignItems: 'center' },
 
-   txtRadioBtn: { fontSize: 16, fontFamily: 'Poppins-Light', letterSpacing: 1 },
+   txtRadioBtn: { fontSize: 16, fontFamily: 'Poppins-Light', letterSpacing: 1, color: '#fff' },
 
    txtInput: {
       height: 35,
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
       padding: 8,
    },
 
-   teachTxtStyle: { fontSize: 15, alignSelf: 'center' },
+   teachTxtStyle: { fontSize: 16, alignSelf: 'center', color: '#fff' },
 
    txtInputStudentLayout: {
       marginTop: 10,
