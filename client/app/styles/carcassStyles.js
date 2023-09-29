@@ -39,6 +39,16 @@ const styles = StyleSheet.create({
       alignItems: 'center',
    },
 
+   btnSendResetPassword: {
+      backgroundColor: '#5352ed',
+      width: 40,
+      height: 40,
+      borderRadius: 20,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginRight: 5,
+   },
+
    inputIcon: {
       paddingHorizontal: '2%',
    },
@@ -82,9 +92,14 @@ const styles = StyleSheet.create({
 
    registerText: {
       textAlign: 'center',
-      marginTop: 15,
       fontSize: 17,
       color: '#fff',
+   },
+
+   btnForgotPassword: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: 12,
    },
 
    safeAreaViewHomePage: {

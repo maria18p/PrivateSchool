@@ -22,6 +22,10 @@ export default function Login({ navigation }) {
    const [password, setPassword] = useState('');
    const [phone, setPhone] = useState('');
 
+   useEffect(() => {
+      if (!showPhoneInput) setPhone('');
+   }, [showPhoneInput]);
+
    const login = async () => {
       const params = {
          email: email,
@@ -112,37 +116,28 @@ export default function Login({ navigation }) {
                <Text style={styles.loginButtonText}>Login</Text>
             </TouchableOpacity>
 
-            <View>
-               <TouchableOpacity onPress={handleForgotPasswordClick}>
-                  <Text style={styles.registerText}>Forgot password</Text>
-               </TouchableOpacity>
-               {showPhoneInput && (
-                  <View style={styles.inputView}>
-                     <Icon style={styles.inputIcon} name='phone' type='ionicons' color='#5352ed' />
-                     <TextInput
-                        style={styles.input}
-                        placeholder='Enter your phone number'
-                        value={phone}
-                        onChangeText={(text) => setPhone(text)}
-                        autoCorrect={false}
-                     />
-                     <View
-                        style={{
-                           backgroundColor: '#5352ed',
-                           width: 40,
-                           height: 40,
-                           borderRadius: 20,
-                           justifyContent: 'center',
-                           alignItems: 'center',
-                           marginRight: 5,
-                        }}>
-                        <TouchableOpacity onPress={transferResetPassword}>
-                           <Text style={{ fontSize: 20 }}>✉️</Text>
-                        </TouchableOpacity>
-                     </View>
-                  </View>
-               )}
-            </View>
+            <TouchableOpacity style={styles.btnForgotPassword} onPress={handleForgotPasswordClick}>
+               <Text style={[styles.registerText, { color: '#5352ed', marginTop: 0 }]}>
+                  Forgot password
+               </Text>
+            </TouchableOpacity>
+            {showPhoneInput && (
+               <View style={styles.inputView}>
+                  <Icon style={styles.inputIcon} name='phone' type='ionicons' color='#5352ed' />
+                  <TextInput
+                     style={styles.input}
+                     placeholder='Enter your phone number'
+                     value={phone}
+                     onChangeText={(text) => setPhone(text)}
+                     autoCorrect={false}
+                  />
+                  <TouchableOpacity
+                     onPress={transferResetPassword}
+                     style={styles.btnSendResetPassword}>
+                     <Text style={{ fontSize: 20 }}>✉️</Text>
+                  </TouchableOpacity>
+               </View>
+            )}
 
             <View style={styles.registerOptionLoginScreen}>
                <Text style={styles.registerText}>Don't have an account? </Text>
