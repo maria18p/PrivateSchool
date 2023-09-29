@@ -12,7 +12,8 @@ import {
    postRequestUpdateUserLastName,
    postRequestUpdateStudentActive,
    postRequestUpdateStudentInactive,
-   postRequestCheckSecretKey,
+   getRequestFindUserByPhoneNumber,
+   postRequestSendPassword,
 } from '../middleware/users.js';
 import { userLoggedIn } from '../middleware/commonModule.js';
 import { getRequestUserChat, postCreateMessage } from '../middleware/messages.js';
@@ -51,13 +52,24 @@ Router.delete('/deleteUser/:id', async (req, res) => {
 });
 
 Router.post('/checkLoggedIn', async (req, res) => {
-   console.log(req);
    return respond(await userLoggedIn(req.body), res);
 });
 
 Router.get('/checkPassword', async (req, res) => {
    return respond(await getRequestUserPassword(req.query), res);
 });
+
+Router.get('/findUserByPhoneNumber', async (req, res) => {
+   return respond(await getRequestFindUserByPhoneNumber(req.query), res);
+});
+
+//================================================================
+Router.post('/sendPasswordToEmailAddress', async (req, res) => {
+   // console.log('[** REQUEST **]: ', req.body);
+   const response = await postRequestSendPassword(req.body);
+   return respond(response, res);
+});
+//================================================================
 
 Router.post('/updatePassword', async (req, res) => {
    return respond(await postRequestUpdateUserPassword(req.body), res);
@@ -97,10 +109,6 @@ Router.post('/updateStudentActive', async (req, res) => {
 
 Router.post('/updateStudentInactive', async (req, res) => {
    return respond(await postRequestUpdateStudentInactive(req.body), res);
-});
-
-Router.post('/checkKey', async (req, res) => {
-   return respond(await postRequestCheckSecretKey(req.body), res);
 });
 
 export default Router;

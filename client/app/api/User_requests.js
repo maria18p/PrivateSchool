@@ -32,7 +32,6 @@ export const makeRegisterTeacherRequest = async (data) => {
 };
 
 export const checkLoggedIn = async (params) => {
-   // console.log(params);
    try {
       const result = await axios.post(BASE_URL + 'checkLoggedIn', params);
       return result.data;
@@ -49,17 +48,6 @@ export const checkPassword = async (params) => {
       };
       const result = await axios.get(BASE_URL + 'checkPassword', {
          params: params,
-      });
-      return result.data;
-   } catch (error) {
-      console.error('Error:', error);
-   }
-};
-
-export const checkSecretKey = async (params) => {
-   try {
-      const result = await axios.get(BASE_URL + 'checkKey', {
-         secretKey: params.secretKey,
       });
       return result.data;
    } catch (error) {
@@ -177,5 +165,28 @@ export const updateStudentActive = async (params) => {
       return result.data;
    } catch (error) {
       console.error('Error:', error);
+   }
+};
+
+export const findUserByPhoneNumber = async (phoneNumber) => {
+   try {
+      const response = await axios.get(BASE_URL + 'findUserByPhoneNumber', {
+         params: { phoneNumber },
+      });
+      return response.data;
+   } catch (error) {
+      console.error('Error:', error);
+      throw error;
+   }
+};
+
+export const sendPasswordToUserEmail = async (data) => {
+   try {
+      // console.log('[** data **]', data);
+      const response = await axios.post(BASE_URL + 'sendPasswordToEmailAddress', data);
+      return response.data;
+   } catch (error) {
+      console.error('Error:', error);
+      throw error;
    }
 };

@@ -10,7 +10,8 @@ import {
    updateLastName,
    updateStudentActive,
    updateStudentInactive,
-   getUserSecretKey,
+   findUserByPhoneNumber,
+   sendPassword,
 } from '../controllers/UserActions.js';
 import { requestFailure, requestSuccess, userHasAdminPermission } from './commonModule.js';
 import { sendAdminNotification } from './notifications.js';
@@ -72,6 +73,22 @@ export const getAllUsers = async (req) => {
    // if (!userHasAdminPermission === true) return hasPermission;
    const result = await getUsers(req);
    return requestSuccess({ data: result });
+};
+
+export const getRequestFindUserByPhoneNumber = async (req) => {
+   const phoneNumber = req.phoneNumber;
+   const queryResult = await findUserByPhoneNumber(phoneNumber);
+   return queryResult.success
+      ? requestSuccess({ data: queryResult.data, message: queryResult.message })
+      : requestFailure({ message: queryResult.message });
+};
+
+//================================================================
+export const postRequestSendPassword = async (req) => {
+   const queryResult = await sendPassword(req);
+   return queryResult.success
+      ? requestSuccess({ data: queryResult.data, message: queryResult.message })
+      : requestFailure({ message: queryResult.message });
 };
 
 export const getRequestUserPassword = async (req) => {
@@ -142,11 +159,4 @@ export const postRequestUpdateStudentInactive = async (req) => {
    return queryResult.success
       ? requestSuccess({ message: queryResult.json.message })
       : requestFailure({ message: queryResult.json.message });
-};
-
-export const postRequestCheckSecretKey = async (req) => {
-   const queryResult = await getUserSecretKey(req);
-   return queryResult.success
-      ? requestSuccess({ message: queryResult.message })
-      : requestFailure({ message: queryResult.message });
 };

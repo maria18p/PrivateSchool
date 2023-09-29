@@ -20,8 +20,8 @@ export const createTeacher = async (reqObj) => {
       email: reqObj.email,
       password: hashedPassword,
       role: 'Teacher',
+      phoneNumber: reqObj.phoneNumber,
       subjects: reqObj.subjects,
-      resetCode: '',
    });
 
    await _account.save();

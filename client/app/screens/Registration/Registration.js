@@ -44,23 +44,25 @@ const fakeLastName = faker.person.lastName();
 const fakeEmail = faker.internet.email();
 
 export default function Registration({ navigation }) {
+   const dispatch = useDispatch();
+
+   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
    const [email, setEmail] = useState('');
    const [password, setPassword] = useState('');
    const [firstName, setFirstName] = useState('');
    const [lastName, setLastName] = useState('');
+   const [phoneNumber, setPhoneNumber] = useState('');
    const [code, setCode] = useState('');
    const [regMode, setRegMode] = useState(STUDENT_MODE);
    const [allSubjects, setAllSubjects] = useState([]);
    const [isCodeCorrect, setIsCodeCorrect] = useState(true);
    const [incorrectAttempts, setIncorrectAttempts] = useState(0);
    const [disableRegistration, setDisableRegistration] = useState(false);
-
+   const [showPassword, setShowPassword] = useState(false);
    const [subjectsState, subjectsDispatcher] = useReducer(subjectReducer, {
       subjects: [],
    });
-   const dispatch = useDispatch();
-
-   const [showPassword, setShowPassword] = useState(false);
 
    const togglePasswordVisibility = () => {
       setShowPassword(!showPassword);
@@ -75,6 +77,7 @@ export default function Registration({ navigation }) {
       setFirstName('');
       setLastName('');
       setCode('');
+      setPhoneNumber('');
       subjectsDispatcher({
          type: 'clear',
          payload: {},
@@ -82,25 +85,20 @@ export default function Registration({ navigation }) {
       setPassword(generateRandomPassword());
    }, [regMode]);
 
-   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
    const getSubjects = async () => {
       const res = await getAllSubjects();
       setAllSubjects(res.data);
    };
 
-   // Function to generate a random password
+   // generate a random password
    const generateRandomPassword = () => {
       const symbols = '!@#$%^&*()_-+={}[]:;<>,.?/~';
       const letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
       const digits = '0123456789';
-
       const passwordLength = 12;
       let password = '';
-
       for (let i = 0; i < passwordLength; i++) {
          const category = Math.floor(Math.random() * 3); // 0 for symbols, 1 for letters, 2 for digits
-
          switch (category) {
             case 0:
                password += symbols[Math.floor(Math.random() * symbols.length)];
@@ -113,7 +111,6 @@ export default function Registration({ navigation }) {
                break;
          }
       }
-
       return password;
    };
 
@@ -140,11 +137,10 @@ export default function Registration({ navigation }) {
          lastName: lastName,
          email: email,
          password: password,
+         phoneNumber: phoneNumber,
          subjects: subjectIDs,
       };
-
-      console.log(params.email, params.firstName, params.lastName);
-
+      console.log(params.email, params.firstName, params.lastName, params.phoneNumber);
       try {
          if (email === '' || password === '' || firstName === '' || lastName === '') {
             Alert.alert('All fields are required');
@@ -177,6 +173,7 @@ export default function Registration({ navigation }) {
          email: email,
          password: password,
          code: code,
+         phoneNumber: phoneNumber,
          subjects: subjectIDs,
       };
       try {
@@ -272,7 +269,7 @@ export default function Registration({ navigation }) {
 
    return (
       <LinearGradient
-         colors={['#F2F4FF', '#96C5F7', '#454ADE']}
+         colors={['#7A6F9B', '#8B85C1', '#D4CDF4']}
          style={[styles.container, { justifyContent: 'center' }]}>
          <ScrollView style={[styles.bottomView, { height: '100%', width: '97%' }]}>
             <SafeAreaView style={registerStyle.safeAreaContainer}>
@@ -282,7 +279,7 @@ export default function Registration({ navigation }) {
                      status={regMode === STUDENT_MODE ? 'checked' : 'unchecked'}
                      onPress={() => setRegMode(STUDENT_MODE)}
                   />
-                  <Text style={{ fontSize: 15 }}>Student</Text>
+                  <Text style={registerStyle.txtRadioBtn}>Student</Text>
                </View>
                <View style={registerStyle.radioBtnLayout}>
                   <RadioButton
@@ -290,7 +287,7 @@ export default function Registration({ navigation }) {
                      status={regMode === TEACHER_MODE ? 'checked' : 'unchecked'}
                      onPress={() => setRegMode(TEACHER_MODE)}
                   />
-                  <Text style={{ fontSize: 15 }}>Teacher</Text>
+                  <Text style={registerStyle.txtRadioBtn}>Teacher</Text>
                </View>
             </SafeAreaView>
 
@@ -305,6 +302,18 @@ export default function Registration({ navigation }) {
                   textContentType='emailAddress'
                   autoCorrect={true}
                   selectTextOnFocus
+                  editable={true}
+               />
+            </View>
+            <View style={styles.inputView}>
+               <Icon style={styles.inputIcon} name='phone' type='ionicons' color='#5352ed' />
+               <TextInput
+                  keyboardType='numeric'
+                  placeholder='Number phone'
+                  textContentType='telephoneNumber'
+                  style={styles.input}
+                  value={phoneNumber}
+                  onChangeText={(text) => setPhoneNumber(text)}
                   editable={true}
                />
             </View>

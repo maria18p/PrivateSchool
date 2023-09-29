@@ -12,7 +12,6 @@ export const addNotification = async (req) => {
          payload: req.payload ? req.payload : null,
          hidden: false,
       });
-      // console.log('[QUERYRESULT ]', queryResult.payload);
       if (!queryResult) return { success: false, message: 'SOMETHING WENT WRONG' };
       const userRef = await ODM.models.User.findOne({ _id: req.user._id });
       userRef.notifications.push(queryResult._id);

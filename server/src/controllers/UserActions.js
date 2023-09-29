@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { ODM, requestFailure, requestSuccess } from '../middleware/commonModule.js';
+import nodemailer from 'nodemailer';
 import colors from 'colors';
 
 export const addAdmin = async () => {
@@ -14,6 +15,7 @@ export const addAdmin = async () => {
          email: 'admin',
          password: hashedPassword,
          role: 'Admin',
+         phoneNumber: '',
       });
       admin.save();
    } catch (e) {
@@ -75,18 +77,6 @@ export const checkUserLoggedIn = async (reqObj) => {
       : { success: false, message: 'User not logged in' };
 };
 
-export const getUserSecretKey = async (req) => {
-   try {
-      const userKey = await ODM.models.User.findOne({ secretKey: req.user.secretKey });
-      console.log('[USERKEY \n======]', userKey);
-      return req.secretKey === 'mom'
-         ? { success: true, message: 'Correct key' }
-         : { success: false, message: 'Invalid key' };
-   } catch (err) {
-      throw err;
-   }
-};
-
 export const getUsers = async (req) => {
    let filter = {};
    if (req._id) filter._id = req._id;
@@ -136,7 +126,6 @@ export const updatePassword = async (req) => {
       const filter = { _id: req.user._id };
       const update = { password: hashedPassword };
       const updatedUser = await ODM.models.User.findOneAndUpdate(filter, update);
-      // updatedUser.save();
       return requestSuccess({ message: 'Password updated successfully' });
    } catch (e) {
       console.log('Error updating password -> UserActions', e);
@@ -214,11 +203,81 @@ export const getUserChats = async (req) => {
       let userChats = await ODM.models.Chat.find({
          users: { $in: req.user._id },
       }).populate('users');
-
       return { success: true, data: userChats };
    } catch (e) {
       console.log('e', e);
       return { success: false, message: 'USER NOT FOUND' };
+   }
+};
+
+export const findUserByPhoneNumber = async (phoneNumber) => {
+   try {
+      const user = await ODM.models.User.findOne({ phoneNumber });
+      return {
+         success: true,
+         data: { _id: user._id, email: user.email, phoneNumber: user.phoneNumber },
+         message: 'A user with the phone number was found',
+      };
+   } catch (error) {
+      console.error('Error finding user by phone number:', error);
+      return { success: false, message: 'A user with this phone number was not found' };
+   }
+};
+
+export const sendPassword = async (req) => {
+   const generateRandomPassword = (length) => {
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let randPassword = '';
+      for (let i = 0; i < length; i++) {
+         const randomIndex = Math.floor(Math.random() * characters.length);
+         randPassword += characters.charAt(randomIndex);
+      }
+      return randPassword;
+   };
+
+   const newPassword = generateRandomPassword(4);
+
+   try {
+      // Find the user by phone number
+      const userByPhoneNumber = await findUserByPhoneNumber(req.phoneNumber);
+      // Check if the user ID from the phone number matches the one from the request
+      if (
+         !userByPhoneNumber.success ||
+         userByPhoneNumber.data._id.toString() !== req._id.toString()
+      ) {
+         return {
+            success: false,
+            message:
+               'The provided user ID does not match the one associated with the phone number.',
+         };
+      }
+      // Check if the email matches the one associated with the phone number
+      if (userByPhoneNumber.data.email !== req.email) {
+         return {
+            success: false,
+            message: 'The provided email does not match the one associated with the phone number.',
+         };
+      }
+      const transporter = nodemailer.createTransport({
+         service: 'Gmail',
+         auth: {
+            user: process.env.AUTH_USER_TRANSPORTER_GOOGLE,
+            pass: process.env.AUTH_PASS_TRANSPORTER_GOOGLE,
+         },
+      });
+
+      const mailOptions = {
+         from: 'tcbmaria2023@gmail.com',
+         to: req.email, // Use the email from the request
+         subject: 'Reset password',
+         text: `Your new password is: ${newPassword}`,
+      };
+      // Send the email
+      await transporter.sendMail(mailOptions);
+      return { success: true, message: 'Password reset instructions sent to your email' };
+   } catch (error) {
+      console.error('Error sending password:', error);
+      return { success: false, message: 'Failed to request password reset' };
    }
 };
 

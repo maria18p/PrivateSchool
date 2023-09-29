@@ -22,8 +22,8 @@ export const createStudent = async (reqObj) => {
       email: reqObj.email,
       password: hashedPassword,
       role: 'Student',
+      phoneNumber: reqObj.phoneNumber,
       subjects: reqObj.subjects,
-      resetCode: '',
    });
 
    await _account.save();

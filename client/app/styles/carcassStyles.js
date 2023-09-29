@@ -32,7 +32,8 @@ const styles = StyleSheet.create({
    inputView: {
       height: 50,
       backgroundColor: '#f1f3f6',
-      marginTop: '3.5%',
+      marginTop: '5%',
+      marginBottom: '3%',
       display: 'flex',
       flexDirection: 'row',
       alignItems: 'center',
