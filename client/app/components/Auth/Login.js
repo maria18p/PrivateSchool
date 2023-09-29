@@ -16,26 +16,11 @@ import styles from '../../styles/carcassStyles';
 export default function Login({ navigation }) {
    const dispatch = useDispatch();
 
-   // Generate a random verification code
-   const generatedCode = Math.floor(1000 + Math.random() * 9000);
-
    const [showPhoneInput, setShowPhoneInput] = useState(false);
-   const [showVerificationCodeInput, setShowVerificationCodeInput] = useState(false);
-
    const [notAuthUser, setNotAuthUser] = useState(null);
    const [email, setEmail] = useState('');
    const [password, setPassword] = useState('');
    const [phone, setPhone] = useState('');
-   const [inputCode, setInputCode] = useState('');
-   const [sentVerificationCode, setSentVerificationCode] = useState('');
-   const [emailReceivedPassword, setEmailReceivedPassword] = useState('');
-
-   useEffect(() => {
-      if (showPhoneInput) {
-         setInputCode('');
-         setShowVerificationCodeInput(false);
-      }
-   }, [showPhoneInput]);
 
    const login = async () => {
       const params = {
@@ -59,56 +44,28 @@ export default function Login({ navigation }) {
       setShowPhoneInput(!showPhoneInput);
    };
 
-   const sendVerificationCode = async () => {
+   const transferResetPassword = async () => {
       try {
          if (!phone.trim()) {
             Alert.alert('Please enter your phone number.');
             return;
          }
-         // Check if user exists by phone number
          const user = await findUserByPhoneNumber(phone);
          setNotAuthUser({ ...user });
-         const code = generatedCode;
-         setSentVerificationCode(code);
-         if (user.success) {
-            console.log(`[generatedCode ${code}]`);
-            Alert.alert('Verification code: ' + code);
-            setShowPhoneInput(false);
-            setShowVerificationCodeInput(true);
+         const result = await sendPasswordToUserEmail(notAuthUser.data);
+         if (result.success) {
+            const maskedEmail = `${notAuthUser.data.email.slice(
+               0,
+               3,
+            )}.....${notAuthUser.data.email.slice(-2)}@gmail.com`;
+            Alert.alert(`Password was sent to email ${maskedEmail}.`);
+            setShowPhoneInput(!showPhoneInput);
          } else {
-            console.log(user.message);
-            Alert.alert(user.message);
+            console.log(result.message);
+            Alert.alert(result.message);
          }
       } catch (error) {
          console.error('Error in sendVerificationCode:', error);
-      }
-   };
-
-   const checkInputCode = async () => {
-      // Check if the entered verification code matches the sent code
-      const maskedEmail = `${notAuthUser.data.email.slice(0, 3)}.....${notAuthUser.data.email.slice(
-         -2,
-      )}@gmail.com`;
-
-      try {
-         if (inputCode.toString() === sentVerificationCode.toString()) {
-            setShowVerificationCodeInput(false);
-            const result = await sendPasswordToUserEmail(notAuthUser.data);
-            try {
-               if (result.success) {
-                  Alert.alert(`Password was sent to email ${maskedEmail}.`);
-               } else {
-                  console.log(result.message);
-                  Alert.alert(result.message);
-               }
-            } catch (error) {
-               console.log(error);
-            }
-         } else {
-            Alert.alert('Incorrect verification code. Please try again.');
-         }
-      } catch (error) {
-         console.error('Error in notAuthUser data :', error);
       }
    };
 
@@ -179,24 +136,10 @@ export default function Login({ navigation }) {
                            alignItems: 'center',
                            marginRight: 5,
                         }}>
-                        <TouchableOpacity onPress={sendVerificationCode}>
+                        <TouchableOpacity onPress={transferResetPassword}>
                            <Text style={{ fontSize: 20 }}>✉️</Text>
                         </TouchableOpacity>
                      </View>
-                  </View>
-               )}
-               {showVerificationCodeInput && (
-                  <View style={[styles.inputView, { padding: 10 }]}>
-                     <TextInput
-                        style={styles.input}
-                        placeholder='Enter verification code'
-                        value={inputCode}
-                        onChangeText={(text) => setInputCode(text)}
-                        autoCorrect={false}
-                     />
-                     <TouchableOpacity onPress={checkInputCode}>
-                        <Text style={styles.resetPasswordText}>Send</Text>
-                     </TouchableOpacity>
                   </View>
                )}
             </View>

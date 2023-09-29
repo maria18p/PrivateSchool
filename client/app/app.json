@@ -14,12 +14,6 @@
       "assetBundlePatterns": ["**/*"],
       "assets": ["./assets/fonts/"],
       "platforms": ["ios", "android"],
-      "permissions": {
-         "mediaLibrary": {
-            "read": true,
-            "write": true
-         }
-      },
       "fonts": [
          {
             "asset": "./assets/fonts/CroissantOne-Regular.ttf",
