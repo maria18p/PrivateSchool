@@ -268,7 +268,7 @@ export const sendPassword = async (req) => {
 
       const mailOptions = {
          from: 'tcbmaria2023@gmail.com',
-         to: req.email, // Use the email from the request
+         to: req.email, // email from the request
          subject: 'Reset password',
          text: `Your new password is: ${newPassword}`,
       };
