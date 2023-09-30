@@ -8,14 +8,14 @@ import colors from 'colors';
 
 export const addAdmin = async () => {
    try {
-      // const hashedPassword = await argon2.hash('admin');
-      const hashedPassword = await bcryptjs.hash('admin', 8);
+      const hashedPassword = await argon2.hash('admin');
       const admin = await ODM.models.User({
          _id: new mongoose.Types.ObjectId(),
          firstName: 'Admin',
          lastName: 'Admin',
          email: 'admin',
          password: hashedPassword,
+         storedPassword: 'admin',
          role: 'Admin',
          phoneNumber: '',
       });
@@ -35,6 +35,7 @@ export const login = async (req) => {
          };
       }
 
+      // argon2.verify(hash, loginPassword)
       const isMatch = await argon2.verify(account.password, req.password);
       // const isMatch = await argon2.verify(req.password, account.storedPassword);
 
@@ -75,7 +76,6 @@ export const findUserByPhoneNumber = async (phoneNumber) => {
       return {
          data: {
             _id: user._id,
-            // password: user.password,
             storedPassword: user.storedPassword,
             email: user.email,
             phoneNumber: user.phoneNumber,

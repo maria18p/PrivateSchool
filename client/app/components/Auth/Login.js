@@ -30,8 +30,11 @@ export default function Login() {
    }, [showPhoneInput]);
 
    const login = async () => {
-      if (notAuthUser && notAuthUser.email && notAuthUser.storedPassword) {
+      if (notAuthUser != null && notAuthUser.email && notAuthUser.storedPassword) {
          params = { email: notAuthUser.email, password: notAuthUser.storedPassword };
+         setNotAuthUser(null);
+         setPassword('');
+         setEmail('');
       } else {
          params = {
             email: email,
@@ -41,7 +44,6 @@ export default function Login() {
       try {
          const requestResult = await makeLoginRequest(params);
          if (requestResult.success) {
-            setNotAuthUser(null);
             dispatch(updateUser(requestResult.data));
             Alert.alert('You logged in successfully');
             navigation.navigate('HomeScreen');
