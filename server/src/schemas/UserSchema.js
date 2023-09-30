@@ -24,6 +24,7 @@ const userSchema = new Schema({
    },
    email: { type: String, required: true, unique: true }, // email must have a unique
    password: String,
+   storedPassword: String,
    isActive: { type: Boolean, default: true },
    role: String,
    subjects: {

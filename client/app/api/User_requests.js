@@ -180,9 +180,8 @@ export const findUserByPhoneNumber = async (phoneNumber) => {
    }
 };
 
-export const sendPasswordToUserEmail = async (data) => {
+export const sendCodeToEmail = async (data) => {
    try {
-      // console.log('[** data **]', data);
       const response = await axios.post(BASE_URL + 'sendPasswordToEmailAddress', data);
       return response.data;
    } catch (error) {

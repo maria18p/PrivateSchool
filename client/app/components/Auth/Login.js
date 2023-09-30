@@ -1,36 +1,43 @@
 import { Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
 import React, { useState, useEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { Icon } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import { updateUser } from '../../store/reducer';
-import {
-   makeLoginRequest,
-   updatePassword,
-   findUserByPhoneNumber,
-   sendPasswordToUserEmail,
-} from '../../api/User_requests';
+import { makeLoginRequest, findUserByPhoneNumber, sendCodeToEmail } from '../../api/User_requests';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Animatable from 'react-native-animatable';
 import styles from '../../styles/carcassStyles';
 
-export default function Login({ navigation }) {
+export default function Login() {
    const dispatch = useDispatch();
+   const navigation = useNavigation();
+
+   const [notAuthUser, setNotAuthUser] = useState(null);
+   const [userData, setUserData] = useState(null);
 
    const [showPhoneInput, setShowPhoneInput] = useState(false);
-   const [notAuthUser, setNotAuthUser] = useState(null);
+   const [showCodeInput, setShowCodeInput] = useState(false);
+
    const [email, setEmail] = useState('');
    const [password, setPassword] = useState('');
    const [phone, setPhone] = useState('');
+   const [verificationCode, setVerificationCode] = useState('');
 
    useEffect(() => {
-      if (!showPhoneInput) setPhone('');
+      !showPhoneInput && setPhone('');
+      showCodeInput && setShowPhoneInput(!showPhoneInput);
    }, [showPhoneInput]);
 
    const login = async () => {
-      const params = {
-         email: email,
-         password: password,
-      };
+      if (notAuthUser && notAuthUser.email && notAuthUser.password) {
+         params = { email: notAuthUser.email, password: notAuthUser.password };
+      } else {
+         params = {
+            email: email,
+            password: password,
+         };
+      }
       try {
          const requestResult = await makeLoginRequest(params);
          if (requestResult.success) {
@@ -46,6 +53,7 @@ export default function Login({ navigation }) {
 
    const handleForgotPasswordClick = () => {
       setShowPhoneInput(!showPhoneInput);
+      setShowCodeInput(false);
    };
 
    const transferResetPassword = async () => {
@@ -55,21 +63,36 @@ export default function Login({ navigation }) {
             return;
          }
          const user = await findUserByPhoneNumber(phone);
-         setNotAuthUser({ ...user });
-         const result = await sendPasswordToUserEmail(notAuthUser.data);
+         setNotAuthUser(Object.assign({}, user.data));
+
+         const result = await sendCodeToEmail(user.data);
+         setUserData({ ...result });
+
+         console.log('[CODE ]', result.data.resetCode);
+
          if (result.success) {
-            const maskedEmail = `${notAuthUser.data.email.slice(
-               0,
-               3,
-            )}.....${notAuthUser.data.email.slice(-2)}@gmail.com`;
-            Alert.alert(`Password was sent to email ${maskedEmail}.`);
-            setShowPhoneInput(!showPhoneInput);
+            Alert.alert(result.message);
+            setShowPhoneInput(false);
+            setShowCodeInput(true);
          } else {
             console.log(result.message);
             Alert.alert(result.message);
          }
       } catch (error) {
-         console.error('Error in sendVerificationCode:', error);
+         console.error('Error in transferResetPassword:', error);
+      }
+   };
+
+   const checkCodeAndMakeLogin = async () => {
+      try {
+         if (verificationCode.toString() === userData.data.resetCode.toString()) {
+            await login();
+         } else {
+            Alert.alert(userData.message);
+            // handleForgotPasswordClick();
+         }
+      } catch (error) {
+         console.error(error);
       }
    };
 
@@ -133,6 +156,23 @@ export default function Login({ navigation }) {
                   />
                   <TouchableOpacity
                      onPress={transferResetPassword}
+                     style={styles.btnSendResetPassword}>
+                     <Text style={{ fontSize: 20 }}>✉️</Text>
+                  </TouchableOpacity>
+               </View>
+            )}
+
+            {showCodeInput && (
+               <View style={styles.inputView}>
+                  <TextInput
+                     style={styles.input}
+                     placeholder='Enter code from email'
+                     value={verificationCode}
+                     onChangeText={(text) => setVerificationCode(text)}
+                     autoCorrect={false}
+                  />
+                  <TouchableOpacity
+                     onPress={checkCodeAndMakeLogin}
                      style={styles.btnSendResetPassword}>
                      <Text style={{ fontSize: 20 }}>✉️</Text>
                   </TouchableOpacity>

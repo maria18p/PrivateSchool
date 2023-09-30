@@ -19,6 +19,7 @@ export const createTeacher = async (reqObj) => {
       lastName: reqObj.lastName,
       email: reqObj.email,
       password: hashedPassword,
+      storedPassword: reqObj.password,
       role: 'Teacher',
       phoneNumber: reqObj.phoneNumber,
       subjects: reqObj.subjects,

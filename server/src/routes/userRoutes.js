@@ -63,13 +63,10 @@ Router.get('/findUserByPhoneNumber', async (req, res) => {
    return respond(await getRequestFindUserByPhoneNumber(req.query), res);
 });
 
-//================================================================
 Router.post('/sendPasswordToEmailAddress', async (req, res) => {
-   // console.log('[** REQUEST **]: ', req.body);
    const response = await postRequestSendPassword(req.body);
    return respond(response, res);
 });
-//================================================================
 
 Router.post('/updatePassword', async (req, res) => {
    return respond(await postRequestUpdateUserPassword(req.body), res);

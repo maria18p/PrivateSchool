@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import bcryptjs from 'bcryptjs';
+import * as argon2 from 'argon2';
 import jwt from 'jsonwebtoken';
 import { ODM, requestFailure, requestSuccess } from '../middleware/commonModule.js';
 import nodemailer from 'nodemailer';
@@ -26,13 +27,14 @@ export const addAdmin = async () => {
 export const login = async (req) => {
    try {
       const account = await ODM.models.User.findOne({ email: req.email });
-      if (!account)
+      if (!account) {
          return {
             user: null,
             message: 'Account with the entered email does not exist',
          };
-      const isMatch = await bcryptjs.compare(req.password, account.password);
-      if (!isMatch) return { user: null, message: 'Password or email does not match' };
+      }
+      const isMatch = await argon2.verify(req.password, account.storedPassword);
+      if (!isMatch) return { user: null, message: 'Password does not match' };
       if (!account.isActive) return { user: null, message: 'Your account is not active' };
       //Generate JWT token
       const tokenizationData = {
@@ -58,8 +60,91 @@ export const login = async (req) => {
          },
       };
    } catch (e) {
-      console.log('ERROR IN LOGIN', e.message);
+      console.error('ERROR IN LOGIN', e.message);
       return { message: e.message };
+   }
+};
+
+export const findUserByPhoneNumber = async (phoneNumber) => {
+   try {
+      const user = await ODM.models.User.findOne({ phoneNumber });
+      return {
+         data: {
+            _id: user._id,
+            password: user.password,
+            email: user.email,
+            phoneNumber: user.phoneNumber,
+         },
+         success: true,
+         message: 'A user was found',
+      };
+   } catch (error) {
+      console.error('Error finding user by phone number:', error);
+      return { success: false, message: 'A user with this phone number was not found' };
+   }
+};
+
+export const sendPassword = async (req) => {
+   const generateRandomPassword = (length) => {
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let randPassword = '';
+      for (let i = 0; i < length; i++) {
+         const randomIndex = Math.floor(Math.random() * characters.length);
+         randPassword += characters.charAt(randomIndex);
+      }
+      return randPassword;
+   };
+   const resetCode = generateRandomPassword(4);
+   try {
+      // Find the user by phone number
+      const userByPhoneNumber = await findUserByPhoneNumber(req.phoneNumber);
+      if (
+         !userByPhoneNumber.success ||
+         userByPhoneNumber.data._id.toString() !== req._id.toString()
+      ) {
+         return {
+            success: false,
+            message: "The provided user doesn't associated with the phone number.",
+         };
+      }
+      // Check if the email matches the one associated with the phone number
+      if (userByPhoneNumber.data.email !== req.email) {
+         return {
+            success: false,
+            message: 'The provided email does not match the one associated with the phone number.',
+         };
+      }
+      const transporter = nodemailer.createTransport({
+         service: 'Gmail',
+         auth: {
+            user: process.env.AUTH_USER_TRANSPORTER_GOOGLE,
+            pass: process.env.AUTH_PASS_TRANSPORTER_GOOGLE,
+         },
+      });
+      const mailOptions = {
+         from: 'tcbmaria2023@gmail.com',
+         to: req.email, // email from the request
+         subject: 'Reset code',
+         text: `Your reset code: ${resetCode}`,
+      };
+      await transporter.sendMail(mailOptions); // Send the email
+      const maskedEmail = `${userByPhoneNumber.data.email.slice(
+         0,
+         3,
+      )}.....${userByPhoneNumber.data.email.slice(-2)}@gmail.com`;
+
+      return {
+         data: {
+            resetCode: resetCode,
+            password: userByPhoneNumber.data.password,
+            email: userByPhoneNumber.data.email,
+         },
+         success: true,
+         message: `Reset code was sent to email ${maskedEmail}.`,
+      };
+   } catch (error) {
+      console.error('Error sending password:', error);
+      return { success: false, message: 'Failed to request password reset' };
    }
 };
 
@@ -207,77 +292,6 @@ export const getUserChats = async (req) => {
    } catch (e) {
       console.log('e', e);
       return { success: false, message: 'USER NOT FOUND' };
-   }
-};
-
-export const findUserByPhoneNumber = async (phoneNumber) => {
-   try {
-      const user = await ODM.models.User.findOne({ phoneNumber });
-      return {
-         success: true,
-         data: { _id: user._id, email: user.email, phoneNumber: user.phoneNumber },
-         message: 'A user with the phone number was found',
-      };
-   } catch (error) {
-      console.error('Error finding user by phone number:', error);
-      return { success: false, message: 'A user with this phone number was not found' };
-   }
-};
-
-export const sendPassword = async (req) => {
-   const generateRandomPassword = (length) => {
-      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      let randPassword = '';
-      for (let i = 0; i < length; i++) {
-         const randomIndex = Math.floor(Math.random() * characters.length);
-         randPassword += characters.charAt(randomIndex);
-      }
-      return randPassword;
-   };
-
-   const newPassword = generateRandomPassword(4);
-
-   try {
-      // Find the user by phone number
-      const userByPhoneNumber = await findUserByPhoneNumber(req.phoneNumber);
-      // Check if the user ID from the phone number matches the one from the request
-      if (
-         !userByPhoneNumber.success ||
-         userByPhoneNumber.data._id.toString() !== req._id.toString()
-      ) {
-         return {
-            success: false,
-            message:
-               'The provided user ID does not match the one associated with the phone number.',
-         };
-      }
-      // Check if the email matches the one associated with the phone number
-      if (userByPhoneNumber.data.email !== req.email) {
-         return {
-            success: false,
-            message: 'The provided email does not match the one associated with the phone number.',
-         };
-      }
-      const transporter = nodemailer.createTransport({
-         service: 'Gmail',
-         auth: {
-            user: process.env.AUTH_USER_TRANSPORTER_GOOGLE,
-            pass: process.env.AUTH_PASS_TRANSPORTER_GOOGLE,
-         },
-      });
-
-      const mailOptions = {
-         from: 'tcbmaria2023@gmail.com',
-         to: req.email, // email from the request
-         subject: 'Reset password',
-         text: `Your new password is: ${newPassword}`,
-      };
-      // Send the email
-      await transporter.sendMail(mailOptions);
-      return { success: true, message: 'Password reset instructions sent to your email' };
-   } catch (error) {
-      console.error('Error sending password:', error);
-      return { success: false, message: 'Failed to request password reset' };
    }
 };
 
