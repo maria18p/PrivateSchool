@@ -15,23 +15,27 @@ const profile = StyleSheet.create({
    },
 
    txtStyle: {
-      lineHeight: 25,
-      fontSize: 20,
+      lineHeight: 22,
+      fontSize: 13,
       color: '#000000',
-      fontFamily: 'PlayfairDisplay-Medium',
+      fontFamily: 'Poppins-MediumItalic',
    },
 
+   txtBtn: { fontSize: 13, color: '#ffff' },
+
    btnContainer: {
-      height: 35,
-      width: '40%',
+      height: 30,
+      width: '35%',
       backgroundColor: '#5352ed',
       borderRadius: 10,
-      marginTop: '4%',
+      marginTop: '2%',
       justifyContent: 'center',
       alignItems: 'center',
-      alignSelf: 'center',
+      alignSelf: 'flex-end',
       marginBottom: 10,
    },
+
+   btnLayout: { marginTop: '5%', padding: 10 },
 
    layoutChangePassSection: { flexDirection: 'row', justifyContent: 'space-around' },
 

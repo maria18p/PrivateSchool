@@ -32,7 +32,13 @@ const Notifications = () => {
    }, [notifications]);
 
    const refreshNotifications = async () => {
-      setNotifications(await fetchNotifications());
+      const refreshedNotifications = await fetchNotifications();
+      if (refreshedNotifications) {
+         const unreadNotifications = refreshedNotifications.filter(
+            (notification) => !notification.read,
+         );
+         setNotifications(unreadNotifications);
+      }
    };
 
    const fetchNotifications = async () => {
@@ -67,7 +73,9 @@ const Notifications = () => {
 
    const showNotifications = () => {
       if (notifications === null) return <Text>Loading notifications...</Text>;
-      if (!notifications) return <Text>No notifications available.</Text>;
+      if (!notifications || notifications.length === 0) {
+         return <Text>No notifications available.</Text>;
+      }
       return (
          <>
             {notifications.map((notification, key) => (

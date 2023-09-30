@@ -65,9 +65,11 @@ export default function Profile() {
                   </TouchableOpacity>
                )}
             </View>
-            <TouchableOpacity style={profile.btnContainer} onPress={sendOldPassword}>
-               <Text style={profile.txtBtnStyle}>send</Text>
-            </TouchableOpacity>
+            <View style={profile.btnLayout}>
+               <TouchableOpacity style={profile.btnContainer} onPress={sendOldPassword}>
+                  <Text style={profile.txtBtnStyle}>send</Text>
+               </TouchableOpacity>
+            </View>
          </View>
       );
    };
@@ -131,44 +133,45 @@ export default function Profile() {
    return (
       <View style={profile.mainContainer}>
          <View style={profile.nameContainer}>
-            <Text style={[profile.txtStyle, { fontSize: 15 }]}>Email:</Text>
+            <Text style={[profile.txtStyle, { fontSize: 13 }]}>Email:</Text>
             <Text style={profile.txtStyle}>{userData.email}</Text>
          </View>
          <View style={profile.nameContainer}>
-            <Text style={[profile.txtStyle, { fontSize: 15 }]}>First name:</Text>
+            <Text style={[profile.txtStyle, { fontSize: 13 }]}>First name:</Text>
             <Text style={profile.txtStyle}>{userData.firstName}</Text>
          </View>
          <View style={profile.nameContainer}>
-            <Text style={[profile.txtStyle, { fontSize: 15 }]}>Last name:</Text>
+            <Text style={[profile.txtStyle, { fontSize: 13 }]}>Last name:</Text>
             <Text style={profile.txtStyle}>{userData.lastName}</Text>
          </View>
+         <View style={profile.btnLayout}>
+            <TouchableOpacity
+               style={profile.btnContainer}
+               onPress={() => {
+                  setChangeParameter('firstName');
+                  setShowChangePassword(!showChangePassword);
+               }}>
+               <Text style={profile.txtBtn}>Change First Name</Text>
+            </TouchableOpacity>
 
-         <TouchableOpacity
-            style={profile.btnContainer}
-            onPress={() => {
-               setChangeParameter('firstName');
-               setShowChangePassword(!showChangePassword);
-            }}>
-            <Text style={{ fontSize: 15, color: '#ffff' }}>Change First Name</Text>
-         </TouchableOpacity>
+            <TouchableOpacity
+               style={profile.btnContainer}
+               onPress={() => {
+                  setChangeParameter('lastName');
+                  setShowChangePassword(!showChangePassword);
+               }}>
+               <Text style={profile.txtBtn}>Change Last Name</Text>
+            </TouchableOpacity>
 
-         <TouchableOpacity
-            style={profile.btnContainer}
-            onPress={() => {
-               setChangeParameter('lastName');
-               setShowChangePassword(!showChangePassword);
-            }}>
-            <Text style={{ fontSize: 15, color: '#ffff' }}>Change Last Name</Text>
-         </TouchableOpacity>
-
-         <TouchableOpacity
-            style={profile.btnContainer}
-            onPress={() => {
-               setChangeParameter('password');
-               setShowChangePassword(!showChangePassword);
-            }}>
-            <Text style={{ fontSize: 15, color: '#ffff' }}>Change Password</Text>
-         </TouchableOpacity>
+            <TouchableOpacity
+               style={profile.btnContainer}
+               onPress={() => {
+                  setChangeParameter('password');
+                  setShowChangePassword(!showChangePassword);
+               }}>
+               <Text style={profile.txtBtn}>Change Password</Text>
+            </TouchableOpacity>
+         </View>
          {changePasswordSection()}
          {newPasswordSection()}
       </View>
