@@ -8,6 +8,7 @@ import colors from 'colors';
 
 export const addAdmin = async () => {
    try {
+      // const hashedPassword = await argon2.hash('admin');
       const hashedPassword = await bcryptjs.hash('admin', 8);
       const admin = await ODM.models.User({
          _id: new mongoose.Types.ObjectId(),
