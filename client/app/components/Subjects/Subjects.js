@@ -129,7 +129,7 @@ export default function Subjects() {
                      zIndex: -1000,
                      transform: [{ scale: 5 }, { rotate: '15deg' }],
                   }}
-                  source={require('../../assets/musicLogo2.jpeg')}
+                  source={require('../../assets/logo/musicLogo2.jpeg')}
                />
                <Text style={subjectStyle.txtMySubjects}>my subjects</Text>
             </View>

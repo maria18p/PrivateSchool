@@ -9,13 +9,13 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Popover from 'react-native-popover-view';
 
 const Students = () => {
-   const backgroundImage = require('../../assets/students_bg.jpeg');
+   const backgroundImage = require('../../assets/bg/students_bg.jpeg');
    const dispatch = useDispatch();
+   const userData = useSelector((state) => state.user);
 
    const popoverRef = useRef(null);
    const [myStudents, setMyStudents] = useState(null);
    const [allStudents, setAllStudents] = useState(null);
-   const userData = useSelector((state) => state.user);
    const [mode, setMode] = useState(null);
    const [openPopoverKey, setOpenPopoverKey] = useState([]);
 

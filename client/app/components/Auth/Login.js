@@ -77,7 +77,7 @@ export default function Login({ navigation }) {
       <LinearGradient colors={['#F2E9DC', '#1E1B18', '#746D75']} style={styles.container}>
          <View style={styles.welcomeAnimationContainer}>
             <Animatable.Image
-               source={require('../../assets/welcome1.jpg')}
+               source={require('../../assets/bg/welcome1.jpg')}
                style={{
                   position: 'absolute',
                   top: 0,

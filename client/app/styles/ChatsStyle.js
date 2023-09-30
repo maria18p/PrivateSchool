@@ -49,13 +49,8 @@ const styles = StyleSheet.create({
       // borderWidth: 2,
       height: 40,
       alignItems: 'center',
-      justifyContent: 'space-between',
+      justifyContent: 'center',
       marginBottom: 10,
-   },
-
-   layoutSelectedChat: {
-      flex: 1,
-      backgroundColor: 'rgba(112, 110, 178, 0.7)',
    },
 
    nameContainer: {
@@ -63,12 +58,12 @@ const styles = StyleSheet.create({
       width: '80%',
       height: '80%',
       justifyContent: 'center',
-      borderLeftColor: '#fff',
-      borderLeftWidth: 5,
-      borderRightColor: '#fff',
-      borderRightWidth: 5,
-      borderTopRightRadius: 30,
-      borderBottomLeftRadius: 30,
+      // borderWidth: 2,
+   },
+
+   layoutSelectedChat: {
+      flex: 1,
+      backgroundColor: 'rgba(112, 110, 178, 0.7)',
    },
 
    selectedChatLayout: {
@@ -103,14 +98,13 @@ const styles = StyleSheet.create({
       color: '#ffff',
       textTransform: 'capitalize',
       textAlign: 'center',
-      fontSize: 18,
+      fontSize: 20,
       fontFamily: 'Poppins-Light',
    },
 
    sendRow: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      // alignSelf: 'center',
       marginHorizontal: '2%',
       borderWidth: 1,
       borderStyle: 'solid',

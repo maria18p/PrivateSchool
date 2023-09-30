@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, Button } from 'react-native';
+import React, { useEffect, useState, useCallback } from 'react';
+import { View, Text, TouchableOpacity, ScrollView, RefreshControl } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { getNotifications, markNotificationsRead } from '../../api/Notification_requests';
 import NotificationActionModal from './NotificationActionModal';
@@ -8,11 +8,20 @@ import { setUserNotifications } from '../../store/reducer';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const Notifications = () => {
-   const [notifications, setNotifications] = useState(null);
-   const [actionData, setActionData] = useState(null);
-
    const userData = useSelector((state) => state.user);
    const dispatch = useDispatch();
+
+   const [notifications, setNotifications] = useState(null);
+   const [actionData, setActionData] = useState(null);
+   const [refreshing, setRefreshing] = useState(false);
+
+   const onRefresh = useCallback(() => {
+      setRefreshing(true);
+      setTimeout(() => {
+         setRefreshing(false);
+      }, 1000);
+      refreshNotifications();
+   }, []);
 
    useEffect(() => {
       fetchNotifications();
@@ -21,6 +30,10 @@ const Notifications = () => {
    useEffect(() => {
       if (notifications) makeNotificationsRead();
    }, [notifications]);
+
+   const refreshNotifications = async () => {
+      setNotifications(await fetchNotifications());
+   };
 
    const fetchNotifications = async () => {
       try {
@@ -54,8 +67,7 @@ const Notifications = () => {
 
    const showNotifications = () => {
       if (notifications === null) return <Text>Loading notifications...</Text>;
-      if (notifications.length === 0) return <Text>No notifications available.</Text>;
-
+      if (!notifications) return <Text>No notifications available.</Text>;
       return (
          <>
             {notifications.map((notification, key) => (
@@ -151,7 +163,9 @@ const Notifications = () => {
          colors={['#fff', '#91CAF2', '#E7ECEF']}
          start={{ x: 2, y: 0 }}
          end={{ x: 1, y: 1 }}>
-         <ScrollView style={notificationStyles.container}>
+         <ScrollView
+            style={notificationStyles.container}
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
             {showNotifications()}
             {actionData ? (
                <NotificationActionModal

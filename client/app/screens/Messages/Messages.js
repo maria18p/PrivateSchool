@@ -8,24 +8,24 @@ import {
    RefreshControl,
    KeyboardAvoidingView,
 } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllUsers, getUserChat, sendChatMessage } from '../../api/User_requests';
 import chatStyle from '../../styles/ChatsStyle';
 import { setUserChats } from '../../store/reducer';
-import bcImage from '../../assets/bc-chat.jpeg';
+import bcImage from '../../assets/bg/bc-chat.jpeg';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function Messages() {
-   const userData = useSelector((state) => state.user);
    const dispatch = useDispatch();
+   const userData = useSelector((state) => state.user);
+
    const [chatPartners, setChatPartners] = useState([]);
    const [messageText, setMessageText] = useState('');
    const [selectedPartner, setSelectedPartner] = useState(null);
    const [chats, setChats] = useState(null);
-
    const [refreshing, setRefreshing] = useState(false);
+
    const onRefresh = useCallback(() => {
       setRefreshing(true);
       setTimeout(() => {
@@ -228,9 +228,7 @@ export default function Messages() {
                         )}
                         <View style={chatStyle.nameContainer}>
                            {!selectedPartner ? (
-                              <Text style={[chatStyle.txtStyle, { color: '#E8C547' }]}>
-                                 Contacts
-                              </Text>
+                              <Text style={chatStyle.txtStyle}>Contacts</Text>
                            ) : (
                               <Text style={chatStyle.txtStyle}>{selectedPartner.name}</Text>
                            )}

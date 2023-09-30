@@ -5,7 +5,7 @@ import HomeScreen from '../screens/Home/HomePage';
 import Notifications from '../screens/Notifications';
 import Registration from '../screens/Registration/Registration';
 import Messages from '../screens/Messages/Messages';
-import img1 from '../assets/chats_bg3.avif';
+import img1 from '../assets/bg/navigationBg2.jpg';
 import { Image } from 'react-native';
 
 const Stack = createNativeStackNavigator();
@@ -18,11 +18,11 @@ const styleOptions = {
          style={{ width: '100%', height: '100%', resizeMode: 'cover', opacity: 0.9 }}
       />
    ),
-   headerTintColor: '#ffff',
+   headerTintColor: '#ffffff',
    headerTitleStyle: {
       fontSize: 25,
       fontWeight: '500',
-      fontFamily: 'CroissantOne-Regular',
+      fontFamily: 'DMSerifText-Regular',
    },
 };
 
