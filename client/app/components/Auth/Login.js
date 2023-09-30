@@ -30,7 +30,7 @@ export default function Login() {
    }, [showPhoneInput]);
 
    const login = async () => {
-      if (notAuthUser && notAuthUser.email && notAuthUser.password) {
+      if (notAuthUser && notAuthUser.email && notAuthUser.storedPassword) {
          params = { email: notAuthUser.email, password: notAuthUser.storedPassword };
       } else {
          params = {

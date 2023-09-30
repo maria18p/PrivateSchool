@@ -75,7 +75,7 @@ export const findUserByPhoneNumber = async (phoneNumber) => {
       return {
          data: {
             _id: user._id,
-            password: user.password,
+            // password: user.password,
             storedPassword: user.storedPassword,
             email: user.email,
             phoneNumber: user.phoneNumber,
