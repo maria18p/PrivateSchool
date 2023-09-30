@@ -47,7 +47,7 @@ export default function Planner() {
 
    useEffect(() => {
       fetchLessons();
-   }, [lessons]); // 'lessons' as a dependency
+   }, [lessons]);
 
    useEffect(() => {
       if (!selectedDate || selectedDate.toString() === 'Invalid Date') setSelectedDate(new Date());

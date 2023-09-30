@@ -57,21 +57,56 @@ export default function NewEventModal(props) {
       setStudents(students.data);
    };
 
+   // const submit = async () => {
+   //    const today = new Date();
+   //    const selectedDate = new Date(date);
+   //    const currentTime = today.getHours() * 60 + today.getMinutes();
+   //    const startTimeMinutes = parseInt(start.split(':')[0]) * 60 + parseInt(start.split(':')[1]);
+   //    const endTimeMinutes = parseInt(end.split(':')[0]) * 60 + parseInt(end.split(':')[1]);
+
+   //    if (
+   //       start >= end ||
+   //       selectedDate < today ||
+   //       startTimeMinutes < currentTime ||
+   //       endTimeMinutes < currentTime ||
+   //       selectedDate < today
+   //    ) {
+   //       Alert.alert('Invalid lesson details');
+   //    } else {
+   //       const queryResult = await createLesson({
+   //          user: userData,
+   //          date: date,
+   //          start: start,
+   //          end: end,
+   //          student: student,
+   //          room: room,
+   //          subject: subject,
+   //       });
+   //       Alert.alert(queryResult.message);
+   //       console.log('[QUERY RESULT]', queryResult);
+   //    }
+   // };
    const submit = async () => {
       const today = new Date();
+      today.setHours(0, 0, 0, 0); // Set the time to midnight
+
       const selectedDate = new Date(date);
+      selectedDate.setHours(0, 0, 0, 0);
+
       const currentTime = today.getHours() * 60 + today.getMinutes();
       const startTimeMinutes = parseInt(start.split(':')[0]) * 60 + parseInt(start.split(':')[1]);
       const endTimeMinutes = parseInt(end.split(':')[0]) * 60 + parseInt(end.split(':')[1]);
 
-      if (
-         start >= end ||
-         (selectedDate < today &&
-            (startTimeMinutes < currentTime || endTimeMinutes < currentTime)) ||
-         endTimeMinutes <= startTimeMinutes ||
-         selectedDate < today
-      ) {
-         Alert.alert('Invalid lesson details');
+      if (selectedDate < today) {
+         Alert.alert('Invalid lesson details: Selected date is in the past.');
+      } else if (startTimeMinutes < currentTime) {
+         Alert.alert('Invalid lesson details: Lesson cannot start in the past.');
+      } else if (endTimeMinutes < currentTime) {
+         Alert.alert('Invalid lesson details: Lesson cannot end in the past.');
+      } else if (start >= end) {
+         Alert.alert('Invalid lesson details: Start time must be before end time.');
+      } else if (endTimeMinutes > 21 * 60) {
+         Alert.alert('Invalid lesson details: Lesson cannot end after 21:00.');
       } else {
          const queryResult = await createLesson({
             user: userData,
@@ -193,7 +228,7 @@ export default function NewEventModal(props) {
 
                <View style={modalStyle.btnLayout}>
                   <View style={{ marginTop: 50 }}>
-                     <Button title='Create Event' onPress={() => submit()} />
+                     <Button title='Add lesson' onPress={() => submit()} />
                   </View>
                   <View style={{ marginTop: 10 }}>
                      <Button title='Close' onPress={() => props.closeModal()} />
