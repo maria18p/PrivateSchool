@@ -34,7 +34,10 @@ export const login = async (req) => {
             message: 'Account with the entered email does not exist',
          };
       }
-      const isMatch = await argon2.verify(req.password, account.storedPassword);
+
+      const isMatch = await argon2.verify(account.password, req.password);
+      // const isMatch = await argon2.verify(req.password, account.storedPassword);
+
       if (!isMatch) return { user: null, message: 'Password does not match' };
       if (!account.isActive) return { user: null, message: 'Your account is not active' };
       //Generate JWT token
@@ -73,6 +76,7 @@ export const findUserByPhoneNumber = async (phoneNumber) => {
          data: {
             _id: user._id,
             password: user.password,
+            storedPassword: user.storedPassword,
             email: user.email,
             phoneNumber: user.phoneNumber,
          },

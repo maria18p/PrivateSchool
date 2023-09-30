@@ -31,7 +31,7 @@ export default function Login() {
 
    const login = async () => {
       if (notAuthUser && notAuthUser.email && notAuthUser.password) {
-         params = { email: notAuthUser.email, password: notAuthUser.password };
+         params = { email: notAuthUser.email, password: notAuthUser.storedPassword };
       } else {
          params = {
             email: email,
@@ -41,6 +41,7 @@ export default function Login() {
       try {
          const requestResult = await makeLoginRequest(params);
          if (requestResult.success) {
+            setNotAuthUser(null);
             dispatch(updateUser(requestResult.data));
             Alert.alert('You logged in successfully');
             navigation.navigate('HomeScreen');
