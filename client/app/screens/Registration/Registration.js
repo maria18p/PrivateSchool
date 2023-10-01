@@ -294,7 +294,7 @@ export default function Registration({ navigation }) {
             </SafeAreaView>
 
             <View style={styles.inputView}>
-               <Icon style={styles.inputIcon} name='person' type='ionicons' color='#5352ed' />
+               <Icon style={styles.inputIcon} name='email' type='ionicons' color='#5352ed' />
                <TextInput
                   keyboardType='email-address'
                   placeholder={fakeEmail}

@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import bcryptjs from 'bcryptjs';
 import * as argon2 from 'argon2';
 import jwt from 'jsonwebtoken';
 import { ODM, requestFailure, requestSuccess } from '../middleware/commonModule.js';
@@ -34,10 +33,9 @@ export const login = async (req) => {
             message: 'Account with the entered email does not exist',
          };
       }
-
       // argon2.verify(hash, loginPassword)
       const isMatch = await argon2.verify(account.password, req.password);
-      // const isMatch = await argon2.verify(req.password, account.storedPassword);
+      console.log(account.password, ' + ', req.password);
 
       if (!isMatch) return { user: null, message: 'Password does not match' };
       if (!account.isActive) return { user: null, message: 'Your account is not active' };
@@ -202,7 +200,7 @@ export const getAllUserSubjectKeys = async (req) => {
 export const getUserPassword = async (req) => {
    try {
       const userData = await ODM.models.User.findOne({ _id: req.user._id });
-      return (await bcryptjs.compare(req.password, userData.password))
+      return (await argon2.verify(userData.password, req.password))
          ? { success: true, message: 'Correct password' }
          : { success: false, message: 'Invalid password' };
    } catch (err) {
@@ -212,7 +210,7 @@ export const getUserPassword = async (req) => {
 
 export const updatePassword = async (req) => {
    try {
-      const hashedPassword = await bcryptjs.hash(req.parameter, 8);
+      const hashedPassword = await argon2.hash(req.parameter);
       const filter = { _id: req.user._id };
       const update = { password: hashedPassword };
       const updatedUser = await ODM.models.User.findOneAndUpdate(filter, update);

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
+import * as argon2 from 'argon2';
 import { ODM } from '../middleware/commonModule.js';
-import bcryptjs from 'bcryptjs';
 import { getUsers } from './UserActions.js';
 import { getSubjects } from './SubjectActions.js';
 
@@ -11,8 +11,7 @@ export const createTeacher = async (reqObj) => {
    if (isAccountExists) return { success: false, message: 'Teacher already exists' };
 
    //Password crypt
-   const hashedPassword = await bcryptjs.hash(reqObj.password, 8);
-
+   const hashedPassword = await argon2.hash(reqObj.password);
    const _account = await ODM.models.User({
       _id: new mongoose.Types.ObjectId(),
       firstName: reqObj.firstName,

@@ -117,7 +117,7 @@ export default function Login() {
          </View>
          <View style={styles.bottomView}>
             <View style={styles.inputView}>
-               <Icon style={styles.inputIcon} name='person' type='ionicons' color='#5352ed' />
+               <Icon style={styles.inputIcon} name='email' type='ionicons' color='#5352ed' />
                <TextInput
                   style={styles.input}
                   placeholder='Email'
