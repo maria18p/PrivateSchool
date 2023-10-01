@@ -41,13 +41,17 @@ export default function Login() {
    useEffect(() => {
       Animated.timing(fadeAnim, {
          toValue: 0,
-         duration: 2500,
+         duration: 3000,
          useNativeDriver: true,
       }).start(() => {
          Alert.alert(
             'Welcome aboard!',
             'We are excited to have you as part of our community.',
-            { text: "Let's get started" },
+            [
+               {
+                  text: "Let's get started",
+               },
+            ],
             { cancelable: false },
          );
       });
