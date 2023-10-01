@@ -145,7 +145,6 @@ export default function Login() {
                useNativeDriver={true}
                delay={300}
             />
-
             <Animated.View style={{ opacity: fadeAnim }}>
                <Text
                   style={{
@@ -154,7 +153,7 @@ export default function Login() {
                      textAlign: 'center',
                      color: '#ffffff',
                   }}>
-                  Welcome to Prive!
+                  Welcome to Prive
                </Text>
             </Animated.View>
          </SafeAreaView>
