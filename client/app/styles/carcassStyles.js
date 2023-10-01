@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       width: '100%',
       height: 50,
+      marginTop: 10,
    },
 
    bottomView: {
@@ -30,20 +31,20 @@ const styles = StyleSheet.create({
    },
 
    inputView: {
-      height: 50,
+      flexDirection: 'row',
+      height: 40,
       backgroundColor: '#f1f3f6',
       marginTop: '5%',
-      marginBottom: '3%',
+      marginBottom: '2%',
       display: 'flex',
-      flexDirection: 'row',
       alignItems: 'center',
    },
 
    btnSendResetPassword: {
       backgroundColor: '#5352ed',
-      width: 40,
-      height: 40,
-      borderRadius: 20,
+      width: 30,
+      height: 30,
+      borderRadius: 15,
       justifyContent: 'center',
       alignItems: 'center',
       marginRight: 5,

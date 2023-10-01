@@ -151,16 +151,30 @@ export default function Login() {
                <View style={styles.inputView}>
                   <Icon style={styles.inputIcon} name='phone' type='ionicons' color='#5352ed' />
                   <TextInput
+                     keyboardType='phone-pad'
                      style={styles.input}
                      placeholder='Enter your phone number'
                      value={phone}
-                     onChangeText={(text) => setPhone(text)}
-                     autoCorrect={false}
+                     onChangeText={(text) => {
+                        const formattedText = text.replace(/[^0-9+]/g, '');
+                        if (
+                           formattedText.startsWith('+') &&
+                           formattedText.lastIndexOf('+') === formattedText.indexOf('+')
+                        ) {
+                           setPhone('+' + formattedText.substring(1, 13));
+                        } else {
+                           const newText = formattedText.replace(/\+/g, (match, offset) =>
+                              offset === 0 ? match : '',
+                           );
+                           setPhone(newText.substring(0, 10));
+                        }
+                     }}
+                     editable={true}
                   />
                   <TouchableOpacity
                      onPress={transferResetPassword}
                      style={styles.btnSendResetPassword}>
-                     <Text style={{ fontSize: 20 }}>✉️</Text>
+                     <Text style={{ fontSize: 15 }}>✉️</Text>
                   </TouchableOpacity>
                </View>
             )}
@@ -177,7 +191,7 @@ export default function Login() {
                   <TouchableOpacity
                      onPress={checkCodeAndMakeLogin}
                      style={styles.btnSendResetPassword}>
-                     <Text style={{ fontSize: 20 }}>✉️</Text>
+                     <Text style={{ fontSize: 15 }}>✉️</Text>
                   </TouchableOpacity>
                </View>
             )}

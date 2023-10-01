@@ -320,7 +320,17 @@ export default function Registration({ navigation }) {
                   value={phoneNumber}
                   onChangeText={(text) => {
                      const formattedText = text.replace(/[^0-9+]/g, '');
-                     setPhoneNumber(formattedText);
+                     if (
+                        formattedText.startsWith('+') &&
+                        formattedText.lastIndexOf('+') === formattedText.indexOf('+')
+                     ) {
+                        setPhoneNumber('+' + formattedText.substring(1, 13));
+                     } else {
+                        const newText = formattedText.replace(/\+/g, (match, offset) =>
+                           offset === 0 ? match : '',
+                        );
+                        setPhoneNumber(newText.substring(0, 10));
+                     }
                   }}
                   editable={true}
                />
