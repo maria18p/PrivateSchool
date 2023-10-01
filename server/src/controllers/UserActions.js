@@ -35,8 +35,6 @@ export const login = async (req) => {
       }
       // argon2.verify(hash, loginPassword)
       const isMatch = await argon2.verify(account.password, req.password);
-      console.log(account.password, ' + ', req.password);
-
       if (!isMatch) return { user: null, message: 'Password does not match' };
       if (!account.isActive) return { user: null, message: 'Your account is not active' };
       //Generate JWT token

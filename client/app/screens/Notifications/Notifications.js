@@ -98,7 +98,6 @@ const Notifications = () => {
 
    const messageRequestNotification = (notification) => {
       const teacherSign = '📚';
-      // console.log('[NOTIFICATION ]', notification);
       const firstName = notification.payload?.firstName || '';
       const lastName = notification.payload?.lastName || '';
       return (

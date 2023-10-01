@@ -1,4 +1,4 @@
-import { Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity, Alert, SafeAreaView } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Icon } from 'react-native-elements';
@@ -101,7 +101,7 @@ export default function Login() {
 
    return (
       <LinearGradient colors={['#F2E9DC', '#1E1B18', '#746D75']} style={styles.container}>
-         <View style={styles.welcomeAnimationContainer}>
+         <SafeAreaView style={styles.welcomeAnimationContainer}>
             <Animatable.Image
                source={require('../../assets/bg/welcome1.jpg')}
                style={{
@@ -114,7 +114,7 @@ export default function Login() {
                animation='fadeIn'
                delay={500}
             />
-         </View>
+         </SafeAreaView>
          <View style={styles.bottomView}>
             <View style={styles.inputView}>
                <Icon style={styles.inputIcon} name='email' type='ionicons' color='#5352ed' />
@@ -141,7 +141,6 @@ export default function Login() {
             <TouchableOpacity style={styles.loginButton} onPress={login}>
                <Text style={styles.loginButtonText}>Login</Text>
             </TouchableOpacity>
-
             <TouchableOpacity style={styles.btnForgotPassword} onPress={handleForgotPasswordClick}>
                <Text style={[styles.registerText, { color: '#5352ed', marginTop: 0 }]}>
                   Forgot password
@@ -195,7 +194,6 @@ export default function Login() {
                   </TouchableOpacity>
                </View>
             )}
-
             <View style={styles.registerOptionLoginScreen}>
                <Text style={styles.registerText}>Don't have an account? </Text>
                <TouchableOpacity onPress={() => navigation.navigate('Registration')}>

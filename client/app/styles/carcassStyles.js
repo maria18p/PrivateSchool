@@ -8,10 +8,11 @@ const styles = StyleSheet.create({
    },
 
    welcomeAnimationContainer: {
-      height: '26%',
+      height: '18%',
       alignItems: 'center',
       justifyContent: 'center',
       marginBottom: 35,
+      marginTop: '13%',
    },
 
    registerOptionLoginScreen: {
