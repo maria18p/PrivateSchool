@@ -208,15 +208,18 @@ export default function Registration({ navigation }) {
 
    const teacherRegistrationAddon = () => {
       return (
-         <View style={{ alignItems: 'center', width: '100%' }}>
-            <TextInput
-               style={registerStyle.txtInput}
-               value={code}
-               placeholder='Enter registration code: '
-               onChangeText={(text) => setCode(text)}
-            />
+         <View style={registerStyle.teacherRegistrationAddonLayout}>
+            <View style={styles.inputView}>
+               <Icon style={styles.inputIcon} name='code' type='ionicons' color='#5352ed' />
+               <TextInput
+                  style={styles.input}
+                  value={code}
+                  placeholder='Enter registration code'
+                  onChangeText={(text) => setCode(text)}
+               />
+            </View>
             <View style={registerStyle.txtInputTeachLayout}>
-               <Text style={registerStyle.teachTxtStyle}>I want to teach:</Text>
+               <Text style={registerStyle.txtToTeach}>I want to teach:</Text>
             </View>
          </View>
       );
@@ -225,7 +228,7 @@ export default function Registration({ navigation }) {
    const studentAddons = () => {
       return (
          <View style={registerStyle.txtInputStudentLayout}>
-            <Text style={registerStyle.teachTxtStyle}>I want to learn:</Text>
+            <Text style={registerStyle.txtToTeach}>I want to learn:</Text>
          </View>
       );
    };
@@ -310,12 +313,15 @@ export default function Registration({ navigation }) {
             <View style={styles.inputView}>
                <Icon style={styles.inputIcon} name='phone' type='ionicons' color='#5352ed' />
                <TextInput
-                  keyboardType='numeric'
+                  keyboardType='phone-pad'
                   placeholder='Number phone'
                   textContentType='telephoneNumber'
                   style={styles.input}
                   value={phoneNumber}
-                  onChangeText={(text) => setPhoneNumber(text)}
+                  onChangeText={(text) => {
+                     const formattedText = text.replace(/[^0-9+]/g, '');
+                     setPhoneNumber(formattedText);
+                  }}
                   editable={true}
                />
             </View>
@@ -361,9 +367,7 @@ export default function Registration({ navigation }) {
                   />
                </TouchableOpacity>
             </View>
-
             {regMode === STUDENT_MODE ? studentAddons() : teacherRegistrationAddon()}
-
             {subjectSelection()}
             <View style={styles.loginButton}>
                <TouchableOpacity onPress={() => submit()}>

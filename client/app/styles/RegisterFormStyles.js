@@ -37,23 +37,22 @@ const styles = StyleSheet.create({
 
    txtRadioBtn: { fontSize: 16, fontFamily: 'Poppins-Light', letterSpacing: 1, color: '#fff' },
 
-   txtInput: {
-      height: 35,
-      backgroundColor: 'white',
-      marginTop: 10,
-      padding: 10,
+   teacherRegistrationAddonLayout: {
+      justifyContent: 'center',
+      flexDirection: 'column',
+      alignItems: 'center',
+      width: '100%',
+      height: 'auto',
+      marginBottom: 0,
    },
 
    txtInputTeachLayout: {
-      marginTop: 10,
       width: '100%',
       height: 40,
       justifyContent: 'center',
-      alignItems: 'flex-start',
-      padding: 8,
    },
 
-   teachTxtStyle: { fontSize: 16, alignSelf: 'center', color: '#fff' },
+   txtToTeach: { fontSize: 16, alignSelf: 'center', color: '#fff' },
 
    txtInputStudentLayout: {
       marginTop: 10,
