@@ -8,10 +8,9 @@ const styles = StyleSheet.create({
    },
 
    welcomeAnimationContainer: {
-      height: '18%',
-      alignItems: 'center',
+      height: '19%',
       justifyContent: 'center',
-      marginBottom: 35,
+      marginBottom: 15,
       marginTop: '13%',
    },
 

@@ -1,4 +1,12 @@
-import { Text, View, TextInput, TouchableOpacity, Alert, SafeAreaView } from 'react-native';
+import {
+   Text,
+   View,
+   TextInput,
+   TouchableOpacity,
+   Alert,
+   SafeAreaView,
+   Animated,
+} from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Icon } from 'react-native-elements';
@@ -13,6 +21,7 @@ export default function Login() {
    const dispatch = useDispatch();
    const navigation = useNavigation();
 
+   const [fadeAnim] = useState(new Animated.Value(1));
    const [notAuthUser, setNotAuthUser] = useState(null);
    const [userData, setUserData] = useState(null);
 
@@ -28,6 +37,21 @@ export default function Login() {
       !showPhoneInput && setPhone('');
       showCodeInput && setShowPhoneInput(!showPhoneInput);
    }, [showPhoneInput]);
+
+   useEffect(() => {
+      Animated.timing(fadeAnim, {
+         toValue: 0,
+         duration: 2500,
+         useNativeDriver: true,
+      }).start(() => {
+         Alert.alert(
+            'Welcome aboard!',
+            'We are excited to have you as part of our community.',
+            { text: "Let's get started" },
+            { cancelable: false },
+         );
+      });
+   }, []);
 
    const login = async () => {
       if (notAuthUser != null && notAuthUser.email && notAuthUser.storedPassword) {
@@ -103,7 +127,7 @@ export default function Login() {
       <LinearGradient colors={['#F2E9DC', '#1E1B18', '#746D75']} style={styles.container}>
          <SafeAreaView style={styles.welcomeAnimationContainer}>
             <Animatable.Image
-               source={require('../../assets/bg/welcome1.jpg')}
+               source={require('../../assets/bg/welcome3.jpg')}
                style={{
                   position: 'absolute',
                   top: 0,
@@ -112,8 +136,23 @@ export default function Login() {
                   height: '100%',
                }}
                animation='fadeIn'
-               delay={500}
+               duration={3000}
+               easing='ease-out'
+               useNativeDriver={true}
+               delay={300}
             />
+
+            <Animated.View style={{ opacity: fadeAnim }}>
+               <Text
+                  style={{
+                     fontSize: 35,
+                     fontWeight: 'bold',
+                     textAlign: 'center',
+                     color: '#ffffff',
+                  }}>
+                  Welcome to Prive!
+               </Text>
+            </Animated.View>
          </SafeAreaView>
          <View style={styles.bottomView}>
             <View style={styles.inputView}>
