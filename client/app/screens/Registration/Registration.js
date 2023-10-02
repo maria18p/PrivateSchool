@@ -14,10 +14,9 @@ import { faker } from '@faker-js/faker';
 import { makeRegisterStudentRequest, makeRegisterTeacherRequest } from '../../api/User_requests';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styles from '../../styles/carcassStyles';
 import { RadioButton } from 'react-native-paper';
-import { SelectList } from 'react-native-dropdown-select-list';
 import { getAllSubjects } from '../../api/Subject_requests';
 import registerStyle from '../../styles/RegisterFormStyles';
 
@@ -254,10 +253,13 @@ export default function Registration({ navigation }) {
                </Text>
             </TouchableOpacity>
             {isOpen && (
-               <View ref={dropdownRef}>
+               <View ref={dropdownRef} style={{ flex: 1 }}>
                   {options.map((option) => (
-                     <TouchableOpacity key={option} onPress={() => handleOptionSelect(option)}>
-                        <Text style={{ color: '#fff' }}>{option}</Text>
+                     <TouchableOpacity
+                        style={registerStyle.dropdownBtn}
+                        key={option}
+                        onPress={() => handleOptionSelect(option)}>
+                        <Text style={{ color: '#fff', fontSize: 15 }}>{option}</Text>
                      </TouchableOpacity>
                   ))}
                </View>
@@ -419,16 +421,4 @@ export default function Registration({ navigation }) {
          </ScrollView>
       </LinearGradient>
    );
-}
-
-{
-   /* <SelectList
-               setSelected={(val) => {
-                  subjectsDispatcher({
-                     type: 'add',
-                     payload: val,
-                  });
-               }}
-               data={allSubjects.map((subject) => subject.name)}
-            /> */
 }

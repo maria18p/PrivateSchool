@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
       width: '100%',
       justifyContent: 'center',
       alignContent: 'center',
-      marginBottom: 10,
+      marginBottom: 5,
    },
 
    addedSubjectName: {
@@ -76,6 +76,21 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       // fontFamily: 'Poppins-ExtraLight',
       marginLeft: 10,
+   },
+
+   dropdownBtn: {
+      backgroundColor: '#3B3843',
+      borderRadius: 5,
+      marginBottom: 3,
+      paddingHorizontal: 10,
+      paddingVertical: 4,
+      shadowColor: '#746D75',
+      shadowOffset: {
+         width: 0,
+         height: 3,
+      },
+      shadowOpacity: 0.2,
+      shadowRadius: 4,
    },
 });
 
