@@ -158,7 +158,7 @@ export default function Planner() {
                         style={[
                            PlannerStyles.weekDayBtn,
                            isSameDay
-                              ? { backgroundColor: '#ffffff' }
+                              ? PlannerStyles.selectedWeekDayBtn
                               : isWeekCollapsed
                               ? { display: 'none' }
                               : {},
@@ -166,7 +166,6 @@ export default function Planner() {
                         onPress={() => {
                            if (isSameDay) {
                               setIsWeekCollapsed(!isWeekCollapsed);
-                              setCalendarShown(true);
                            } else {
                               setSelectedDate(weekDay.date);
                               setIsWeekCollapsed(true);

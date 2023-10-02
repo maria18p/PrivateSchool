@@ -77,6 +77,13 @@ export const PlannerStyles = StyleSheet.create({
       padding: 3,
    },
 
+   selectedWeekDayBtn: {
+      backgroundColor: '#ffffff',
+      borderWidth: 2,
+      borderColor: '#315BC4',
+      borderRadius: 5,
+   },
+
    titleTableLayout: {
       width: '100%',
       height: 'auto',
