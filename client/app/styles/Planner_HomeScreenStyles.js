@@ -1,13 +1,11 @@
 import { StyleSheet } from 'react-native';
 
 export const PlannerStyles = StyleSheet.create({
-   mainLayout: {
+   plannerContainer: {
       flex: 1,
       width: '100%',
-      justifyContent: 'center',
-      alignItems: 'center',
       height: '100%',
-      marginTop: 2,
+      justifyContent: 'center',
    },
 
    dayPlanner: {
@@ -18,13 +16,10 @@ export const PlannerStyles = StyleSheet.create({
    },
 
    plannerTitle: {
-      fontSize: 18,
+      fontSize: 16,
       color: '#ffff',
       textAlign: 'center',
       fontWeight: '300',
-      // textShadowColor: '#C5D86D',
-      // textShadowOffset: { width: 1, height: 1 },
-      // textShadowRadius: 0.8,
    },
 
    titleStyle: { fontSize: 18, color: '#ffff' },
@@ -43,45 +38,48 @@ export const PlannerStyles = StyleSheet.create({
       alignItems: 'center',
    },
 
-   plannerTitleContainer: {
-      width: '55%',
-      height: 50,
-      backgroundColor: '#1098F7',
+   weekContainer: {
+      flexDirection: 'row',
+      flex: 1,
+      width: '100%',
+      height: 'auto',
+   },
+
+   daysContainer: { flexDirection: 'column', width: '22%', padding: 5, marginTop: 5 },
+
+   selectedDateContainer: {
+      width: '78%',
+      height: '100%',
       justifyContent: 'center',
-      alignContent: 'center',
+      alignItems: 'center',
+      padding: 5,
+   },
+
+   selectedDateLayout: {
+      width: '60%',
+      height: 40,
+      justifyContent: 'center',
+      backgroundColor: '#315BC4',
       borderBottomRightRadius: 5,
       borderBottomLeftRadius: 25,
       borderTopRightRadius: 5,
       borderTopLeftRadius: 5,
-      marginTop: 7,
-      marginBottom: 7,
-   },
-
-   titleColContainer: {
-      width: '100%',
-      flexDirection: 'row',
-      marginTop: 10,
-   },
-
-   weekDaysContainer: {
-      flexDirection: 'row',
-      width: '100%',
-      height: 50,
-      justifyContent: 'center',
    },
 
    weekDayBtn: {
-      backgroundColor: '#00CFC1',
-      width: '14%',
-      borderTopWidth: 4,
-      borderBottomColor: '#00CEE0',
-      borderTopColor: '#03CEA4',
-      borderBottomWidth: 7,
+      backgroundColor: '#315BC4',
+      flexDirection: 'column',
+      width: '100%',
       shadowOpacity: 0.8,
       elevation: 30,
-      shadowRadius: 15,
+      shadowRadius: 10,
       alignItems: 'center',
-      justifyContent: 'center',
+      padding: 3,
+   },
+
+   titleTableLayout: {
+      width: '100%',
+      height: 'auto',
    },
 
    popover: { textAlign: 'center', fontSize: 14 },

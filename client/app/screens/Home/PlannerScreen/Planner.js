@@ -38,8 +38,9 @@ export default function Planner() {
    const [weekPlan, setWeekPlan] = useState(null);
    const [showNewEvent, setShowNewEvent] = useState(null);
    const [selectedLesson, setSelectedLesson] = useState(null);
-   const [lessons, setLessons] = useState([]);
    const [calendarShown, setCalendarShown] = useState(false);
+   const [isWeekCollapsed, setIsWeekCollapsed] = useState(false);
+   const [lessons, setLessons] = useState([]);
 
    useEffect(() => {
       fetchLessons();
@@ -63,6 +64,22 @@ export default function Planner() {
          user: userData,
       });
       setLessons(lessons);
+   };
+
+   const handleRemoveLesson = async (lessonId) => {
+      try {
+         const result = await removeLesson({
+            user: userData,
+            lessonId: lessonId,
+         });
+         if (result.success) {
+            Alert.alert(result.message);
+         } else {
+            Alert.alert('Failed to remove lesson');
+         }
+      } catch (error) {
+         console.error('Error removing lesson:', error);
+      }
    };
 
    // const updateWeekPlan = () => {
@@ -130,50 +147,57 @@ export default function Planner() {
 
    const renderWeekMenu = () => {
       if (!selectedDate || !selectedDateWeekDates) return <></>;
+      const isDayInWeek = selectedDateWeekDates.some(
+         (weekDay) => weekDay.dayName === daysOfWeek[selectedDate.getDay()],
+      );
       return (
-         <View style={PlannerStyles.weekDaysContainer}>
-            {selectedDateWeekDates.map((weekDay, index) => {
-               if (weekDay.dayName === daysOfWeek[selectedDate.getDay()]) {
+         <View style={PlannerStyles.weekContainer}>
+            <View style={PlannerStyles.daysContainer}>
+               {selectedDateWeekDates.map((weekDay, index) => {
+                  const isSameDay = weekDay.dayName === daysOfWeek[selectedDate.getDay()];
+                  if (!isSameDay && isWeekCollapsed) {
+                     return null; // Hide other days
+                  }
                   return (
                      <TouchableOpacity
-                        key={`weekDay-${index}`} // Provide a unique key
-                        style={[PlannerStyles.weekDayBtn, { backgroundColor: '#ffffff' }]}>
-                        <Text style={[PlannerStyles.txtDay, { color: '#000', fontWeight: '500' }]}>
+                        key={`weekDay-${index}`}
+                        style={[
+                           PlannerStyles.weekDayBtn,
+                           isSameDay ? { backgroundColor: '#ffffff' } : isDayInWeek,
+                        ]}
+                        onPress={() => {
+                           setSelectedDate(weekDay.date);
+                           setIsWeekCollapsed(!isSameDay);
+                        }}>
+                        <Text
+                           style={[
+                              PlannerStyles.txtDay,
+                              isSameDay ? { color: '#000' } : isDayInWeek,
+                           ]}>
                            {weekDay.dayName.slice(0, 3)}
                         </Text>
                      </TouchableOpacity>
                   );
-               } else {
-                  return (
-                     <TouchableOpacity
-                        key={`weekDay-${index}`} // Provide a unique key
-                        style={PlannerStyles.weekDayBtn}
+               })}
+            </View>
+            <View style={PlannerStyles.selectedDateContainer}>
+               <View style={PlannerStyles.selectedDateLayout}>
+                  {selectedDate ? (
+                     <Text
+                        style={PlannerStyles.plannerTitle}
                         onPress={() => {
-                           setSelectedDate(weekDay.date);
+                           setIsWeekCollapsed(!isWeekCollapsed);
+                           setCalendarShown(true);
                         }}>
-                        <Text style={PlannerStyles.txtDay}>{weekDay.dayName.slice(0, 3)}</Text>
-                     </TouchableOpacity>
-                  );
-               }
-            })}
+                        {daysOfWeek[selectedDate.getDay()]} {selectedDate.toLocaleDateString()}
+                     </Text>
+                  ) : (
+                     <></>
+                  )}
+               </View>
+            </View>
          </View>
       );
-   };
-
-   const handleRemoveLesson = async (lessonId) => {
-      try {
-         const result = await removeLesson({
-            user: userData,
-            lessonId: lessonId,
-         });
-         if (result.success) {
-            Alert.alert(result.message);
-         } else {
-            Alert.alert('Failed to remove lesson');
-         }
-      } catch (error) {
-         console.error('Error removing lesson:', error);
-      }
    };
 
    const showDayPlan = () => {
@@ -276,7 +300,7 @@ export default function Planner() {
 
    const createList = () => {
       return (
-         <View style={PlannerStyles.titleColContainer}>
+         <View style={PlannerStyles.titleTableLayout}>
             <DataTable>
                <DataTable.Header style={{ backgroundColor: '#F5F749' }}>
                   <DataTable.Title textStyle={[ManageStyles.tblTxtTitle, colorTxt]}>
@@ -311,7 +335,7 @@ export default function Planner() {
    };
 
    return (
-      <View style={PlannerStyles.mainLayout}>
+      <View style={PlannerStyles.plannerContainer}>
          {renderWeekMenu()}
          {calendarShown ? (
             <Calendar
@@ -325,18 +349,7 @@ export default function Planner() {
          ) : (
             <></>
          )}
-         <View style={PlannerStyles.dayPlanner}>
-            <View style={PlannerStyles.plannerTitleContainer}>
-               {selectedDate ? (
-                  <Text style={PlannerStyles.plannerTitle} onPress={() => setCalendarShown(true)}>
-                     {daysOfWeek[selectedDate.getDay()]} {selectedDate.toLocaleDateString()}
-                  </Text>
-               ) : (
-                  <></>
-               )}
-            </View>
-            {createList()}
-         </View>
+         <View style={PlannerStyles.dayPlanner}>{createList()}</View>
          <View style={[PlannerStyles.layoutBtn, { width: '50%' }]}>
             {userData.role !== 'Student' ? (
                <View>
