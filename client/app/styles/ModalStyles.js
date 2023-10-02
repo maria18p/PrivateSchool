@@ -11,9 +11,7 @@ const modalStyle = StyleSheet.create({
    },
 
    calendar: {
-      // borderWidth: 1,
       borderColor: 'gray',
-      // height: 100,
    },
 
    DATE: {

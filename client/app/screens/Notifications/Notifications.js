@@ -166,7 +166,7 @@ const Notifications = () => {
 
    return (
       <LinearGradient
-         style={{ justifyContent: 'center', flex: 1, borderWidth: 2 }}
+         style={{ justifyContent: 'center', flex: 1 }}
          colors={['#fff', '#91CAF2', '#E7ECEF']}
          start={{ x: 2, y: 0 }}
          end={{ x: 1, y: 1 }}>

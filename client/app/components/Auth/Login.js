@@ -21,7 +21,7 @@ export default function Login() {
    const dispatch = useDispatch();
    const navigation = useNavigation();
 
-   const [fadeAnim] = useState(new Animated.Value(1));
+   const [fadeAnim] = useState(new Animated.Value(2));
    const [notAuthUser, setNotAuthUser] = useState(null);
    const [userData, setUserData] = useState(null);
 

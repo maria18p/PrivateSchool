@@ -19,8 +19,8 @@ export default function Profile() {
    const [oldPassword, setOldPassword] = useState(null);
    const [showNewPassword, setShowNewPassword] = useState(null);
    const [newParameterValue, setNewParameterValue] = useState(null);
-   const [passwordVisible, setPasswordVisible] = useState(false); // password visibility
    const [changeParameter, setChangeParameter] = useState(null);
+   const [passwordVisible, setPasswordVisible] = useState(false); // password visibility
 
    const togglePasswordVisibility = () => {
       setPasswordVisible(!passwordVisible);

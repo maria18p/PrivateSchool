@@ -4,7 +4,6 @@ const styles = StyleSheet.create({
    containerStudentsScreen: { flex: 1, height: '100%' },
 
    btnLayout: {
-      // borderWidth: 2,
       height: 'auto',
       width: '100%',
       flexDirection: 'row',

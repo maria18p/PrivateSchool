@@ -46,7 +46,6 @@ const styles = StyleSheet.create({
    headingLayout: {
       flexDirection: 'row',
       width: '95%',
-      // borderWidth: 2,
       height: 40,
       alignItems: 'center',
       justifyContent: 'center',
@@ -58,7 +57,6 @@ const styles = StyleSheet.create({
       width: '80%',
       height: '80%',
       justifyContent: 'center',
-      // borderWidth: 2,
    },
 
    layoutSelectedChat: {

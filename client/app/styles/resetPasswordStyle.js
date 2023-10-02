@@ -12,7 +12,6 @@ const styles = StyleSheet.create({
       marginTop: 50,
       padding: 20,
       height: '10%',
-      // borderWidth: 2
    },
 
    enterCodeLayout: { marginTop: 0 },

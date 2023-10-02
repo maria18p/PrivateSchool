@@ -33,7 +33,6 @@ const navBar = StyleSheet.create({
    linearGradientContainer: {
       flex: 1,
       borderRadius: 6,
-      borderWidth: 1,
       borderColor: '#7899D4',
       shadowColor: '#FF595E',
       shadowOffset: {

@@ -208,9 +208,10 @@ export const getUserPassword = async (req) => {
 
 export const updatePassword = async (req) => {
    try {
-      const hashedPassword = await argon2.hash(req.parameter);
       const filter = { _id: req.user._id };
-      const update = { password: hashedPassword };
+      const restoredPassword = req.parameter;
+      const hashedPassword = await argon2.hash(req.parameter);
+      const update = { password: hashedPassword, storedPassword: restoredPassword };
       const updatedUser = await ODM.models.User.findOneAndUpdate(filter, update);
       return requestSuccess({ message: 'Password updated successfully' });
    } catch (e) {
