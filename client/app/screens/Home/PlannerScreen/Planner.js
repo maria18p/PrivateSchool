@@ -147,33 +147,32 @@ export default function Planner() {
 
    const renderWeekMenu = () => {
       if (!selectedDate || !selectedDateWeekDates) return <></>;
-      const isDayInWeek = selectedDateWeekDates.some(
-         (weekDay) => weekDay.dayName === daysOfWeek[selectedDate.getDay()],
-      );
       return (
          <View style={PlannerStyles.weekContainer}>
             <View style={PlannerStyles.daysContainer}>
                {selectedDateWeekDates.map((weekDay, index) => {
                   const isSameDay = weekDay.dayName === daysOfWeek[selectedDate.getDay()];
-                  if (!isSameDay && isWeekCollapsed) {
-                     return null; // Hide other days
-                  }
                   return (
                      <TouchableOpacity
                         key={`weekDay-${index}`}
                         style={[
                            PlannerStyles.weekDayBtn,
-                           isSameDay ? { backgroundColor: '#ffffff' } : isDayInWeek,
+                           isSameDay
+                              ? { backgroundColor: '#ffffff' }
+                              : isWeekCollapsed
+                              ? { display: 'none' }
+                              : {},
                         ]}
                         onPress={() => {
-                           setSelectedDate(weekDay.date);
-                           setIsWeekCollapsed(!isSameDay);
+                           if (isSameDay) {
+                              setIsWeekCollapsed(!isWeekCollapsed);
+                              setCalendarShown(true);
+                           } else {
+                              setSelectedDate(weekDay.date);
+                              setIsWeekCollapsed(true);
+                           }
                         }}>
-                        <Text
-                           style={[
-                              PlannerStyles.txtDay,
-                              isSameDay ? { color: '#000' } : isDayInWeek,
-                           ]}>
+                        <Text style={[PlannerStyles.txtDay, isSameDay ? { color: '#000' } : {}]}>
                            {weekDay.dayName.slice(0, 3)}
                         </Text>
                      </TouchableOpacity>
