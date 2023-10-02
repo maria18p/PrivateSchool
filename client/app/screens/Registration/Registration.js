@@ -8,13 +8,13 @@ import {
    ScrollView,
    SafeAreaView,
 } from 'react-native';
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useReducer, useState, useRef } from 'react';
 import { Icon } from 'react-native-elements';
 import { faker } from '@faker-js/faker';
 import { makeRegisterStudentRequest, makeRegisterTeacherRequest } from '../../api/User_requests';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../styles/carcassStyles';
 import { RadioButton } from 'react-native-paper';
 import { SelectList } from 'react-native-dropdown-select-list';
@@ -54,15 +54,19 @@ export default function Registration({ navigation }) {
    const [lastName, setLastName] = useState('');
    const [phoneNumber, setPhoneNumber] = useState('');
    const [code, setCode] = useState('');
+   const [incorrectAttempts, setIncorrectAttempts] = useState(0);
    const [regMode, setRegMode] = useState(STUDENT_MODE);
    const [allSubjects, setAllSubjects] = useState([]);
    const [isCodeCorrect, setIsCodeCorrect] = useState(true);
-   const [incorrectAttempts, setIncorrectAttempts] = useState(0);
    const [disableRegistration, setDisableRegistration] = useState(false);
    const [showPassword, setShowPassword] = useState(false);
    const [subjectsState, subjectsDispatcher] = useReducer(subjectReducer, {
       subjects: [],
    });
+
+   const [isOpen, setIsOpen] = useState(false);
+   const [selectedOption, setSelectedOption] = useState(null);
+   const dropdownRef = useRef(null);
 
    const togglePasswordVisibility = () => {
       setShowPassword(!showPassword);
@@ -218,7 +222,7 @@ export default function Registration({ navigation }) {
                   onChangeText={(text) => setCode(text)}
                />
             </View>
-            <View style={registerStyle.txtInputTeachLayout}>
+            <View style={registerStyle.optionLearnOrTeachLayout}>
                <Text style={registerStyle.txtToTeach}>I want to teach:</Text>
             </View>
          </View>
@@ -227,8 +231,37 @@ export default function Registration({ navigation }) {
 
    const studentAddons = () => {
       return (
-         <View style={registerStyle.txtInputStudentLayout}>
+         <View style={registerStyle.optionLearnOrTeachLayout}>
             <Text style={registerStyle.txtToTeach}>I want to learn:</Text>
+         </View>
+      );
+   };
+
+   const CustomDropdown = ({ options, onSelect }) => {
+      const toggleDropdown = () => {
+         setIsOpen(!isOpen);
+      };
+      const handleOptionSelect = (option) => {
+         setSelectedOption(option);
+         onSelect(option);
+         setIsOpen(false);
+      };
+      return (
+         <View>
+            <TouchableOpacity style={[styles.inputView, { marginTop: 0 }]} onPress={toggleDropdown}>
+               <Text style={registerStyle.dropdownContainer}>
+                  {selectedOption || 'Select an option'}
+               </Text>
+            </TouchableOpacity>
+            {isOpen && (
+               <View ref={dropdownRef}>
+                  {options.map((option) => (
+                     <TouchableOpacity key={option} onPress={() => handleOptionSelect(option)}>
+                        <Text style={{ color: '#fff' }}>{option}</Text>
+                     </TouchableOpacity>
+                  ))}
+               </View>
+            )}
          </View>
       );
    };
@@ -257,14 +290,14 @@ export default function Registration({ navigation }) {
                   </View>
                );
             })}
-            <SelectList
-               setSelected={(val) => {
+            <CustomDropdown
+               options={allSubjects.map((subject) => subject.name)}
+               onSelect={(val) => {
                   subjectsDispatcher({
                      type: 'add',
                      payload: val,
                   });
                }}
-               data={allSubjects.map((subject) => subject.name)}
             />
          </View>
       );
@@ -272,7 +305,7 @@ export default function Registration({ navigation }) {
 
    return (
       <LinearGradient
-         colors={['#F2F4FF', '#96C5F7', '#454ADE']}
+         colors={['#F2E9DC', '#1E1B18', '#746D75']}
          style={styles.container}
          start={{ x: 2, y: 1 }}
          end={{ x: 0, y: 0 }}>
@@ -295,7 +328,6 @@ export default function Registration({ navigation }) {
                   <Text style={registerStyle.txtRadioBtn}>Teacher</Text>
                </View>
             </SafeAreaView>
-
             <View style={styles.inputView}>
                <Icon style={styles.inputIcon} name='email' type='ionicons' color='#5352ed' />
                <TextInput
@@ -387,4 +419,16 @@ export default function Registration({ navigation }) {
          </ScrollView>
       </LinearGradient>
    );
+}
+
+{
+   /* <SelectList
+               setSelected={(val) => {
+                  subjectsDispatcher({
+                     type: 'add',
+                     payload: val,
+                  });
+               }}
+               data={allSubjects.map((subject) => subject.name)}
+            /> */
 }

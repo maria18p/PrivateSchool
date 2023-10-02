@@ -41,7 +41,7 @@ export default function Login() {
    useEffect(() => {
       Animated.timing(fadeAnim, {
          toValue: 0,
-         duration: 3000,
+         duration: 2000,
          useNativeDriver: true,
       }).start(() => {
          Alert.alert(

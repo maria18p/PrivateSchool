@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
       height: '19%',
       justifyContent: 'center',
       marginBottom: 15,
-      marginTop: '13%',
+      marginTop: '10%',
    },
 
    registerOptionLoginScreen: {
@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
       marginBottom: '2%',
       display: 'flex',
       alignItems: 'center',
+      borderRadius: 5,
    },
 
    btnSendResetPassword: {

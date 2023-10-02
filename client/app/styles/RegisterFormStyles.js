@@ -3,28 +3,31 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
    registerFormContainer: {
       flexDirection: 'column',
-      alignItems: 'stretch',
+      width: '100%',
+      justifyContent: 'center',
+      alignContent: 'center',
    },
 
    addedSubjectsContainer: {
       flexDirection: 'row',
       width: '100%',
-      alignItems: 'center',
-      marginTop: 10,
+      justifyContent: 'center',
+      alignContent: 'center',
       marginBottom: 10,
    },
 
    addedSubjectName: {
-      justifyContent: 'flex-start',
-      width: '67%',
-      marginLeft: 20,
+      justifyContent: 'center',
+      alignContent: 'center',
+      width: '75%',
    },
 
    fontAddedSub: { fontSize: 17, color: '#fff' },
 
    containerDeleteBtn: {
       justifyContent: 'flex-end',
-      width: '27%',
+      width: '25%',
+      height: 'auto',
    },
 
    safeAreaContainer: {
@@ -35,7 +38,12 @@ const styles = StyleSheet.create({
 
    radioBtnLayout: { flexDirection: 'row', alignItems: 'center' },
 
-   txtRadioBtn: { fontSize: 16, fontFamily: 'Poppins-Light', letterSpacing: 1, color: '#fff' },
+   txtRadioBtn: {
+      fontSize: 15,
+      fontFamily: 'Poppins-ExtraLight',
+      letterSpacing: 0,
+      color: '#fff',
+   },
 
    teacherRegistrationAddonLayout: {
       justifyContent: 'center',
@@ -46,21 +54,28 @@ const styles = StyleSheet.create({
       marginBottom: 0,
    },
 
-   txtInputTeachLayout: {
+   optionLearnOrTeachLayout: {
       width: '100%',
-      height: 40,
+      height: 45,
       justifyContent: 'center',
+      marginBottom: 5,
+      marginTop: 5,
    },
 
-   txtToTeach: { fontSize: 16, alignSelf: 'center', color: '#fff' },
+   txtToTeach: {
+      fontSize: 15,
+      textAlign: 'center',
+      color: '#fff',
+      fontFamily: 'Poppins-ExtraLight',
+   },
 
-   txtInputStudentLayout: {
-      marginTop: 10,
-      width: '100%',
-      height: 40,
-      justifyContent: 'center',
-      alignItems: 'flex-start',
-      padding: 8,
+   dropdownContainer: {
+      textAlign: 'left',
+      color: '#000',
+      fontSize: 15,
+      textAlign: 'center',
+      // fontFamily: 'Poppins-ExtraLight',
+      marginLeft: 10,
    },
 });
 
