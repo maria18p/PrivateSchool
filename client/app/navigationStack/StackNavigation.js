@@ -5,7 +5,7 @@ import HomeScreen from '../screens/Home/HomePage';
 import Notifications from '../screens/Notifications';
 import Registration from '../screens/Registration/Registration';
 import Messages from '../screens/Messages/Messages';
-import img1 from '../assets/bg/navigationBg2.jpg';
+import img1 from '../assets/bg/welcome4.jpeg';
 import { Image } from 'react-native';
 
 const Stack = createNativeStackNavigator();
