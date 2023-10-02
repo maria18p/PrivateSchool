@@ -10,7 +10,12 @@ import {
 } from 'react-native';
 import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllUsers, getUserChat, sendChatMessage } from '../../api/User_requests';
+import {
+   getAllUsers,
+   getUserChat,
+   sendChatMessage,
+   removeChatMessage,
+} from '../../api/User_requests';
 import chatStyle from '../../styles/ChatsStyle';
 import { setUserChats } from '../../store/reducer';
 import bcImage from '../../assets/bg/bc-chat.jpeg';
@@ -99,6 +104,25 @@ export default function Messages() {
       setChats(await getUserChat({ user: userData }));
    };
 
+   const removeMessage = async (message) => {
+      try {
+         const messageId = message._id;
+         const pairingId = message.chat._id;
+         const params = {
+            messageId,
+            pairingId,
+         };
+         const removalResult = await removeChatMessage(params);
+         if (removalResult.success) {
+            console.log('Message removed successfully');
+         } else {
+            console.log('Failed to remove message:', removalResult.message);
+         }
+      } catch (error) {
+         console.error('Error removing message:', error);
+      }
+   };
+
    const showSelectedChat = () => {
       if (!selectedPartner) return <></>;
       let chosenChat = null;
@@ -184,7 +208,7 @@ export default function Messages() {
                <TouchableOpacity onPress={() => sendMessage(chosenChat)} style={chatStyle.btnSend}>
                   <MaterialCommunityIcons
                      name='send'
-                     size={24}
+                     size={32}
                      color='#ffff'
                      style={{ marginRight: 5 }}
                   />
@@ -207,11 +231,13 @@ export default function Messages() {
                      }>
                      <View style={chatStyle.headingLayout}>
                         {selectedPartner && (
-                           <View style={{ flexDirection: 'row' }}>
-                              <TouchableOpacity onPress={() => setSelectedPartner(null)}>
+                           <View style={chatStyle.materialIconsLayout}>
+                              <TouchableOpacity
+                                 style={{ marginRight: 12 }}
+                                 onPress={() => setSelectedPartner(null)}>
                                  <MaterialCommunityIcons
                                     name='arrow-left-bold-circle-outline'
-                                    size={35}
+                                    size={38}
                                     color='#ffff'
                                  />
                               </TouchableOpacity>
@@ -220,7 +246,7 @@ export default function Messages() {
                                  activeOpacity={0.5}>
                                  <MaterialCommunityIcons
                                     name='refresh-circle'
-                                    size={35}
+                                    size={38}
                                     color='#ffff'
                                  />
                               </TouchableOpacity>

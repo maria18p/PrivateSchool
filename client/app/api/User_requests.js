@@ -133,6 +133,15 @@ export const sendChatMessage = async (params) => {
    }
 };
 
+export const removeChatMessage = async (params) => {
+   try {
+      const result = await axios.post(BASE_URL + 'removeChatMessage', params);
+      return result.data;
+   } catch (error) {
+      console.error('Error:', error);
+   }
+};
+
 export const removeSubjectFromUserList = async (params) => {
    try {
       const result = await axios.post(BASE_URL + 'removeUserSubject', params);

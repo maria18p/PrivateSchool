@@ -18,10 +18,9 @@ const styleOptions = {
          style={{ width: '100%', height: '100%', resizeMode: 'cover', opacity: 0.9 }}
       />
    ),
-   headerTintColor: '#ffffff',
+   headerTintColor: '#000000',
    headerTitleStyle: {
-      fontSize: 25,
-      fontWeight: '500',
+      fontSize: 32,
       fontFamily: 'DMSerifText-Regular',
    },
 };

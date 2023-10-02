@@ -16,7 +16,11 @@ import {
    postRequestSendPassword,
 } from '../middleware/users.js';
 import { userLoggedIn } from '../middleware/commonModule.js';
-import { getRequestUserChat, postCreateMessage } from '../middleware/messages.js';
+import {
+   getRequestUserChat,
+   postCreateMessage,
+   postRemoveChatMessage,
+} from '../middleware/messages.js';
 import {
    fetchNotifications,
    postRequestMarkNotificationsRead,
@@ -82,6 +86,10 @@ Router.post('/updateLastName', async (req, res) => {
 
 Router.post('/sendMessage', async (req, res) => {
    return respond(await postCreateMessage(req.body), res);
+});
+
+Router.post('/removeChatMessage', async (req, res) => {
+   return respond(await postRemoveChatMessage(req.body), res);
 });
 
 Router.get('/getUserChat', async (req, res) => {

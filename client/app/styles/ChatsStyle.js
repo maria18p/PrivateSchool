@@ -52,6 +52,13 @@ const styles = StyleSheet.create({
       marginBottom: 10,
    },
 
+   materialIconsLayout: {
+      flexDirection: 'row',
+      position: 'absolute',
+      left: 0,
+      top: 0,
+   },
+
    nameContainer: {
       backgroundColor: 'transparent',
       width: '80%',
@@ -84,7 +91,7 @@ const styles = StyleSheet.create({
    },
 
    selectedChatTxt: {
-      color: '#00CEE0',
+      color: '#ffffff',
       fontWeight: '400',
       fontSize: 16,
       fontFamily: 'Poppins-Light',
@@ -104,19 +111,16 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-between',
       marginHorizontal: '2%',
-      borderWidth: 1,
-      borderStyle: 'solid',
-      borderColor: '#ffff',
       borderRadius: 16,
       marginTop: '2%',
       marginBottom: '5%',
    },
 
-   btnSend: { width: 25, alignItems: 'center', justifyContent: 'center' },
+   btnSend: { width: '8%', alignItems: 'center', justifyContent: 'center' },
 
    txtInputContainer: {
       backgroundColor: '#B7C6E1',
-      width: '92%',
+      width: '90%',
       color: '#40404F',
       fontSize: 18,
       borderRadius: 15,

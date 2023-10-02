@@ -51,3 +51,31 @@ export const getMessagesByKeys = async (keys) => {
    });
    return { success: true, data: result };
 };
+
+export const removeMessageFromPairing = async (req) => {
+   try {
+      // Find the chat by its ID
+      const chat = await ODM.models.Chat.findById(req.chat._id);
+      if (!chat) {
+         return requestFailure({ message: 'Chat not found' });
+      }
+      // Find the message by its ID in the chat
+      const messageToRemove = chat.messages.find(
+         (message) => message._id.toString() === req.messageId,
+      );
+      if (!messageToRemove) {
+         return requestFailure({ message: 'Message not found in the chat' });
+      }
+      if (messageToRemove.sender.toString() !== req.user._id.toString()) {
+         return requestFailure({ message: 'You are not the sender of this message' });
+      }
+      // Remove the message from the chat's messages array
+      chat.messages = chat.messages.filter((message) => message._id.toString() !== req.messageId);
+      // Save the updated chat
+      await chat.save();
+      return requestSuccess({ message: 'Message removed successfully' });
+   } catch (error) {
+      console.error('Error removing message:', error);
+      return requestFailure({ message: 'Error removing message' });
+   }
+};
