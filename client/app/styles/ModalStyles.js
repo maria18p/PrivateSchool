@@ -37,7 +37,7 @@ const modalStyle = StyleSheet.create({
       fontFamily: 'Poppins-MediumItalic',
       color: '#000',
       fontSize: 15,
-      marginBottom: 15,
+      padding: 15,
       textAlign: 'center',
    },
 
@@ -62,8 +62,8 @@ const modalStyle = StyleSheet.create({
 
    txtInputUpdateSubject: {
       fontSize: 22,
-      color: '#FFFFFF',
-      backgroundColor: '#AB9B96',
+      // color: '#FFFFFF',
+      // backgroundColor: '#AB9B96',
       letterSpacing: 3,
       lineHeight: 30,
       fontFamily: 'Poppins-ExtraLight',

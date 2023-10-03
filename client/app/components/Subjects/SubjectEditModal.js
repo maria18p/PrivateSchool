@@ -28,7 +28,7 @@ export default function SubjectEditModal(props) {
          backdropOpacity={0.35}>
          <View style={modalStyle.editSubModalContainer}>
             <View style={modalStyle.txtModalSubjectLayout}>
-               <Text style={modalStyle.txtCurNameSubject}>Current name subject:</Text>
+               <Text style={modalStyle.txtCurNameSubject}>Name subject:</Text>
                <TextInput
                   style={modalStyle.txtInputUpdateSubject}
                   value={subjectName}
