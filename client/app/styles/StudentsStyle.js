@@ -4,23 +4,28 @@ const styles = StyleSheet.create({
    containerStudentsScreen: { flex: 1, height: '100%' },
 
    btnLayout: {
-      height: 'auto',
       width: '100%',
       flexDirection: 'row',
-      justifyContent: 'space-between',
+      justifyContent: 'space-evenly',
    },
 
    btnContainer: {
-      height: 35,
-      width: '28%',
+      height: 'auto',
+      width: '20%',
       backgroundColor: '#009FFD',
       borderTopLeftRadius: 25,
       borderBottomRightRadius: 25,
       borderTopRightRadius: 10,
-      marginBottom: '4%',
-      marginLeft: 5,
-      marginRight: 5,
+      marginBottom: '1%',
       justifyContent: 'center',
+   },
+
+   txtBtn: {
+      color: '#ffffff',
+      textAlign: 'center',
+      fontSize: 13,
+      letterSpacing: 1.5,
+      fontFamily: 'PlayfairDisplay-VariableFont_wght',
    },
 
    tblHeader: { padding: 2, marginLeft: 0 },
@@ -44,13 +49,6 @@ const styles = StyleSheet.create({
    },
 
    setInactive: { textAlign: 'right', marginTop: 9, fontFamily: 'Raleway-SemiBoldItalic' },
-
-   txtBtn: {
-      color: '#ffffff',
-      textAlign: 'center',
-      fontSize: 16,
-      fontFamily: 'PlayfairDisplay-VariableFont_wght',
-   },
 });
 
 export default styles;

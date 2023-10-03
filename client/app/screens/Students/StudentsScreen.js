@@ -161,7 +161,7 @@ const Students = () => {
                      onPress={() => {
                         setMode(allStudents);
                      }}>
-                     <Text style={styles.txtBtn}>All Students</Text>
+                     <Text style={styles.txtBtn}>All</Text>
                   </TouchableOpacity>
                </View>
             </ImageBackground>
