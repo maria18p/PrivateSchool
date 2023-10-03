@@ -89,7 +89,7 @@ export default function NewEventModal(props) {
             subject: subject,
          });
          Alert.alert(queryResult.message);
-         console.log('[QUERY RESULT]', queryResult);
+         console.log('[QUERY RESULT]', queryResult.message);
       }
    };
 
