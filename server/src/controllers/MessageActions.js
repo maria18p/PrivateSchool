@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { ODM } from '../middleware/commonModule.js';
+import { ObjectId } from 'mongodb';
 
 export const createChat = async (users) => {
    try {
@@ -54,28 +55,26 @@ export const getMessagesByKeys = async (keys) => {
 
 export const removeMessageFromPairing = async (req) => {
    try {
-      // Find the chat by its ID
-      const chat = await ODM.models.Chat.findById(req.chat._id);
-      if (!chat) {
-         return requestFailure({ message: 'Chat not found' });
-      }
-      // Find the message by its ID in the chat
-      const messageToRemove = chat.messages.find(
-         (message) => message._id.toString() === req.messageId,
-      );
+      // Find the chat by ID
+      let chat = await ODM.models.Chat.findById(req.chat._id);
+      // Convert req._id to ObjectId for comparison
+      const objectIdToDelete = new ObjectId(req._id.toString());
+      // Find the message to remove
+      const messageToRemove = chat.messages.find((message) => message._id.equals(objectIdToDelete));
+      console.log('Message to Remove:', messageToRemove.message);
       if (!messageToRemove) {
-         return requestFailure({ message: 'Message not found in the chat' });
+         return { success: false, message: 'Message not found' };
       }
       if (messageToRemove.sender.toString() !== req.user._id.toString()) {
-         return requestFailure({ message: 'You are not the sender of this message' });
+         return { success: false, message: 'User is not authorized to remove this message' };
       }
       // Remove the message from the chat's messages array
-      chat.messages = chat.messages.filter((message) => message._id.toString() !== req.messageId);
+      chat.messages = chat.messages.filter((message) => !message._id.equals(objectIdToDelete));
       // Save the updated chat
       await chat.save();
-      return requestSuccess({ message: 'Message removed successfully' });
+      return { success: true, data: chat, message: 'Message removed successfully' };
    } catch (error) {
       console.error('Error removing message:', error);
-      return requestFailure({ message: 'Error removing message' });
+      return { success: false, message: 'Error removing message' };
    }
 };

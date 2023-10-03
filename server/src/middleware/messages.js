@@ -14,14 +14,11 @@ export const postCreateMessage = async (req) => {
          if (!userFound) return requestFailure({ message: 'USER NOT FOUND' });
          else user_ids.push(userFound[0]._id);
       }
-
       const createChatRequest = await createChat(user_ids);
       if (createChatRequest.success) req.chat = createChatRequest.data;
       else return requestFailure({ message: createChatRequest.message });
    }
-
    const queryResult = await addMessage(req);
-
    return queryResult.success
       ? requestSuccess({ message: queryResult.message })
       : requestFailure({ message: queryResult.message });
@@ -36,13 +33,10 @@ export const getRequestUserChat = async (req) => {
 };
 
 export const postRemoveChatMessage = async (req) => {
-   try {
-      const result = await removeMessageFromPairing(req.messageId, req.pairingId);
-      return result.success
-         ? requestSuccess({ message: 'Message removed successfully' })
-         : requestFailure({ message: 'Failed to remove message' });
-   } catch (error) {
-      console.error('Error removing message:', error);
-      return requestFailure({ message: 'Error removing message' });
-   }
+   const queryResult = await removeMessageFromPairing(req);
+   return queryResult.success
+      ? requestSuccess({ data: queryResult.data, message: queryResult.message })
+      : requestFailure({ message: queryResult.message });
+   console.error('Error removing message:', error);
+   return requestFailure({ message: 'Error removing message' });
 };

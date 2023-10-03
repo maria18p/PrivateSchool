@@ -90,12 +90,10 @@ export default function Messages() {
          users: [userData, selectedPartner],
          message: messageText,
       };
-
       const queryResult = await sendChatMessage(params);
-
       if (queryResult.success) {
-         let test = await getUserChat({ user: userData });
-         dispatch(setUserChats({ chats: test }));
+         let userChat = await getUserChat({ user: userData });
+         dispatch(setUserChats({ chats: userChat }));
       }
       setMessageText('');
    };
@@ -104,22 +102,28 @@ export default function Messages() {
       setChats(await getUserChat({ user: userData }));
    };
 
-   const removeMessage = async (message) => {
+   const removeMessage = async (message, chosenChat) => {
       try {
-         const messageId = message._id;
-         const pairingId = message.chat._id;
          const params = {
-            messageId,
-            pairingId,
+            _id: message._id,
+            user: { _id: userData._id },
+            chat: chosenChat,
          };
+         // console.log(`[message._id ${message._id}]`);
+         if (!chosenChat) {
+            console.error('Invalid chat ID:', chosenChat);
+            return;
+         }
          const removalResult = await removeChatMessage(params);
          if (removalResult.success) {
+            let userChat = await getUserChat({ user: userData });
+            dispatch(setUserChats({ chats: userChat }));
             console.log('Message removed successfully');
          } else {
-            console.log('Failed to remove message:', removalResult.message);
+            console.log(removalResult.message);
          }
       } catch (error) {
-         console.error('Error removing message:', error);
+         console.error(error.message);
       }
    };
 
@@ -140,7 +144,6 @@ export default function Messages() {
          }
          if (!found) chatIndex++;
       }
-
       return (
          <View style={chatStyle.selectedChatLayout}>
             {chosenChat &&
@@ -163,17 +166,21 @@ export default function Messages() {
 
                   if (message.sender === userData._id) {
                      rowMessage = (
-                        <View style={chatStyle.rowMessageContainer} key={key}>
-                           <Text style={chatStyle.selectedChatTxt}>{message.message}</Text>
-                           <Text style={[chatStyle.selectedChatTxt, chatStyle.dateMessage]}>
-                              You{' '}
-                              {messageDateString === today
-                                 ? `today ${messageTimeString}`
-                                 : `${messageDay} ${messageMonth}${
-                                      messageYear === currentYear ? '' : ' ' + messageYear
-                                   } ${messageTimeString}`}
-                           </Text>
-                        </View>
+                        <TouchableOpacity
+                           onLongPress={() => removeMessage(message, chosenChat)}
+                           key={key}>
+                           <View style={chatStyle.rowMessageContainer}>
+                              <Text style={chatStyle.selectedChatTxt}>{message.message}</Text>
+                              <Text style={[chatStyle.selectedChatTxt, chatStyle.dateMessage]}>
+                                 You{' '}
+                                 {messageDateString === today
+                                    ? `today ${messageTimeString}`
+                                    : `${messageDay} ${messageMonth}${
+                                         messageYear === currentYear ? '' : ' ' + messageYear
+                                      } ${messageTimeString}`}
+                              </Text>
+                           </View>
+                        </TouchableOpacity>
                      );
                   } else {
                      rowMessage = (

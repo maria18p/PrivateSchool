@@ -135,6 +135,7 @@ export const sendChatMessage = async (params) => {
 
 export const removeChatMessage = async (params) => {
    try {
+      // console.log(`[PARAMS ${JSON.stringify(params)}]`);
       const result = await axios.post(BASE_URL + 'removeChatMessage', params);
       return result.data;
    } catch (error) {
