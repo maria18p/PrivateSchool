@@ -16,9 +16,9 @@ const profile = StyleSheet.create({
 
    txtStyle: {
       lineHeight: 22,
-      fontSize: 13,
+      fontSize: 14,
       color: '#000000',
-      fontFamily: 'Poppins-MediumItalic',
+      fontFamily: 'Poppins-Light',
    },
 
    txtBtn: { fontSize: 13, color: '#ffff' },
@@ -39,9 +39,9 @@ const profile = StyleSheet.create({
 
    layoutChangePassSection: { flexDirection: 'row', justifyContent: 'space-around' },
 
-   txtChangePassSection: { fontSize: 15, fontFamily: 'Poppins-Light' },
+   txtChangePassSection: { fontSize: 14, fontFamily: 'Poppins-Light' },
 
-   txtInput: { height: '90%', fontSize: 15, color: '#1D1E2C', fontFamily: 'Poppins-Light' },
+   txtInput: { height: '90%', fontSize: 14, color: '#1D1E2C', fontFamily: 'Poppins-Light' },
 
    txtBtnStyle: {
       color: '#ffff',

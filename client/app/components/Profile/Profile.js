@@ -26,6 +26,8 @@ export default function Profile() {
       setPasswordVisible(!passwordVisible);
    };
 
+   const formattedStyle = [profile.txtStyle, { fontSize: 14 }];
+
    const sendOldPassword = async () => {
       if (!oldPassword) {
          Alert.alert('Please enter the old password');
@@ -82,7 +84,7 @@ export default function Profile() {
       return (
          <View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-               <Text style={[profile.txtStyle, { fontSize: 15 }]}>{placeholder}:</Text>
+               <Text style={formattedStyle}>{placeholder}:</Text>
                <TextInput
                   style={profile.txtInput}
                   placeholder={placeholder}
@@ -133,15 +135,15 @@ export default function Profile() {
    return (
       <View style={profile.mainContainer}>
          <View style={profile.nameContainer}>
-            <Text style={[profile.txtStyle, { fontSize: 13 }]}>Email:</Text>
+            <Text style={formattedStyle}>Email:</Text>
             <Text style={profile.txtStyle}>{userData.email}</Text>
          </View>
          <View style={profile.nameContainer}>
-            <Text style={[profile.txtStyle, { fontSize: 13 }]}>First name:</Text>
+            <Text style={formattedStyle}>First name:</Text>
             <Text style={profile.txtStyle}>{userData.firstName}</Text>
          </View>
          <View style={profile.nameContainer}>
-            <Text style={[profile.txtStyle, { fontSize: 13 }]}>Last name:</Text>
+            <Text style={formattedStyle}>Last name:</Text>
             <Text style={profile.txtStyle}>{userData.lastName}</Text>
          </View>
          <View style={profile.btnLayout}>
