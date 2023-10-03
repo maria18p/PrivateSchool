@@ -37,6 +37,4 @@ export const postRemoveChatMessage = async (req) => {
    return queryResult.success
       ? requestSuccess({ data: queryResult.data, message: queryResult.message })
       : requestFailure({ message: queryResult.message });
-   console.error('Error removing message:', error);
-   return requestFailure({ message: 'Error removing message' });
 };

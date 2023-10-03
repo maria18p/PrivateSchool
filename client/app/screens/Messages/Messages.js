@@ -40,12 +40,12 @@ export default function Messages() {
    }, []);
 
    useEffect(() => {
-      if (chats) dispatch(setUserChats({ chats: chats }));
-   }, [chats]);
-
-   useEffect(() => {
       fetchChats();
    }, []);
+
+   useEffect(() => {
+      if (chats) dispatch(setUserChats({ chats: chats }));
+   }, [chats]);
 
    const fetchChats = async () => {
       const allUsers = await getAllUsers({
@@ -109,11 +109,10 @@ export default function Messages() {
             user: { _id: userData._id },
             chat: chosenChat,
          };
-         // console.log(`[message._id ${message._id}]`);
-         if (!chosenChat) {
-            console.error('Invalid chat ID:', chosenChat);
-            return;
-         }
+         // if (!chosenChat) {
+         //    console.error('Invalid chat ID:', chosenChat);
+         //    return;
+         // }
          const removalResult = await removeChatMessage(params);
          if (removalResult.success) {
             let userChat = await getUserChat({ user: userData });
@@ -244,15 +243,6 @@ export default function Messages() {
                                  onPress={() => setSelectedPartner(null)}>
                                  <MaterialCommunityIcons
                                     name='arrow-left-bold-circle-outline'
-                                    size={38}
-                                    color='#ffff'
-                                 />
-                              </TouchableOpacity>
-                              <TouchableOpacity
-                                 onPress={() => refreshMessages()}
-                                 activeOpacity={0.5}>
-                                 <MaterialCommunityIcons
-                                    name='refresh-circle'
                                     size={38}
                                     color='#ffff'
                                  />
