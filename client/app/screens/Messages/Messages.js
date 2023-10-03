@@ -109,15 +109,10 @@ export default function Messages() {
             user: { _id: userData._id },
             chat: chosenChat,
          };
-         // if (!chosenChat) {
-         //    console.error('Invalid chat ID:', chosenChat);
-         //    return;
-         // }
          const removalResult = await removeChatMessage(params);
          if (removalResult.success) {
             let userChat = await getUserChat({ user: userData });
             dispatch(setUserChats({ chats: userChat }));
-            console.log('Message removed successfully');
          } else {
             console.log(removalResult.message);
          }
