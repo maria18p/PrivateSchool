@@ -296,7 +296,7 @@ export default function Planner() {
       );
    };
 
-   const createList = () => {
+   const schedule = () => {
       return (
          <View style={PlannerStyles.titleTableLayout}>
             <DataTable>
@@ -347,7 +347,7 @@ export default function Planner() {
          ) : (
             <></>
          )}
-         <View style={PlannerStyles.dayPlanner}>{createList()}</View>
+         <View style={PlannerStyles.dayPlanner}>{schedule()}</View>
          <View style={[PlannerStyles.layoutBtn, { width: '50%' }]}>
             {userData.role !== 'Student' ? (
                <View>

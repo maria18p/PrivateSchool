@@ -25,12 +25,10 @@ const ManageStyles = StyleSheet.create({
    tableLayout: { width: '100%', marginBottom: '100%' },
 
    btnContainer: {
-      backgroundColor: '#F5E663',
-      borderRadius: 5,
+      backgroundColor: 'transparent',
       width: 80,
-      height: 25,
       justifyContent: 'center',
-      alignItems: 'center',
+      // alignItems: 'center',
    },
 
    txtBtn: {

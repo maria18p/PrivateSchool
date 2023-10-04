@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, Alert, ImageBackground } from 'react-native';
+import React, { useEffect, useState, useCallback } from 'react';
+import { View, Text, TouchableOpacity, ScrollView, Alert, RefreshControl } from 'react-native';
 import { DataTable } from 'react-native-paper';
 import { getAllUsers, updateStudentActive, updateStudentInactive } from '../../api/User_requests';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,14 +8,22 @@ import styles from '../../styles/StudentsStyle';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const Students = () => {
-   const backgroundImage = require('../../assets/bg/students_bg.jpeg');
    const dispatch = useDispatch();
    const userData = useSelector((state) => state.user);
 
+   const [refreshing, setRefreshing] = useState(false);
    const [myStudents, setMyStudents] = useState(null);
    const [allStudents, setAllStudents] = useState(null);
    const [mode, setMode] = useState(null);
-   const [openPopoverKey, setOpenPopoverKey] = useState([]);
+
+   const onRefresh = useCallback(async () => {
+      console.log('Refreshing...');
+      try {
+         await refreshAll();
+      } finally {
+         setRefreshing(false);
+      }
+   }, []);
 
    useEffect(() => {
       refreshAll();
@@ -47,78 +55,6 @@ const Students = () => {
       setMyStudents(myStudents.data);
    };
 
-   const handlePopoverOpen = (key) => {
-      const updatedPopoverKeys = [...openPopoverKey];
-      updatedPopoverKeys[key] = key;
-      setOpenPopoverKey(updatedPopoverKeys);
-   };
-
-   const handleStudentClick = (key) => {
-      const updatedPopoverKeys = [...openPopoverKey];
-      updatedPopoverKeys[key] = key;
-      setOpenPopoverKey(updatedPopoverKeys);
-   };
-
-   const handlePopoverClose = (key) => {
-      const updatedPopoverKeys = [...openPopoverKey];
-      updatedPopoverKeys[key] = null;
-      setOpenPopoverKey(updatedPopoverKeys);
-   };
-
-   const studentData = () => {
-      if (!mode || !Array.isArray(mode)) {
-         return <></>;
-      }
-      return (
-         <LinearGradient
-            colors={['#B7B5E4', '#95F9E3', '#E0CA3C']}
-            start={{ x: 0, y: -1 }}
-            end={{ x: 1.3, y: -2 }}>
-            {mode.map((student, key) => {
-               return (
-                  <DataTable.Row
-                     key={key}
-                     onPress={() => handleStudentClick(key)}
-                     style={styles.rowStyle}>
-                     <DataTable.Cell textStyle={styles.cellTxt}>
-                        <TouchableOpacity
-                           onPress={() => handlePopoverOpen(key)}
-                           onMouseEnter={() => handlePopoverOpen(key)}
-                           onMouseLeave={() => handlePopoverClose(key)}>
-                           <Text style={styles.cellTxt}>
-                              {student.firstName} {student.lastName}
-                           </Text>
-                        </TouchableOpacity>
-                     </DataTable.Cell>
-                     <DataTable.Cell textStyle={styles.cellTxt} style={styles.cellStyleEmail}>
-                        <TouchableOpacity
-                           onPress={() => handlePopoverOpen(key)}
-                           onMouseEnter={() => handlePopoverOpen(key)}
-                           onMouseLeave={() => handlePopoverClose(key)}>
-                           <Text style={styles.cellTxt}>{student.email}</Text>
-                        </TouchableOpacity>{' '}
-                     </DataTable.Cell>
-                     <DataTable.Cell numeric textStyle={styles.cellTxt} style={styles.status}>
-                        {student.isActive ? 'Active' : 'Not Active'}
-                     </DataTable.Cell>
-                     <DataTable.Cell textStyle={styles.cellTxt}>
-                        {student.isActive ? (
-                           <TouchableOpacity key={key} onPress={() => setStudentInactive(student)}>
-                              <Text style={styles.setInactive}>Set Inactive</Text>
-                           </TouchableOpacity>
-                        ) : (
-                           <TouchableOpacity key={key} onPress={() => setStudentActive(student)}>
-                              <Text style={styles.setInactive}>Set Active</Text>
-                           </TouchableOpacity>
-                        )}
-                     </DataTable.Cell>
-                  </DataTable.Row>
-               );
-            })}
-         </LinearGradient>
-      );
-   };
-
    const setStudentInactive = async (student) => {
       const queryResult = await updateStudentInactive({
          user: userData,
@@ -140,69 +76,108 @@ const Students = () => {
    const screenOptions = () => {
       if (userData.role === 'Admin') {
          return (
-            <ImageBackground source={backgroundImage}>
-               <View style={styles.btnLayout}>
-                  <TouchableOpacity
-                     style={styles.btnContainer}
-                     onPress={() => {
-                        refreshAll();
-                     }}>
-                     <Text style={styles.txtBtn}>Refresh</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                     style={styles.btnContainer}
-                     onPress={() => {
-                        setMode(myStudents);
-                     }}>
-                     <Text style={styles.txtBtn}>My Students</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                     style={styles.btnContainer}
-                     onPress={() => {
-                        setMode(allStudents);
-                     }}>
-                     <Text style={styles.txtBtn}>All</Text>
-                  </TouchableOpacity>
-               </View>
-            </ImageBackground>
+            <View style={styles.btnLayout}>
+               <TouchableOpacity
+                  style={[styles.btnContainer, { borderBottomWidth: 0 }]}
+                  onPress={() => {
+                     refreshAll();
+                  }}>
+                  <Text style={[styles.txtBtn, { fontSize: 20 }]}>🔄</Text>
+               </TouchableOpacity>
+               <TouchableOpacity
+                  style={styles.btnContainer}
+                  onPress={() => {
+                     setMode(myStudents);
+                  }}>
+                  <Text style={styles.txtBtn}>My Students</Text>
+               </TouchableOpacity>
+               <TouchableOpacity
+                  style={styles.btnContainer}
+                  onPress={() => {
+                     setMode(allStudents);
+                  }}>
+                  <Text style={styles.txtBtn}>All</Text>
+               </TouchableOpacity>
+            </View>
          );
       } else if (userData.role === 'Teacher') {
          return (
-            <ImageBackground source={backgroundImage}>
-               <View style={styles.btnLayout}>
-                  <TouchableOpacity
-                     style={styles.btnContainer}
-                     onPress={() => {
-                        refreshAll();
-                     }}>
-                     <Text style={styles.txtBtn}>Refresh</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                     style={styles.btnContainer}
-                     onPress={() => {
-                        setMode(myStudents);
-                     }}>
-                     <Text style={styles.txtBtn}>My Students</Text>
-                  </TouchableOpacity>
-               </View>
-            </ImageBackground>
+            <View style={styles.btnLayout}>
+               <TouchableOpacity
+                  style={styles.btnContainer}
+                  onPress={() => {
+                     refreshAll();
+                  }}>
+                  <Text style={styles.txtBtn}>Refresh</Text>
+               </TouchableOpacity>
+               <TouchableOpacity
+                  style={styles.btnContainer}
+                  onPress={() => {
+                     setMode(myStudents);
+                  }}>
+                  <Text style={styles.txtBtn}>My Students</Text>
+               </TouchableOpacity>
+            </View>
          );
       } else {
          return <></>;
       }
    };
 
+   const studentData = () => {
+      if (!mode || !Array.isArray(mode)) {
+         return <></>;
+      }
+      return (
+         <LinearGradient
+            colors={['#B7B5E4', '#95F9E3', '#E0CA3C']}
+            start={{ x: 0, y: -1 }}
+            end={{ x: 1.3, y: -2 }}>
+            {mode.map((student, key) => {
+               return (
+                  <DataTable.Row key={key} style={styles.rowStyle}>
+                     <DataTable.Cell textStyle={styles.cellTxt}>
+                        {student.firstName} {student.lastName}
+                     </DataTable.Cell>
+                     <DataTable.Cell textStyle={styles.cellTxt} style={styles.cellEmail}>
+                        {student.email}
+                     </DataTable.Cell>
+                     <DataTable.Cell numeric textStyle={styles.cellTxt} style={styles.status}>
+                        {student.isActive ? 'Active' : 'Not Active'}
+                     </DataTable.Cell>
+                     <DataTable.Cell
+                        textStyle={styles.cellTxt}
+                        key={key}
+                        onPress={() => {
+                           student.isActive
+                              ? setStudentInactive(student)
+                              : setStudentActive(student);
+                        }}>
+                        {student.isActive ? (
+                           <Text style={[styles.cellTxt, { textAlign: 'center' }]}>
+                              Set Inactive
+                           </Text>
+                        ) : (
+                           <Text style={[styles.cellTxt, { textAlign: 'center' }]}>Set Active</Text>
+                        )}
+                     </DataTable.Cell>
+                  </DataTable.Row>
+               );
+            })}
+         </LinearGradient>
+      );
+   };
+
    return (
-      <View style={styles.containerStudentsScreen}>
+      <View style={styles.studentsContainer}>
          {screenOptions()}
-         <ScrollView>
+         <ScrollView
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
             <DataTable>
                <DataTable.Header style={styles.tblHeader}>
-                  <DataTable.Title textStyle={{ fontSize: 14 }}>Name</DataTable.Title>
-                  <DataTable.Title textStyle={{ fontSize: 14 }}>Email</DataTable.Title>
-                  <DataTable.Title textStyle={{ fontSize: 14, marginLeft: -36 }}>
-                     Status
-                  </DataTable.Title>
+                  <DataTable.Title>Name</DataTable.Title>
+                  <DataTable.Title textStyle={{ marginLeft: -15 }}>Email</DataTable.Title>
+                  <DataTable.Title textStyle={{ marginLeft: -40 }}>Status</DataTable.Title>
                </DataTable.Header>
                {studentData()}
             </DataTable>

@@ -8,6 +8,7 @@ import styles from '../../styles/carcassStyles';
 import subjectStyle from '../../styles/SubjectStyles';
 import { removeSubjectFromUserList } from '../../api/User_requests';
 import ManageStyles from '../../styles/ManageOptionStyles';
+import { Icon } from 'react-native-elements';
 
 export default function Subjects() {
    const userData = useSelector((state) => state.user);
@@ -55,12 +56,9 @@ export default function Subjects() {
                      </TouchableOpacity>
                      {userData.role === 'Admin' ? (
                         <TouchableOpacity
-                           style={[
-                              ManageStyles.btnContainer,
-                              { backgroundColor: '#FC2F00', marginRight: 5 },
-                           ]}
+                           style={ManageStyles.btnContainer}
                            onPress={() => handleRemoveSubject(subject)}>
-                           <Text style={{ color: '#fff' }}>Remove</Text>
+                           <Icon name='delete' type='ionicons' size={26} />
                         </TouchableOpacity>
                      ) : (
                         <></>

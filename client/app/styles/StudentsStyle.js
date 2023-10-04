@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-   containerStudentsScreen: { flex: 1, height: '100%' },
+   studentsContainer: { flex: 1, width: '100%', height: '100%' },
 
    btnLayout: {
       width: '100%',
@@ -10,21 +10,16 @@ const styles = StyleSheet.create({
    },
 
    btnContainer: {
+      width: 'auto',
       height: 'auto',
-      width: '20%',
-      backgroundColor: '#009FFD',
-      borderTopLeftRadius: 25,
-      borderBottomRightRadius: 25,
-      borderTopRightRadius: 10,
-      marginBottom: '1%',
       justifyContent: 'center',
+      backgroundColor: 'transparent',
+      borderBottomColor: '#000',
+      borderBottomWidth: 0.5,
    },
 
    txtBtn: {
-      color: '#ffffff',
-      textAlign: 'center',
-      fontSize: 13,
-      letterSpacing: 1.5,
+      letterSpacing: 1,
       fontFamily: 'PlayfairDisplay-VariableFont_wght',
    },
 
@@ -33,22 +28,18 @@ const styles = StyleSheet.create({
    rowStyle: {
       marginBottom: 4,
       borderBottomWidth: 2,
-      borderWidth: 1,
    },
 
-   cellStyleEmail: { marginLeft: 35, marginBottom: 0 },
+   cellEmail: { marginLeft: 17, marginBottom: 0 },
 
-   status: { marginLeft: 25, marginBottom: 0 },
+   status: { marginLeft: 25, marginBottom: 0, marginRight: 0 },
 
    cellTxt: {
-      fontSize: 14,
-      textTransform: 'capitalize',
+      fontSize: 13,
       width: '100%',
       color: '#141B41',
-      fontFamily: 'Raleway-SemiBoldItalic',
+      fontFamily: 'DMSerifText-Regular',
    },
-
-   setInactive: { textAlign: 'right', marginTop: 9, fontFamily: 'Raleway-SemiBoldItalic' },
 });
 
 export default styles;
