@@ -8,17 +8,14 @@ const navBar = StyleSheet.create({
 
    navContainer: {
       flexDirection: 'column',
-      width: '50%',
+      width: '40%',
       height: 'auto',
-      padding: 0,
-      // borderRadius: 6,
       borderTopEndRadius: 25,
-      backgroundColor: '#EDEBFF',
+      backgroundColor: 'transparent',
       position: 'absolute',
-      top: 15,
-      left: 10,
-      overflow: 'scroll',
-      borderWidth: 0,
+      top: 5,
+      left: 5,
+      overflow: 'visible',
       borderColor: '#D7FDF0',
       shadowColor: '#080357',
       shadowOffset: {
@@ -46,10 +43,8 @@ const navBar = StyleSheet.create({
 
    navTab: {
       justifyContent: 'flex-start',
-      alignContent: 'center',
-      marginLeft: 20,
-      marginBottom: 5,
-      borderTopWidth: 2,
+      marginLeft: 5,
+      borderTopWidth: 1,
       borderTopColor: '#161925',
    },
 
