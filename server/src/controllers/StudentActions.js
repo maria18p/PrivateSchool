@@ -11,7 +11,6 @@ export const createStudent = async (reqObj) => {
       email: reqObj.email,
    });
    if (isAccountExists) return { success: false, message: 'Student already exists' };
-
    //Password crypt
    const hashedPassword = await argon2.hash(reqObj.password);
    const _account = await ODM.models.User({

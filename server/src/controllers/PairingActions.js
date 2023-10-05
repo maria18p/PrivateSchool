@@ -45,6 +45,7 @@ export const createPairing = async (req) => {
          student: req.user._id,
          subject: req.subject,
       });
+      // console.log(`[USER ID ${result.student._id}\nPAIRING ID ${result._id}]\n`);
       result.save();
       return result
          ? { success: true, message: 'Pairing created successfully' }
@@ -63,19 +64,22 @@ export const updatePairing = async (req) => {
       let pairing = await ODM.models.Pairing.findOne({
          _id: req.pairing_id,
       });
+      // console.log(`[EXTRACTED PAIRING ${pairing}]\n`);
       pairing.teacher = req.teacher;
       pairing.status = 'active';
       await pairing.save();
+      // console.log(`[UPDATED PAIRING ${pairing}]\n`);
       pairing = await ODM.models.Pairing.findOne({ _id: pairing._id }).populate(
          'student teacher subject',
       );
+      // console.log(`[UPDATED *2 PAIRING ${pairing}]\n`);
       return {
          success: true,
          message: 'Pairing updated successfully',
          data: pairing,
       };
    } catch (err) {
-      console.log('ERROR UPDATING PAIRING', err);
+      console.error('ERROR UPDATING PAIRING', err);
       return { success: false, message: 'PAIRING UPDATE ERROR' };
    }
 };
@@ -125,14 +129,11 @@ export const teacherStudents = async (req) => {
          teacher: req.teacher._id,
          status: 'active',
       });
-
       const studentIds = pairings.map((pairing) => pairing.student);
-
       const students = await getUsers({
          _id: { $in: studentIds },
          isActive: true,
       });
-
       return { success: true, data: students };
    } catch (error) {
       console.error('Error fetching teacher students:', error);

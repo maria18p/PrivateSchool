@@ -44,7 +44,6 @@ export default function NewEventModal(props) {
          user: userData,
          student: student,
       });
-
       setPairingSubjects(queryResult.data);
    };
 
@@ -53,7 +52,6 @@ export default function NewEventModal(props) {
          user: userData,
          role: 'Teacher',
       });
-
       setStudents(students.data);
    };
 
@@ -81,6 +79,7 @@ export default function NewEventModal(props) {
       } else if (endTimeMinutes > 21 * 60) {
          Alert.alert('Invalid lesson details: Lesson cannot end after 21:00.');
       } else {
+         console.log('Student Object:', JSON.stringify(student, null, 2));
          const queryResult = await createLesson({
             user: userData,
             date: date,
@@ -104,20 +103,24 @@ export default function NewEventModal(props) {
    const showEventOptions = () => {
       if (eventType === 'Lesson') {
          if (students.length === 0) return <></>;
-
          const studentsMap = students.map((student) => {
             return {
-               key: student,
+               key: student._id,
                value: student.firstName + ' ' + student.lastName,
             };
          });
-
          return (
             <View>
                <Text style={modalStyle.txtModal}>Student:</Text>
                <SelectList
                   setSelected={(val) => {
-                     setStudent(val);
+                     const selectedStudentObj = students.find((student) => student._id === val);
+                     console.log(
+                        'Selected Student Object:',
+                        JSON.stringify(selectedStudentObj, null, 2),
+                     );
+                     setStudent(selectedStudentObj);
+                     // setStudent(val);
                   }}
                   data={studentsMap}
                />

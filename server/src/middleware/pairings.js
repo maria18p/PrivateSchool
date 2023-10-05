@@ -37,7 +37,7 @@ export const pairTeacherToStudent = async (req) => {
    const isLoggedIn = await userLoggedIn(req.user);
    if (!isLoggedIn.success) return requestFailure({ message: isLoggedIn.message });
    const result = await updatePairing(req);
-
+   // console.log(`[RESULT STUDENT ${result.data.student}]`);
    await createNotification({
       user: result.data.student,
       text: `You were paired for learning ${result.data.subject.name} with ${result.data.teacher.firstName} ${result.data.teacher.lastName}`,
@@ -57,8 +57,6 @@ export const getTeacherStudents = async (req) => {
    const hasPermission = userHasTeacherPermission(req.user);
    if (!hasPermission) return requestFailure({ message: hasPermission.message });
    req.teacher = (await getUsers({ email: req.user.email }))[0];
-   const isLoggedIn = await userLoggedIn(req);
-   if (!isLoggedIn.success) return requestFailure({ message: isLoggedIn.message });
    const students = await teacherStudents(req);
    return students.success
       ? requestSuccess({ data: students.data })

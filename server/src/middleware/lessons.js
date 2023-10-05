@@ -19,7 +19,6 @@ export const postRequestCreateLesson = async (req) => {
    req.student = pairing_student;
    const pairing_teacher = (await getUsers({ _id: userObj._id }))[0];
    req.teacher = pairing_teacher;
-
    req.pairing = (
       await getPairings({
          teacher: userObj._id,
@@ -27,17 +26,10 @@ export const postRequestCreateLesson = async (req) => {
          subject: req.subject,
       })
    ).data[0];
-
-   // console.log(`[PAIRING         ID ${req.pairing}\n]`);
-   // console.log(`[pairing_student ${pairing_student._id}]\n`);
-   // console.log(`[pairing_subject ${req.subject.name}]\n`);
-
    let lessonValid = await checkLessonCreationValid(req);
    if (!lessonValid || !lessonValid.data)
       return requestFailure({ message: 'Lesson overlaps with another lesson' });
-
    const pairing = (await getAllPairings({ _id: req.pairing })).json.data.data[0];
-
    const studentOverlaps = await userHasAnotherLesson(req);
    if (!studentOverlaps.success || !studentOverlaps.data)
       return requestFailure({ message: 'Lesson overlaps with another lesson' });

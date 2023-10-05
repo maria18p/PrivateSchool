@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 import * as argon2 from 'argon2';
 import jwt from 'jsonwebtoken';
-import { ODM, requestFailure, requestSuccess } from '../middleware/commonModule.js';
 import nodemailer from 'nodemailer';
 import colors from 'colors';
+import { ODM, requestFailure, requestSuccess } from '../middleware/commonModule.js';
 
 export const addAdmin = async () => {
    try {
