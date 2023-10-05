@@ -16,8 +16,8 @@ import { getAllPairings } from './pairings.js';
 export const postRequestCreateLesson = async (req) => {
    const userObj = (await getUsers(req.user))[0];
    const pairing_student = (await getUsers({ _id: req.student._id }))[0];
-   req.student = pairing_student;
    const pairing_teacher = (await getUsers({ _id: userObj._id }))[0];
+   req.student = pairing_student;
    req.teacher = pairing_teacher;
    req.pairing = (
       await getPairings({
@@ -29,7 +29,6 @@ export const postRequestCreateLesson = async (req) => {
    let lessonValid = await checkLessonCreationValid(req);
    if (!lessonValid || !lessonValid.data)
       return requestFailure({ message: 'Lesson overlaps with another lesson' });
-   // const pairing = (await getAllPairings({ _id: req.pairing })).json.data.data[0];
    const studentOverlaps = await userHasAnotherLesson(req);
    if (!studentOverlaps.success || !studentOverlaps.data)
       return requestFailure({ message: 'Lesson overlaps with another lesson' });

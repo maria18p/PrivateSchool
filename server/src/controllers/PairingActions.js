@@ -45,7 +45,6 @@ export const createPairing = async (req) => {
          student: req.user._id,
          subject: req.subject,
       });
-      // console.log(`[USER ID ${result.student._id}\nPAIRING ID ${result._id}]\n`);
       result.save();
       return result
          ? { success: true, message: 'Pairing created successfully' }
@@ -64,15 +63,12 @@ export const updatePairing = async (req) => {
       let pairing = await ODM.models.Pairing.findOne({
          _id: req.pairing_id,
       });
-      // console.log(`[EXTRACTED PAIRING ${pairing}]\n`);
       pairing.teacher = req.teacher;
       pairing.status = 'active';
       await pairing.save();
-      console.log(`[UPDATED PAIRING ${pairing}]\n`);
       pairing = await ODM.models.Pairing.findOne({ _id: pairing._id }).populate(
          'student teacher subject',
       );
-      // console.log(`[UPDATED PAIRING ${pairing}]\n`);
       return {
          success: true,
          message: 'Pairing updated successfully',

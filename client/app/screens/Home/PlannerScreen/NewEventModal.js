@@ -55,7 +55,7 @@ export default function NewEventModal(props) {
       setStudents(students.data);
    };
 
-   const submit = async () => {
+   const validateLesson = (date, start, end, student, room, subject) => {
       const today = new Date();
       today.setHours(0, 0, 0, 0); // Set the time to midnight
 
@@ -69,15 +69,22 @@ export default function NewEventModal(props) {
       const endTimeMinutes = parseInt(end.split(':')[0]) * 60 + parseInt(end.split(':')[1]);
 
       if (selectedDate < today) {
-         Alert.alert('Invalid lesson details: Selected date is in the past.');
-      } else if (startTimeMinutes < currentTime) {
-         Alert.alert('Invalid lesson details: Lesson cannot start in the past.');
-      } else if (endTimeMinutes < currentTime) {
-         Alert.alert('Invalid lesson details: Lesson cannot end in the past.');
+         return 'Selected date is in the past.';
+      } else if (startTimeMinutes < currentTime || endTimeMinutes < currentTime) {
+         return 'Lesson cannot start in the past.';
       } else if (startTimeMinutes >= endTimeMinutes) {
-         Alert.alert('Invalid lesson details: Start time must be before end time.');
-      } else if (endTimeMinutes > 21 * 60) {
-         Alert.alert('Invalid lesson details: Lesson cannot end after 21:00.');
+         return 'Start time must be before end time.';
+      } else if (endTimeMinutes > 22 * 60) {
+         return 'Lesson cannot end after 21:00.';
+      }
+      return null;
+   };
+
+   const submit = async () => {
+      const validationMessage = validateLesson(date, start, end, student, room, subject);
+
+      if (validationMessage) {
+         Alert.alert('Invalid lesson details: ' + validationMessage);
       } else {
          const queryResult = await createLesson({
             user: userData,
@@ -88,11 +95,6 @@ export default function NewEventModal(props) {
             room: room,
             subject: subject,
          });
-         // console.log('2 STUDENT :', JSON.stringify(student, null, 2));
-         // setStart(null);
-         // setEnd(null);
-         // setStudent(null);
-         // console.log('3 STUDENT :', JSON.stringify(student, null, 2));
          Alert.alert(queryResult.message);
          console.log('[QUERY RESULT]', queryResult.message);
       }
@@ -117,12 +119,7 @@ export default function NewEventModal(props) {
                <SelectList
                   setSelected={(val) => {
                      const selectedStudentObj = students.find((student) => student._id === val);
-                     // console.log(
-                     //    '1 Selected Student Object:',
-                     //    JSON.stringify(selectedStudentObj, null, 2),
-                     // );
                      setStudent(selectedStudentObj);
-                     // setStudent(val);
                   }}
                   data={studentsMap}
                />

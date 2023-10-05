@@ -17,7 +17,6 @@ const Students = () => {
    const [mode, setMode] = useState(null);
 
    const onRefresh = useCallback(async () => {
-      console.log('Refreshing...');
       try {
          await refreshAll();
       } finally {

@@ -10,10 +10,6 @@ function createDateWithTime(date, timeString) {
 
 export const createLesson = async (req) => {
    try {
-      // console.log(`[PAIRING         ID ${req.pairing._id}\n]`);
-      // console.log(`[PAIRING STUDENT ID ${req.student._id}\n]`);
-      // console.log(`[PAIRING SUBJECT NAME ${req.subject.name}\n`);
-      console.log('==========================================');
       const startDate = createDateWithTime(req.date, req.start);
       const endDate = createDateWithTime(req.date, req.end);
       const result = await ODM.models.Lesson.create({

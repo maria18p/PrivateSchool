@@ -61,7 +61,6 @@ export const removeMessageFromPairing = async (req) => {
       const objectIdToDelete = new ObjectId(req._id.toString());
       // Find the message to remove
       const messageToRemove = chat.messages.find((message) => message._id.equals(objectIdToDelete));
-      console.log('Message to Remove:', messageToRemove.message);
       if (!messageToRemove) {
          return { success: false, message: 'Message not found' };
       }
