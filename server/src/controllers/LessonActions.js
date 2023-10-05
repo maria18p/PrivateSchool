@@ -10,7 +10,7 @@ function createDateWithTime(date, timeString) {
 
 export const createLesson = async (req) => {
    try {
-      console.log(`[PAIRING         ID ${req.pairing._id}\n]`);
+      // console.log(`[PAIRING         ID ${req.pairing._id}\n]`);
       // console.log(`[PAIRING STUDENT ID ${req.student._id}\n]`);
       // console.log(`[PAIRING SUBJECT NAME ${req.subject.name}\n`);
       console.log('==========================================');
@@ -19,10 +19,9 @@ export const createLesson = async (req) => {
       const result = await ODM.models.Lesson.create({
          _id: new mongoose.Types.ObjectId(),
          pairing: req.pairing._id,
-         student: req.student._id,
          date: req.date,
-         room: { _id: req.room._id, name: req.room.name },
-         subject: { _id: req.subject._id, name: req.subject.name },
+         room: req.room._id,
+         subject: req.subject._id,
          start: startDate,
          finish: endDate,
       });

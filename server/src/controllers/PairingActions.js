@@ -42,7 +42,7 @@ export const createPairing = async (req) => {
    try {
       const result = await ODM.models.Pairing.create({
          _id: new mongoose.Types.ObjectId(),
-         student: req.user,
+         student: req.user._id,
          subject: req.subject,
       });
       result.save();

@@ -218,7 +218,7 @@ export default function Planner() {
                )
                   return <View key={index}></View>;
                return (
-                  <View key={key}>
+                  <View key={index}>
                      {dayObj.dayLessons.map((lesson, index) => {
                         const isStudent = userData.role === 'Student';
                         return (

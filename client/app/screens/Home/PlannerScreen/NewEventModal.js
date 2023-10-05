@@ -88,7 +88,7 @@ export default function NewEventModal(props) {
             end: end,
             student: student,
             room: room,
-            subject: { _id: subject._id, name: subject.name },
+            subject: subject,
          });
          setStart(null);
          setEnd(null);
