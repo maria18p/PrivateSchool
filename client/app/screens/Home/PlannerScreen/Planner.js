@@ -48,7 +48,7 @@ export default function Planner() {
 
    useEffect(() => {
       fetchLessons();
-   }, [lessons]);
+   }, [showNewEvent]);
 
    useEffect(() => {
       if (lessons || selectedDateWeekDates || lessons.length > 0) updateWeekPlan();
@@ -74,6 +74,7 @@ export default function Planner() {
          });
          if (result.success) {
             Alert.alert(result.message);
+            await fetchLessons();
          } else {
             Alert.alert('Failed to remove lesson');
          }

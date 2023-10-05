@@ -29,7 +29,7 @@ export const postRequestCreateLesson = async (req) => {
    let lessonValid = await checkLessonCreationValid(req);
    if (!lessonValid || !lessonValid.data)
       return requestFailure({ message: 'Lesson overlaps with another lesson' });
-   const pairing = (await getAllPairings({ _id: req.pairing })).json.data.data[0];
+   // const pairing = (await getAllPairings({ _id: req.pairing })).json.data.data[0];
    const studentOverlaps = await userHasAnotherLesson(req);
    if (!studentOverlaps.success || !studentOverlaps.data)
       return requestFailure({ message: 'Lesson overlaps with another lesson' });

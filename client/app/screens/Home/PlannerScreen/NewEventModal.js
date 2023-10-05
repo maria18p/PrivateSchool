@@ -79,7 +79,6 @@ export default function NewEventModal(props) {
       } else if (endTimeMinutes > 21 * 60) {
          Alert.alert('Invalid lesson details: Lesson cannot end after 21:00.');
       } else {
-         console.log('Student Object:', JSON.stringify(student, null, 2));
          const queryResult = await createLesson({
             user: userData,
             date: date,
@@ -89,8 +88,11 @@ export default function NewEventModal(props) {
             room: room,
             subject: subject,
          });
-         setStart(null);
-         setEnd(null);
+         // console.log('2 STUDENT :', JSON.stringify(student, null, 2));
+         // setStart(null);
+         // setEnd(null);
+         // setStudent(null);
+         // console.log('3 STUDENT :', JSON.stringify(student, null, 2));
          Alert.alert(queryResult.message);
          console.log('[QUERY RESULT]', queryResult.message);
       }
@@ -115,10 +117,10 @@ export default function NewEventModal(props) {
                <SelectList
                   setSelected={(val) => {
                      const selectedStudentObj = students.find((student) => student._id === val);
-                     console.log(
-                        'Selected Student Object:',
-                        JSON.stringify(selectedStudentObj, null, 2),
-                     );
+                     // console.log(
+                     //    '1 Selected Student Object:',
+                     //    JSON.stringify(selectedStudentObj, null, 2),
+                     // );
                      setStudent(selectedStudentObj);
                      // setStudent(val);
                   }}

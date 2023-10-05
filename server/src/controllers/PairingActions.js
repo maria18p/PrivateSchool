@@ -68,11 +68,11 @@ export const updatePairing = async (req) => {
       pairing.teacher = req.teacher;
       pairing.status = 'active';
       await pairing.save();
-      // console.log(`[UPDATED PAIRING ${pairing}]\n`);
+      console.log(`[UPDATED PAIRING ${pairing}]\n`);
       pairing = await ODM.models.Pairing.findOne({ _id: pairing._id }).populate(
          'student teacher subject',
       );
-      // console.log(`[UPDATED *2 PAIRING ${pairing}]\n`);
+      // console.log(`[UPDATED PAIRING ${pairing}]\n`);
       return {
          success: true,
          message: 'Pairing updated successfully',
@@ -94,7 +94,9 @@ export const getPairings = async (req) => {
    }
    if (req.subject) filter.subject = req.subject;
    if (req.status) filter.status = req.status;
-   if (req.subject) filter.subject = req.subject;
+   if (req.student) filter.student = req.student;
+   if (req.teacher) filter.teacher = req.teacher;
+
    try {
       let result = await ODM.models.Pairing.find(filter);
       result = await Promise.all(
