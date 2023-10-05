@@ -1,1 +1,0 @@
-import ScreenHeading from "./ScreenHeading";
