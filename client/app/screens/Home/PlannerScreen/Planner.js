@@ -51,19 +51,19 @@ export default function Planner() {
    }, [lessons]);
 
    useEffect(() => {
+      if (lessons || selectedDateWeekDates || lessons.length > 0) updateWeekPlan();
+   }, [lessons, selectedDateWeekDates]);
+
+   useEffect(() => {
       if (!selectedDate || selectedDate.toString() === 'Invalid Date') setSelectedDate(new Date());
       else updateCurrentWeekDates();
    }, [selectedDate]);
 
-   useEffect(() => {
-      if (lessons || selectedDateWeekDates || lessons.length > 0) updateWeekPlan();
-   }, [lessons, selectedDateWeekDates]);
-
    const fetchLessons = async () => {
-      const lessons = await getUserLessons({
+      const lessonsData = await getUserLessons({
          user: userData,
       });
-      setLessons(lessons);
+      setLessons(lessonsData);
    };
 
    const handleRemoveLesson = async (lessonId) => {
@@ -82,28 +82,6 @@ export default function Planner() {
       }
    };
 
-   // const updateWeekPlan = () => {
-   //    if (!lessons || !selectedDateWeekDates) {
-   //       setWeekPlan([]);
-   //       return;
-   //    }
-   //    setWeekPlan(
-   //       selectedDateWeekDates.map((weekDayObj) => {
-   //          let dayLessons = [];
-   //          lessons.forEach((lesson) => {
-   //             const lessonDate = new Date(lesson.date);
-   //             let dayEquals = lessonDate.getDay() == weekDayObj.date.getDay();
-   //             let monthEquals = lessonDate.getMonth() == weekDayObj.date.getMonth();
-   //             let yearEquals = lessonDate.getFullYear() == weekDayObj.date.getFullYear();
-   //             let sameDate = ((dayEquals == monthEquals) == yearEquals) == true;
-
-   //             if (sameDate) dayLessons.push(lesson);
-   //          });
-   //          weekDayObj.dayLessons = dayLessons;
-   //          return weekDayObj;
-   //       }),
-   //    );
-   // };
    const updateWeekPlan = () => {
       if (!selectedDateWeekDates || !lessons) {
          setWeekPlan([]);
@@ -127,21 +105,17 @@ export default function Planner() {
 
    const updateCurrentWeekDates = () => {
       const startDate = new Date(selectedDate);
-
       startDate.setDate(startDate.getDate() - startDate.getDay());
-
       const weekDays = [];
       for (let i = 0; i < 7; i++) {
          const dayDate = new Date(startDate);
          dayDate.setDate(startDate.getDate() + i);
-
          const dayObject = {
             dayName: daysOfWeek[i],
             date: dayDate,
          };
          weekDays.push(dayObject);
       }
-
       setSelectedDateWeekDates(weekDays);
    };
 
@@ -198,105 +172,7 @@ export default function Planner() {
       );
    };
 
-   const showDayPlan = () => {
-      if (!weekPlan) return <></>;
-      return (
-         <View>
-            {weekPlan.map((dayObj, index) => {
-               if (
-                  !dayObj.dayLessons ||
-                  new Date(dayObj.date).toLocaleDateString() !==
-                     new Date(selectedDate).toLocaleDateString()
-               )
-                  return <View key={index}></View>;
-               return (
-                  <View key={index}>
-                     {dayObj.dayLessons.map((lesson, index) => {
-                        const isStudent = userData.role === 'Student';
-                        return (
-                           <DataTable.Row key={index} onPress={() => setSelectedLesson(lesson)}>
-                              <DataTable.Cell textStyle={PlannerStyles.plannerText}>
-                                 {lesson.pairing.subject.name}
-                              </DataTable.Cell>
-                              <DataTable.Cell textStyle={PlannerStyles.plannerText}>
-                                 <TouchableOpacity style={PlannerStyles.rowBtn}>
-                                    <Text
-                                       numberOfLines={3}
-                                       ellipsizeMode='tail'
-                                       style={PlannerStyles.plannerText}>
-                                       {new Date(lesson.start)
-                                          .getUTCHours()
-                                          .toString()
-                                          .padStart(2, '0')}
-                                       :
-                                       {new Date(lesson.start)
-                                          .getUTCMinutes()
-                                          .toString()
-                                          .padStart(2, '0')}
-                                       -
-                                       {new Date(lesson.finish)
-                                          .getUTCHours()
-                                          .toString()
-                                          .padStart(2, '0')}
-                                       :
-                                       {new Date(lesson.start)
-                                          .getUTCMinutes()
-                                          .toString()
-                                          .padStart(2, '0')}
-                                    </Text>
-                                 </TouchableOpacity>
-                              </DataTable.Cell>
-                              <DataTable.Cell
-                                 textStyle={[PlannerStyles.plannerText, { marginLeft: 30 }]}>
-                                 {lesson.room.name}
-                              </DataTable.Cell>
-                              <DataTable.Cell
-                                 textStyle={{
-                                    width: '100%',
-                                 }}>
-                                 <TouchableOpacity style={PlannerStyles.rowBtn}>
-                                    <Text
-                                       style={PlannerStyles.plannerText}
-                                       numberOfLines={3}
-                                       ellipsizeMode='tail'>
-                                       {isStudent
-                                          ? lesson.pairing.teacher.firstName +
-                                            ' ' +
-                                            lesson.pairing.teacher.lastName
-                                          : lesson.pairing.student.firstName +
-                                            ' ' +
-                                            lesson.pairing.student.lastName}
-                                    </Text>
-                                 </TouchableOpacity>
-                              </DataTable.Cell>
-                              {!isStudent && (
-                                 <DataTable.Cell numeric>
-                                    <TouchableOpacity
-                                       onPress={() => handleRemoveLesson(lesson._id)}
-                                       style={{
-                                          justifyContent: 'center',
-                                          alignItems: 'center',
-                                       }}>
-                                       <Icon
-                                          name='delete'
-                                          type='ionicons'
-                                          color='#3A445D'
-                                          size={24}
-                                       />
-                                    </TouchableOpacity>
-                                 </DataTable.Cell>
-                              )}
-                           </DataTable.Row>
-                        );
-                     })}
-                  </View>
-               );
-            })}
-         </View>
-      );
-   };
-
-   const schedule = () => {
+   const tableTitles = () => {
       return (
          <View style={PlannerStyles.titleTableLayout}>
             <DataTable>
@@ -319,15 +195,87 @@ export default function Planner() {
                   </DataTable.Title>
 
                   {userData.role !== 'Student' ? (
-                     <DataTable.Title
-                        numeric
-                        textStyle={[ManageStyles.tblTxtTitle, colorTxt, { marginLeft: 15 }]}>
+                     <DataTable.Title numeric textStyle={[ManageStyles.tblTxtTitle, colorTxt]}>
                         Edit
                      </DataTable.Title>
                   ) : null}
                </DataTable.Header>
                {showDayPlan()}
             </DataTable>
+         </View>
+      );
+   };
+
+   const showDayPlan = () => {
+      if (!weekPlan) return <></>;
+      return (
+         <View>
+            {weekPlan.map((dayObj, index) => {
+               if (
+                  !dayObj.dayLessons ||
+                  new Date(dayObj.date).toLocaleDateString() !==
+                     new Date(selectedDate).toLocaleDateString()
+               )
+                  return <View key={index}></View>;
+               return (
+                  <View key={key}>
+                     {dayObj.dayLessons.map((lesson, index) => {
+                        const isStudent = userData.role === 'Student';
+                        return (
+                           <DataTable.Row key={index} onPress={() => setSelectedLesson(lesson)}>
+                              <DataTable.Cell textStyle={PlannerStyles.plannerText}>
+                                 {lesson.pairing.subject.name}
+                              </DataTable.Cell>
+                              <DataTable.Cell
+                                 style={PlannerStyles.rowBtn}
+                                 textStyle={PlannerStyles.plannerText}>
+                                 {new Date(lesson.start).getUTCHours().toString().padStart(2, '0')}:
+                                 {new Date(lesson.start)
+                                    .getUTCMinutes()
+                                    .toString()
+                                    .padStart(2, '0')}
+                                 -
+                                 {new Date(lesson.finish).getUTCHours().toString().padStart(2, '0')}
+                                 :
+                                 {new Date(lesson.finish)
+                                    .getUTCMinutes()
+                                    .toString()
+                                    .padStart(2, '0')}
+                              </DataTable.Cell>
+                              <DataTable.Cell
+                                 textStyle={[PlannerStyles.plannerText, { marginLeft: 30 }]}>
+                                 {lesson.room.name}
+                              </DataTable.Cell>
+                              <DataTable.Cell
+                                 textStyle={{
+                                    width: '100%',
+                                 }}
+                                 style={PlannerStyles.plannerText}>
+                                 {isStudent
+                                    ? `${lesson.pairing.teacher.firstName} ${lesson.pairing.teacher.lastName}`
+                                    : `${lesson.pairing.student.firstName} ${lesson.pairing.student.lastName}`}
+                              </DataTable.Cell>
+                              {!isStudent && (
+                                 <DataTable.Cell
+                                    numeric
+                                    onPress={() => handleRemoveLesson(lesson._id)}>
+                                    <View style={{ alignContent: 'center' }}>
+                                       <Icon
+                                          name='delete'
+                                          type='ionicons'
+                                          color='#3A445D'
+                                          style={{ alignSelf: 'center' }}
+                                          size={20}
+                                       />
+                                    </View>
+                                 </DataTable.Cell>
+                              )}
+                           </DataTable.Row>
+                        );
+                     })}
+                  </View>
+               );
+            })}
          </View>
       );
    };
@@ -347,7 +295,7 @@ export default function Planner() {
          ) : (
             <></>
          )}
-         <View style={PlannerStyles.dayPlanner}>{schedule()}</View>
+         <View style={PlannerStyles.dayPlanner}>{tableTitles()}</View>
          <View style={[PlannerStyles.layoutBtn, { width: '50%' }]}>
             {userData.role !== 'Student' ? (
                <View>

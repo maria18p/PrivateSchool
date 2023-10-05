@@ -42,12 +42,10 @@ export const createPairing = async (req) => {
    try {
       const result = await ODM.models.Pairing.create({
          _id: new mongoose.Types.ObjectId(),
-         student: req.user._id,
+         student: req.user,
          subject: req.subject,
       });
-
       result.save();
-
       return result
          ? { success: true, message: 'Pairing created successfully' }
          : { success: false, message: 'Pairing not created' };
@@ -105,18 +103,15 @@ export const getPairings = async (req) => {
                status: element.status,
             };
             temp.subjectName = (await getSubjects({ _id: element.subject }))[0].name;
-
             if (temp.status === 'unassigned') {
                const teachers = await getSubjectTeachers({
                   subject_id: temp.subject,
                });
-
                temp.availableTeachers = teachers.json.data;
             }
             return temp;
          }),
       );
-
       return { success: true, data: result };
    } catch (e) {
       console.log('ERROR FETCHING USERS', e);

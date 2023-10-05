@@ -24,14 +24,13 @@ export const postLoginRequest = async (req) => {
       ? requestSuccess({ data: result.user })
       : requestFailure({ message: result.message });
 };
-
+//==================Create users==================
 export const postTeacherRequest = async (req) => {
    if (req.code !== '123') return requestFailure({ message: 'Invalid Code !' });
    try {
       const queryResult = await createTeacher(req);
       await sendAdminNotification({
          text: 'A new teacher has joined !',
-         // type: '',
          payload: queryResult.data,
       });
       return queryResult.success
@@ -46,7 +45,7 @@ export const postTeacherRequest = async (req) => {
 export const postStudentRequest = async (req) => {
    try {
       const queryResult = await createStudent(req);
-      let pairings = await req.subjects.map(async (subject) => {
+      await req.subjects.map(async (subject) => {
          const pairingCreation = await addPairing({
             user: queryResult.data,
             subject: subject,
@@ -68,6 +67,7 @@ export const postStudentRequest = async (req) => {
    }
 };
 
+//================================================================
 export const getAllUsers = async (req) => {
    // const hasPermission = userHasAdminPermission(req.user);
    // if (!userHasAdminPermission === true) return hasPermission;
@@ -83,18 +83,17 @@ export const getRequestFindUserByPhoneNumber = async (req) => {
       : requestFailure({ message: queryResult.message });
 };
 
+export const getRequestUserPassword = async (req) => {
+   const queryResult = await getUserPassword(req);
+   return queryResult.success
+      ? requestSuccess({ message: queryResult.message })
+      : requestFailure({ message: queryResult.message });
+};
 //================================================================
 export const postRequestSendPassword = async (req) => {
    const queryResult = await sendPassword(req);
    return queryResult.success
       ? requestSuccess({ data: queryResult.data, message: queryResult.message })
-      : requestFailure({ message: queryResult.message });
-};
-
-export const getRequestUserPassword = async (req) => {
-   const queryResult = await getUserPassword(req);
-   return queryResult.success
-      ? requestSuccess({ message: queryResult.message })
       : requestFailure({ message: queryResult.message });
 };
 

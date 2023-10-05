@@ -8,7 +8,7 @@ import {
 
 const Router = express.Router();
 
-Router.post('/create', async (req, res) => {
+Router.post('/createLesson', async (req, res) => {
    return respond(await postRequestCreateLesson(req.body), res);
 });
 

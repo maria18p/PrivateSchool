@@ -10,14 +10,19 @@ function createDateWithTime(date, timeString) {
 
 export const createLesson = async (req) => {
    try {
+      console.log(`[PAIRING         ID ${req.pairing._id}\n]`);
+      // console.log(`[PAIRING STUDENT ID ${req.student._id}\n]`);
+      // console.log(`[PAIRING SUBJECT NAME ${req.subject.name}\n`);
+      console.log('==========================================');
       const startDate = createDateWithTime(req.date, req.start);
       const endDate = createDateWithTime(req.date, req.end);
       const result = await ODM.models.Lesson.create({
          _id: new mongoose.Types.ObjectId(),
          pairing: req.pairing._id,
+         student: req.student._id,
          date: req.date,
-         room: req.room._id,
-         subject: req.subject._id,
+         room: { _id: req.room._id, name: req.room.name },
+         subject: { _id: req.subject._id, name: req.subject.name },
          start: startDate,
          finish: endDate,
       });
@@ -31,6 +36,32 @@ export const createLesson = async (req) => {
       console.log('ERROR CREATING LESSON');
       console.log('err', err);
       return { success: false, message: 'SOMETHING WENT WRONG' };
+   }
+};
+
+export const getUserLessons = async (req) => {
+   try {
+      let userLessons = [];
+      const lessons = await Promise.all(
+         req.pairings.map(async (pairing) => {
+            let pairingLessons = await ODM.models.Lesson.find({
+               pairing: pairing._id,
+            }).populate('room');
+            if (!pairingLessons) return;
+            const pairingData = await ODM.models.Pairing.findOne({
+               _id: pairing._id,
+            }).populate('student teacher subject');
+            pairingLessons.map((lesson) => {
+               lesson.pairing = pairingData;
+               userLessons.push(lesson);
+            });
+         }),
+      );
+
+      return { success: true, data: userLessons };
+   } catch (e) {
+      console.log('ERROR FETCHING USERS', e);
+      return { success: false, message: 'SOMETHING WENT WRONG!' };
    }
 };
 
@@ -87,32 +118,6 @@ export const checkRoomAvailable = async (req) => {
    });
 
    return { success: true, data: overlappingLessons.length === 0 };
-};
-
-export const getUserLessons = async (req) => {
-   try {
-      let userLessons = [];
-      const lessons = await Promise.all(
-         req.pairings.map(async (pairing) => {
-            let pairingLessons = await ODM.models.Lesson.find({
-               pairing: pairing._id,
-            }).populate('room');
-            if (!pairingLessons) return;
-            const pairingData = await ODM.models.Pairing.findOne({
-               _id: pairing._id,
-            }).populate('student teacher subject');
-            pairingLessons.map((lesson) => {
-               lesson.pairing = pairingData;
-               userLessons.push(lesson);
-            });
-         }),
-      );
-
-      return { success: true, data: userLessons };
-   } catch (e) {
-      console.log('ERROR FETCHING USERS', e);
-      return { success: false, message: 'SOMETHING WENT WRONG!' };
-   }
 };
 
 export const removeLesson = async (req) => {

@@ -9,7 +9,7 @@ import modalStyle from '../../../styles/ModalStyles';
 import { Calendar } from 'react-native-calendars';
 import { getAllRooms } from '../../../api/Room_requests';
 
-const eventTypes = ['Lesson', 'Practice', 'Other'];
+const eventTypes = ['Lesson', 'Practice', 'Concert'];
 
 export default function NewEventModal(props) {
    const userData = useSelector((state) => state.user);
@@ -65,7 +65,9 @@ export default function NewEventModal(props) {
       selectedDate.setHours(0, 0, 0, 0);
 
       const currentTime = today.getHours() * 60 + today.getMinutes();
+
       const startTimeMinutes = parseInt(start.split(':')[0]) * 60 + parseInt(start.split(':')[1]);
+
       const endTimeMinutes = parseInt(end.split(':')[0]) * 60 + parseInt(end.split(':')[1]);
 
       if (selectedDate < today) {
@@ -74,7 +76,7 @@ export default function NewEventModal(props) {
          Alert.alert('Invalid lesson details: Lesson cannot start in the past.');
       } else if (endTimeMinutes < currentTime) {
          Alert.alert('Invalid lesson details: Lesson cannot end in the past.');
-      } else if (start >= end) {
+      } else if (startTimeMinutes >= endTimeMinutes) {
          Alert.alert('Invalid lesson details: Start time must be before end time.');
       } else if (endTimeMinutes > 21 * 60) {
          Alert.alert('Invalid lesson details: Lesson cannot end after 21:00.');
@@ -86,8 +88,10 @@ export default function NewEventModal(props) {
             end: end,
             student: student,
             room: room,
-            subject: subject,
+            subject: { _id: subject._id, name: subject.name },
          });
+         setStart(null);
+         setEnd(null);
          Alert.alert(queryResult.message);
          console.log('[QUERY RESULT]', queryResult.message);
       }

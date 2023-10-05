@@ -28,6 +28,10 @@ export const postRequestCreateLesson = async (req) => {
       })
    ).data[0];
 
+   console.log(`[PAIRING         ID ${req.pairing}\n]`);
+   // console.log(`[pairing_student ${pairing_student._id}]\n`);
+   // console.log(`[pairing_subject ${req.subject.name}]\n`);
+
    let lessonValid = await checkLessonCreationValid(req);
    if (!lessonValid || !lessonValid.data)
       return requestFailure({ message: 'Lesson overlaps with another lesson' });
@@ -79,4 +83,30 @@ export const deleteRequestRemoveLesson = async (req) => {
    return queryResult.success
       ? requestSuccess({ message: queryResult.message })
       : requestFailure({ message: queryResult.message });
+};
+
+export const getUserLessons = async (req) => {
+   try {
+      let userLessons = [];
+      const lessons = await Promise.all(
+         req.pairings.map(async (pairing) => {
+            let pairingLessons = await ODM.models.Lesson.find({
+               pairing: pairing._id,
+            }).populate('room');
+            if (!pairingLessons) return;
+            const pairingData = await ODM.models.Pairing.findOne({
+               _id: pairing._id,
+            }).populate('student teacher subject');
+            pairingLessons.map((lesson) => {
+               lesson.pairing = pairingData;
+               userLessons.push(lesson);
+            });
+         }),
+      );
+
+      return { success: true, data: userLessons };
+   } catch (e) {
+      console.log('ERROR FETCHING USERS', e);
+      return { success: false, message: 'SOMETHING WENT WRONG!' };
+   }
 };

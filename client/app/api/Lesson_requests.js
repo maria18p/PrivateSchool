@@ -11,11 +11,16 @@ export const createLesson = async (data) => {
          date: data.date,
          start: data.start,
          end: data.end,
-         student: { _id: data.student._id },
+         student: {
+            _id: data.student._id,
+            firstName: data.student.firstName,
+            lastName: data.student.lastName,
+            email: data.student.email,
+         },
          room: data.room,
          subject: data.subject,
       };
-      const result = await axios.post(BASE_URL + 'create', data);
+      const result = await axios.post(BASE_URL + 'createLesson', data);
       return result.data;
    } catch (error) {
       console.error('Error:', error);
@@ -43,7 +48,7 @@ export const removeLesson = async (data) => {
             lessonId: data.lessonId,
          },
       });
-      console.log('[RESULT.DATA]', result.data);
+      console.log('[RESULT.DATA]', result.data.message);
       return result.data;
    } catch (error) {
       console.error('Error:', error);

@@ -30,12 +30,6 @@ export const PlannerStyles = StyleSheet.create({
       textDecorationLine: 'underline',
       textTransform: 'capitalize',
       color: '#000',
-      fontWeight: '300',
-   },
-
-   rowBtn: {
-      justifyContent: 'center',
-      alignItems: 'center',
    },
 
    weekContainer: {
