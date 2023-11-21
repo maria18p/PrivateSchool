@@ -26,7 +26,7 @@ export const postLoginRequest = async (req) => {
 };
 //==================Create users==================
 export const postTeacherRequest = async (req) => {
-   if (req.code !== '123') return requestFailure({ message: 'Invalid Code !' });
+   if (req.code !== process.env.CODE_TEACHER) return requestFailure({ message: 'Invalid Code !' });
    try {
       const queryResult = await createTeacher(req);
       await sendAdminNotification({
