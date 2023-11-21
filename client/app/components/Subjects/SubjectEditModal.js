@@ -6,15 +6,12 @@ import { updateSubject } from '../../api/Subject_requests';
 
 export default function SubjectEditModal(props) {
    const [subjectName, setSubjectName] = useState(props.subject.name);
-
    const handleUpdateSubject = async () => {
       props.subject.name = subjectName;
       const queryResult = await updateSubject({
          subject: props.subject,
       });
-
       Alert.alert(queryResult.message);
-
       if (queryResult.success) {
          props.closeModal();
       }

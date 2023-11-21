@@ -37,11 +37,10 @@ export const createTeacher = async (reqObj) => {
 export const assignSubjectToTeacher = async (req) => {
    try {
       const desiredUser = await getUsers(req.teacher);
+      const desiredSubject = await getSubjects(req.subject);
       if (desiredUser == [] || desiredUser === null) {
          return { success: false, message: 'User not found' };
       }
-
-      const desiredSubject = await getSubjects(req.subject);
       if (desiredSubject == [] || desiredSubject === null) {
          return { success: false, message: 'Subject not found' };
       }
