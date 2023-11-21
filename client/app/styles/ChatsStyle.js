@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
 
    layoutSelectedChat: {
       flex: 1,
-      backgroundColor: 'rgba(112, 110, 178, 0.7)',
+      backgroundColor: 'rgba(200, 200, 200, 0.55)',
    },
 
    selectedChatLayout: {
@@ -93,11 +93,11 @@ const styles = StyleSheet.create({
    selectedChatTxt: {
       color: '#ffffff',
       fontWeight: '400',
-      fontSize: 16,
+      fontSize: 18,
       fontFamily: 'Poppins-Light',
    },
 
-   dateMessage: { color: '#141B41', fontSize: 13, marginTop: 5 },
+   dateMessage: { color: '#000000', fontSize: 17, marginTop: 5 },
 
    txtStyle: {
       color: '#ffff',
